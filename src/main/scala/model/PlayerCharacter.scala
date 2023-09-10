@@ -38,6 +38,7 @@ import scala.util.Random
   * @author [[https://github.com/~Your github account~/ ~Your Name~]]
   */
 class PlayerCharacter(val name: String,
+              var Hp: Int,
               val maxHp: Int,
               val attack: Int,
               val defense: Int,

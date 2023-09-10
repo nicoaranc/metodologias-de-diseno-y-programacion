@@ -1,13 +1,22 @@
 package cl.uchile.dcc.citric
 package model.paneles
 
-import model.traits.Panel
+import model.PlayerCharacter
+import model.Panel
 
 import scala.collection.mutable.ArrayBuffer
 
-class neutral extends panel{
+abstract class neutral extends Panel {
 
   val characters: ArrayBuffer[PlayerCharacter]
 
-  var nextPanels
+  var nextPanels: ArrayBuffer[Panel]
+
+  def addCharacter(player: PlayerCharacter): Unit = {
+    characters.addOne(player)
+  }
+
+  def removeCharacter(player: PlayerCharacter): Boolean = {
+    characters.remove(player)
+  }
 }
