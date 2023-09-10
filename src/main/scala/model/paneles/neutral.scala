@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package paneles
-package model
-package traits
+package model.paneles
+
+import model.traits.Panel
 
 import scala.collection.mutable.ArrayBuffer
 

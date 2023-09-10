@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model
+package traits
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,8 +14,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/r8vnhill Ignacio Slater M.]]
  * @author [[https://github.com/YOUR-USERNAME YOUR NAME]]
  */
-
-trait panel {
+trait Panel {
 
   /** Array of the characters currently positioned on this panel.
    *
