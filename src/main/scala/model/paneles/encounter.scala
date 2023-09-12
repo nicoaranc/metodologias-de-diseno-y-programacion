@@ -12,11 +12,15 @@ class encounter (val id: Int) extends Panel{
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
   def addCharacter(player: PlayerCharacter): Unit = {
-    characters.addOne(player)
+    if (characters.indexOf(player) == -1) {
+      characters.addOne(player)
+    }
   }
 
   def removeCharacter(player: PlayerCharacter): Unit = {
-    val index: Int = characters.indexOf(player)
-    characters.remove(index)
+    if (characters.indexOf(player) != -1) {
+      val index: Int = characters.indexOf(player)
+      characters.remove(index)
+    }
   }
 }
