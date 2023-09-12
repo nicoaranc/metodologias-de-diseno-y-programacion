@@ -30,13 +30,18 @@ class NeutralPanelTest extends munit.FunSuite {
       characters.remove(index)
     }
   }
+  /** the test of the methods of addCharacter and removeCharacter are going to take place here,
+   * and the same methods are going to be in the other classes of Panel*/
 
+  /** test of the "addCharacter" method */
   test("a player enter"){
     assertEquals(characters.isEmpty, true)
     addCharacter(player1)
     assertEquals(characters.isEmpty, false)
     addCharacter(player2)
   }
+
+  /** test of "removeCharacter" method */
   test("a player leaves"){
     addCharacter(player1)
     addCharacter(player2)

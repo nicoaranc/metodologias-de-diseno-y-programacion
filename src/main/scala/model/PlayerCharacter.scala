@@ -45,7 +45,7 @@ class PlayerCharacter(val name: String,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
               var stars: Int,
-              var norm: Int) {
+              var norma: Int) {
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {

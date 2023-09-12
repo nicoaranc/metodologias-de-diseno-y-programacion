@@ -12,7 +12,7 @@ class BonusPanelTest extends munit.FunSuite {
 
   def give_stars(player: PlayerCharacter): Unit = {
     val roll: Int = player.rollDice()
-    val Norm: Int = player.norm
+    val Norm: Int = player.norma
     val a = roll * Norm
     val b = roll * 3
     if (a <= b) {
@@ -22,6 +22,8 @@ class BonusPanelTest extends munit.FunSuite {
       player.stars += b
     }
   }
+
+  /** tests of "give_stars" method */
 
   test("First stars"){
     assertEquals(player1.stars, 0)

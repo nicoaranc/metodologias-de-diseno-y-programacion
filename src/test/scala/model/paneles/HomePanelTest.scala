@@ -20,7 +20,7 @@ class HomePanelTest extends munit.FunSuite {
       return false
     }
   }
-
+  /** tests of the "stop" method */
   test("player can stop"){
     assertEquals(stop(player2),true)
   }
@@ -28,4 +28,5 @@ class HomePanelTest extends munit.FunSuite {
     assertEquals(stop(player1),false)
   }
 
+  /** test of the norma_check method */
 }
