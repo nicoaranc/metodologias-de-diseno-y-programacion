@@ -6,7 +6,7 @@ import model.Panel
 
 import scala.collection.mutable.ArrayBuffer
 
-class neutral(val id: Int) extends Panel {
+class neutral extends Panel {
 
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 

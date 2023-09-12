@@ -9,14 +9,14 @@ import scala.util.Random
 class NeutralPanelTest extends munit.FunSuite {
 
   private val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
-  private val player1: PlayerCharacter = new PlayerCharacter("pedro",7,7,4,5,
+  private val player1: PlayerCharacter = new PlayerCharacter("pedro", 7, 7, 4, 5,
     3, new Random(11))
-  private val player2: PlayerCharacter = new PlayerCharacter("juan", 8,8,6,3,
+  private val player2: PlayerCharacter = new PlayerCharacter("juan", 8, 8, 6, 3,
     2, new Random(11))
 
-  private val panel1: neutral = new neutral(1)
-  private val panel2: neutral = new neutral(2)
-  private var nextPanels: ArrayBuffer[Panel] = ArrayBuffer[Panel](panel1,panel2)
+  private val panel1: neutral = new neutral()
+  private val panel2: neutral = new neutral()
+  private var nextPanels: ArrayBuffer[Panel] = ArrayBuffer[Panel](panel1, panel2)
 
   def addCharacter(player: PlayerCharacter): Unit = {
     characters.addOne(player)

@@ -6,7 +6,7 @@ import model.Panel
 
 import scala.collection.mutable.ArrayBuffer
 
-class home extends Panel {
+class home (val owner: PlayerCharacter) extends Panel {
 
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 
@@ -20,4 +20,15 @@ class home extends Panel {
     val index: Int = characters.indexOf(player)
     characters.remove(index)
   }
+
+  def stop(player: PlayerCharacter): Boolean = {
+    if (player == owner){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+  /** def norma_check(player: PlayerCharacter): Boolean */
+
 }

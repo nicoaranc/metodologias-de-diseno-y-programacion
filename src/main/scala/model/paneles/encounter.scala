@@ -5,7 +5,7 @@ import model.Panel
 
 import scala.collection.mutable.ArrayBuffer
 
-class encounter extends Panel{
+class encounter (val id: Int) extends Panel{
 
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 

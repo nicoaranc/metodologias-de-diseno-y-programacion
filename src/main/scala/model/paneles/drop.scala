@@ -5,7 +5,7 @@ import model.Panel
 
 import scala.collection.mutable.ArrayBuffer
 
-class drop extends Panel{
+class drop (val id: Int) extends Panel{
 
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 
