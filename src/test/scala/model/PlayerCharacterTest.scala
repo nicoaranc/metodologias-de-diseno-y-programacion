@@ -10,6 +10,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   This will make your tests more readable, easier to maintain, and less error-prone.
   */
   private val name = "testPlayer"
+  private var Hp = 10
   private val maxHp = 10
   private val attack = 1
   private val defense = 1
@@ -30,6 +31,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   override def beforeEach(context: BeforeEach): Unit = {
     character = new PlayerCharacter(
       name,
+      Hp,
       maxHp,
       attack,
       defense,
@@ -60,7 +62,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   // are always the same for the same seed.
   test("A character should be able to roll a dice with a fixed seed") {
     val other =
-      new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
+      new PlayerCharacter(name, Hp, maxHp, attack, defense, evasion, new Random(11))
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
