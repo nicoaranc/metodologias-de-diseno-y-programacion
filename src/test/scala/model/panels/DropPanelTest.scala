@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.paneles
+package model.panels
 
 import cl.uchile.dcc.citric.model.PlayerCharacter
 import scala.util.Random

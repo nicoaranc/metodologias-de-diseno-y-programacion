@@ -1,11 +1,12 @@
 package cl.uchile.dcc.citric
-package model.paneles
-import model.PlayerCharacter
-import model.Panel
+package model.panels
+
+import model.traits.Panel
+import cl.uchile.dcc.citric.model.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
-class drop extends Panel{
+class bonus extends Panel{
 
   /** "characters" is the ArrayBuffer of the players that are on the Panel */
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
@@ -32,15 +33,18 @@ class drop extends Panel{
     }
   }
 
-  /** the "remove_stars" method drops the quantity of roll*norma from the player, if this quantity is higher than
-   * the current count of stars of the player, the count of stars become to zero */
-  def remove_stars(player: PlayerCharacter): Unit = {
-    val q: Int = player.rollDice() * player.norma
-    if (q >= player.stars){
-      player.stars = 0
+  /** the "give_stars" method of the class gives the minimum quantity of stars between roll*norma or roll*3 to
+   * the player */
+  def give_stars(player: PlayerCharacter): Unit = {
+    val roll: Int = player.rollDice()
+    val Norm: Int = player.norma
+    val a = roll * Norm
+    val b = roll * 3
+    if (a <= b){
+      player.stars += a
     }
     else{
-      player.stars -= q
+      player.stars += b
     }
   }
 }
