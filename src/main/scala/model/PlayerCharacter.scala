@@ -1,7 +1,11 @@
 package cl.uchile.dcc.citric
 package model
 import model.traits.Units
+
 import scala.util.Random
+import model.traits.Norma
+
+import cl.uchile.dcc.citric.model.norma.Norma1
 
 /** The `PlayerCharacter` class represents a character or avatar in the game, encapsulating
   * several attributes such as health points, attack strength, defense capability,
@@ -45,7 +49,7 @@ class PlayerCharacter(val name: String,
               val randomNumberGenerator: Random = new Random()) extends Units{
   var Hp: Int = maxHp
   var stars: Int = 0
-  var norma: Int = 1
+  var norma: Norma = new Norma1()
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {

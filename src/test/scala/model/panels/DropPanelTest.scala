@@ -5,10 +5,10 @@ import cl.uchile.dcc.citric.model.PlayerCharacter
 import scala.util.Random
 
 class DropPanelTest extends munit.FunSuite {
-  val player1: PlayerCharacter = new PlayerCharacter("Juan", 6, 6, 7,
-    4, 6, new Random(11), 4, 1)
-  val player2: PlayerCharacter = new PlayerCharacter("Pedro", 6, 6, 7,
-    4, 6, new Random(11), 34, 4)
+  val player1: PlayerCharacter = new PlayerCharacter("Juan", 6, 7,
+    4, 6, new Random(11))
+  val player2: PlayerCharacter = new PlayerCharacter("Pedro", 6, 7,
+    4, 6, new Random(11))
 
   def remove_stars(player: PlayerCharacter): Unit = {
     val q: Int = player.rollDice() * player.norma

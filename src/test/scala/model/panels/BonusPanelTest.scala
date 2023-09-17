@@ -5,10 +5,10 @@ import cl.uchile.dcc.citric.model.PlayerCharacter
 import scala.util.Random
 
 class BonusPanelTest extends munit.FunSuite {
-  val player1: PlayerCharacter = new PlayerCharacter("Juan",6,6,7,
-    4,6, new Random(11),0,1)
-  val player2: PlayerCharacter = new PlayerCharacter("Pedro", 6, 6, 7,
-    4, 6, new Random(11), 7, 2)
+  val player1: PlayerCharacter = new PlayerCharacter("Juan",6,7,
+    4,6, new Random(11))
+  val player2: PlayerCharacter = new PlayerCharacter("Pedro",6, 7,
+    4, 6, new Random(11))
 
   def give_stars(player: PlayerCharacter): Unit = {
     val roll: Int = player.rollDice()

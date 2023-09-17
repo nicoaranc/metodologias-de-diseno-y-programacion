@@ -33,14 +33,11 @@ class PlayerCharacterTest extends munit.FunSuite {
   override def beforeEach(context: BeforeEach): Unit = {
     character = new PlayerCharacter(
       name,
-      Hp,
       maxHp,
       attack,
       defense,
       evasion,
       randomNumberGenerator,
-      stars,
-      norma
     )
   }
 
@@ -66,7 +63,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   // are always the same for the same seed.
   test("A character should be able to roll a dice with a fixed seed") {
     val other =
-      new PlayerCharacter(name, Hp, maxHp, attack, defense, evasion, new Random(11),stars,norma)
+      new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
