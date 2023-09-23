@@ -1,8 +1,7 @@
 package cl.uchile.dcc.citric
 package model.wild
-import model.absclasses.WildUnit
 
-import model.PlayerCharacter
+import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 class Seagull extends WildUnit {
 
@@ -18,14 +17,7 @@ class Seagull extends WildUnit {
 
   var stars: Int = 0
 
-  def dead(): Boolean = {
-    if (Hp == 0) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
+
 
   def winStars(player: PlayerCharacter): Unit = {
     stars += (player.stars) / 2

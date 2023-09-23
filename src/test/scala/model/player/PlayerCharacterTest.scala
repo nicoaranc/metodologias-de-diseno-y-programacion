@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model
+package model.player
+
+import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall, WildUnit}
 
 import scala.util.Random
 
@@ -67,5 +69,48 @@ class PlayerCharacterTest extends munit.FunSuite {
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
+  }
+
+  test("A character obtains stars per chapter"){
+    val a: Int = character.stars
+    character.stars_perChapter(1)
+    assertEquals(a + (1/5) + 1, character.stars)
+    character.stars = a
+    character.stars_perChapter(11)
+    assertEquals(a + (11/5) + 1, character.stars)
+  }
+
+  test("A character earns victories winning a battle") {
+    val a: Int = character.victories
+    val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11))
+    character.victories_perBattle(player2)
+    assertEquals(a + 2, character.victories)
+    character.victories = a
+    val npc1: WildUnit = new RoboBall()
+    val npc2: WildUnit = new Seagull()
+    val npc3: WildUnit = new Chicken()
+    character.victories_perBattle(npc1)
+    character.victories_perBattle(npc2)
+    character.victories_perBattle(npc3)
+    assertEquals(a + 3,character.victories)
+  }
+
+  test("Count of stars when a player wins/loose against a WildUnit"){
+    character.stars = 14
+    val a : Int = character.stars
+    val npc1: WildUnit = new RoboBall()
+    npc1.stars = 4
+    val npc2: WildUnit = new Seagull()
+    npc2.stars = 2
+    val npc3: WildUnit = new Chicken()
+    character.dropStars_battle(npc1)
+    assertEquals(a/2,character.stars)
+    assertEquals(4 + a/2, npc1.stars)
+    character.stars = a
+    character.winStars_battle(npc2)
+    assertEquals(a + npc2.stars, character.stars)
+    character.stars = a
+    character.winStars_battle(npc3)
+    assertEquals(a,character.stars)
   }
 }

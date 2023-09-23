@@ -4,8 +4,8 @@ package model.wild
 import model.wild.Chicken
 import model.wild.RoboBall
 import model.wild.Seagull
+import cl.uchile.dcc.citric.model.player.PlayerCharacter
 import scala.util.Random
-import model.PlayerCharacter
 
 class WildUnitTest extends munit.FunSuite {
   val npc1: Chicken = new Chicken()

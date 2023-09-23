@@ -1,11 +1,11 @@
 package cl.uchile.dcc.citric
-package model
-import model.traits.Units
+package model.player
+
+import model.norma.Norma1
+import model.traits.{Norma, Units}
+import cl.uchile.dcc.citric.model.wild.WildUnit
 
 import scala.util.Random
-import model.traits.Norma
-
-import cl.uchile.dcc.citric.model.norma.Norma1
 
 /** The `PlayerCharacter` class represents a character or avatar in the game, encapsulating
   * several attributes such as health points, attack strength, defense capability,
@@ -49,10 +49,52 @@ class PlayerCharacter(val name: String,
               val randomNumberGenerator: Random = new Random()) extends Units{
   var Hp: Int = maxHp
   var stars: Int = 0
-  var norma: Norma = new Norma1()
+  var norma: Int = 1
+  var victories: Int = 0
+  private var Recovery: Boolean = false
+  private var Can_play: Boolean = true
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
+  }
+
+  def stars_perChapter(c: Int): Unit = {
+    stars += (c/5) + 1
+  }
+
+  def victories_perBattle(u: WildUnit): Unit = {
+    victories += 1
+  }
+
+  def victories_perBattle(u: PlayerCharacter): Unit = {
+    victories += 2
+  }
+
+  def dropStars_battle(u: WildUnit): Unit = {
+    u.stars += stars/2
+    stars = stars/2
+  }
+
+  def winStars_battle(u: WildUnit): Unit = {
+    stars += u.stars
+  }
+
+  if (Hp == 0){
+    Recovery = true
+  }
+
+  if (Recovery){
+    Can_play = false
+    var q: Int = 6
+    while(Recovery){
+      var dice: Int = rollDice()
+      if (dice >= q){
+        Can_play = true
+        q = 6
+        Recovery = false
+      }
+      q -= 1
+    }
   }
 }
