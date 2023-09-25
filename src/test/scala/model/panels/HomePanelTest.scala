@@ -10,23 +10,26 @@ class HomePanelTest extends munit.FunSuite {
     3, new Random(11))
   private val player2: PlayerCharacter = new PlayerCharacter("juan", 8, 6, 3,
     2, new Random(11))
-  private val owner = player2
 
-  def canStop(player: PlayerCharacter): Boolean = {
-    if (player == owner) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-  /** tests of the "stop" method */
-  test("player can stop"){
-    assertEquals(canStop(player2),true)
-  }
-  test("player can't stop"){
-    assertEquals(canStop(player1),false)
+  val panel1: home = new home()
+
+  /** test of the "addCharacter" method */
+  test("a player enter") {
+    assertEquals(panel1.characters.isEmpty, true)
+    panel1.addCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, false)
+    panel1.addCharacter(player1)
+    assertEquals(panel1.characters.size, 1)
   }
 
-  /** test of the norma_check method */
+  /** test of "removeCharacter" method */
+  test("a player leaves") {
+    panel1.addCharacter(player1)
+    panel1.addCharacter(player2)
+    panel1.removeCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, false)
+    panel1.removeCharacter(player2)
+    panel1.removeCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, true)
+  }
 }

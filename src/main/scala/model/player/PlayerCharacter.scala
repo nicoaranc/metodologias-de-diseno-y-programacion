@@ -81,7 +81,7 @@ class PlayerCharacter(val name: String,
     }
     if (Input to victories goal) {
       goal = (NormaArray[norma_id]).victories
-      kind_goal = "victories
+      kind_goal = "victories"
     }
   }
   */
@@ -118,14 +118,12 @@ class PlayerCharacter(val name: String,
     stars += u.stars
   }
 
-  def normaClear(): Unit = {
-
-  }
 
   /** when the player's Hp drops to 0, the player enters to the Recovery phase */
-  if (Hp == 0){
+  /** if (Hp == 0){
     Recovery = true
   }
+  */
 
   /** the process to leave the Recovery phase */
   /** if (Recovery){

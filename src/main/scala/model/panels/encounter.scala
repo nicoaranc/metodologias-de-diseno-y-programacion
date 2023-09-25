@@ -2,7 +2,10 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import model.traits.Panel
+import model.traits.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import model.wild.{RoboBall,Chicken,Seagull}
+import scala.util.Random
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,6 +17,7 @@ class encounter  extends Panel{
   /** "nextPanels" is the ArrayBuffer of the panels that they are next in
    * every direction of the panel */
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
+
 
   /** the "addCharacter" method of the class add the player to the ArrayBuffer of the players on the panel
    * if the player is not in te Panel yet, but if the player already is on the Panel, the method don't do
@@ -35,5 +39,17 @@ class encounter  extends Panel{
 
   /** Here is going to be the place that the method that
    * gives the Wild Unit to combat with the player */
-  /** def battle_with(): Wild_Unit */
+  def battle_with(): WildUnit = {
+    val a: Random = new Random()
+    var b: Int = a.nextInt(3) + 1
+    if (b == 1){
+      return new RoboBall()
+    }
+    else if (b == 2){
+      return new Chicken()
+    }
+    else{
+      return new Seagull()
+    }
+  }
 }

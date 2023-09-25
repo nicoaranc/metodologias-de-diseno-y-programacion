@@ -2,6 +2,7 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import model.panels.bonus
 import scala.util.Random
 
 class BonusPanelTest extends munit.FunSuite {
@@ -10,30 +11,40 @@ class BonusPanelTest extends munit.FunSuite {
   val player2: PlayerCharacter = new PlayerCharacter("Pedro",6, 7,
     4, 6, new Random(11))
 
-  def give_stars(player: PlayerCharacter): Unit = {
-    val roll: Int = player.rollDice()
-    val Norm: Int = player.norma
-    val a = roll * Norm
-    val b = roll * 3
-    if (a <= b) {
-      player.stars += a
-    }
-    else {
-      player.stars += b
-    }
+  player2.stars = 7
+
+  val panel1: bonus = new bonus()
+
+  /** test of the "addCharacter" method */
+  test("a player enter") {
+    assertEquals(panel1.characters.isEmpty, true)
+    panel1.addCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, false)
+    panel1.addCharacter(player1)
+    assertEquals(panel1.characters.size, 1)
   }
 
+  /** test of "removeCharacter" method */
+  test("a player leaves") {
+    panel1.addCharacter(player1)
+    panel1.addCharacter(player2)
+    panel1.removeCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, false)
+    panel1.removeCharacter(player2)
+    panel1.removeCharacter(player1)
+    assertEquals(panel1.characters.isEmpty, true)
+  }
   /** tests of "give_stars" method */
 
   test("First stars"){
     assertEquals(player1.stars, 0)
-    give_stars(player1)
+    panel1.give_stars(player1)
     assertEquals(player1.stars != 0, true)
   }
 
   test("Giving more stars"){
     assertEquals(player2.stars, 7)
-    give_stars(player2)
+    panel1.give_stars(player2)
     assertEquals(player2.stars != 7, true)
   }
 }

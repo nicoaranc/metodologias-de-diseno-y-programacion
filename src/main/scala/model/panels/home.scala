@@ -6,7 +6,7 @@ import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
-class home (val owner: PlayerCharacter) extends Panel {
+class home  extends Panel {
 
   /** "characters" is the ArrayBuffer of the players that are on the Panel */
   val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
@@ -35,7 +35,7 @@ class home (val owner: PlayerCharacter) extends Panel {
 
   /** the "stop" method of the class is the function that verifies if the current player over the panel is the
    * owner of the same panel, in the case it is, the owner can stop on the panel and activate it, but if the
-   * player isn't the owner of the panel, the player must continues if it have more movements to do */
+   * player isn't the owner of the panel, the player must continues if it have more movements to do
   def canStop(player: PlayerCharacter): Boolean = {
     if (player == owner) {
       return true
@@ -44,8 +44,9 @@ class home (val owner: PlayerCharacter) extends Panel {
       return false
     }
   }
+   */
 
-  /** the method of "norma_check" checks if the player reached the goal to increase the norma level */
+  /** the method of "norma_check" checks if the player reached the goal to increase the norma level
   def norma_check(player: PlayerCharacter): Boolean = {
     if (player.kind_goal == "stars"){
       if (player.stars >= player.goal){
@@ -64,7 +65,10 @@ class home (val owner: PlayerCharacter) extends Panel {
       }
     }
   }
+  */
 
+  /** norma_Clear checks if the player already done the norma_check
+   * with positive results, increases his norma level
   def norma_Clear(player: PlayerCharacter): Unit = {
     val a: Int = player.norma_id
     if (norma_check(player)){
@@ -72,5 +76,6 @@ class home (val owner: PlayerCharacter) extends Panel {
       player.norma_id += 1
     }
   }
+  */
 
 }
