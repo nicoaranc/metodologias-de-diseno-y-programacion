@@ -60,8 +60,8 @@ class PlayerCharacter(val name: String,
   var norma: Norma = n1
   var norma_id: Int = 1
   var victories: Int = 0
-  private var Recovery: Boolean = false
-  private var Can_play: Boolean = true
+  var Recovery: Boolean = false
+  var Can_play: Boolean = true
   var NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
   NormaArray.addOne(n1)
   NormaArray.addOne(n2)
@@ -116,6 +116,13 @@ class PlayerCharacter(val name: String,
   /** when the player defeats a Wild Unit, wins the mount of stars that the Wild Unit have */
   def winStars_battle(u: WildUnit): Unit = {
     stars += u.stars
+  }
+
+  def defeated(): Unit = {
+    if (Hp == 0){
+      Recovery = true
+      Can_play = false
+    }
   }
 
 

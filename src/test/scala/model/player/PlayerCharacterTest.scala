@@ -18,7 +18,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   private val attack = 1
   private val defense = 1
   private val evasion = 1
-  private val randomNumberGenerator = new Random(11)
+  private var randomNumberGenerator : Random = _
   private var stars = 0
   private var norma = 1
   /* Add any other constants you need here... */
@@ -34,6 +34,7 @@ class PlayerCharacterTest extends munit.FunSuite {
 
   // This method is executed before each `test(...)` method.
   override def beforeEach(context: BeforeEach): Unit = {
+    randomNumberGenerator = new Random(11)
     character = new PlayerCharacter(
       name,
       maxHp,
@@ -82,6 +83,16 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(a + (11/5) + 1, character.stars)
   }
   */
+
+  test("The player enters to the Recovery phase") {
+    character.defeated()
+    assertEquals(character.Recovery, false)
+    assertEquals(character.Can_play, true)
+    character.Hp = 0
+    character.defeated()
+    assertEquals(character.Recovery,true)
+    assertEquals(character.Can_play, false)
+  }
 
   test("A character earns victories winning a battle") {
     val a: Int = character.victories
