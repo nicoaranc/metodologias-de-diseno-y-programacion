@@ -1,10 +1,7 @@
 package cl.uchile.dcc.citric
-package model.wild
+package model.traits
 
-import model.player.PlayerCharacter
-import model.traits.Units
-
-abstract class WildUnit extends Units{
+trait WildUnit extends Units{
   var Hp: Int
 
   val maxHp: Int

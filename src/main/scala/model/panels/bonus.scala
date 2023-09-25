@@ -37,7 +37,7 @@ class bonus extends Panel{
    * the player */
   def give_stars(player: PlayerCharacter): Unit = {
     val roll: Int = player.rollDice()
-    val Norm: Int = player.norma
+    val Norm: Int = player.norma_id
     val a = roll * Norm
     val b = roll * 3
     if (a <= b){

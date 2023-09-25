@@ -4,7 +4,6 @@ package model.norma
 import model.traits.Norma
 
 class Norma6 extends Norma{
-  val id = 6
 
   val stars_goal = 200
 

@@ -2,6 +2,7 @@ package cl.uchile.dcc.citric
 package model.wild
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import cl.uchile.dcc.citric.model.traits.WildUnit
 
 class RoboBall extends WildUnit {
 

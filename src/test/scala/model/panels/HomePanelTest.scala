@@ -12,7 +12,7 @@ class HomePanelTest extends munit.FunSuite {
     2, new Random(11))
   private val owner = player2
 
-  def stop(player: PlayerCharacter): Boolean = {
+  def canStop(player: PlayerCharacter): Boolean = {
     if (player == owner) {
       return true
     }
@@ -22,10 +22,10 @@ class HomePanelTest extends munit.FunSuite {
   }
   /** tests of the "stop" method */
   test("player can stop"){
-    assertEquals(stop(player2),true)
+    assertEquals(canStop(player2),true)
   }
   test("player can't stop"){
-    assertEquals(stop(player1),false)
+    assertEquals(canStop(player1),false)
   }
 
   /** test of the norma_check method */

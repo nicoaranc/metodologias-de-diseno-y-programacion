@@ -1,7 +1,8 @@
 package cl.uchile.dcc.citric
 package model.player
 
-import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall, WildUnit}
+import cl.uchile.dcc.citric.model.traits.WildUnit
+import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
 
 import scala.util.Random
 
