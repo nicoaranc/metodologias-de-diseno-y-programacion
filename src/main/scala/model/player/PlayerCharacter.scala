@@ -134,13 +134,7 @@ class PlayerCharacter(val name: String,
       Can_play = false
     }
   }
-
-
-  /** when the player's Hp drops to 0, the player enters to the Recovery phase */
-  /** if (Hp == 0){
-    Recovery = true
-  }
-  */
+  
 
   /** the process to leave the Recovery phase */
   /** if (Recovery){
