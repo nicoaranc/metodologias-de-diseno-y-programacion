@@ -36,6 +36,14 @@ class DropPanelTest extends munit.FunSuite {
     assertEquals(panel1.characters.isEmpty, true)
   }
 
+  test("Adding panels next to the current Panel") {
+    assertEquals(panel1.nextPanels.isEmpty, true)
+    val p1: drop = new drop()
+    panel1.addPanel(p1)
+    assertEquals(panel1.nextPanels.isEmpty, false)
+  }
+
+
   /** test of the "remove_stars" method */
   test("players lost their stars"){
     assertEquals(player1.stars, 4)

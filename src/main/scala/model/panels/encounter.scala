@@ -37,8 +37,14 @@ class encounter  extends Panel{
     }
   }
 
-  /** Here is going to be the place that the method that
-   * gives the Wild Unit to combat with the player */
+  /** the addPanel method adds a Panel to the list of nextPanels */
+  def addPanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) == -1) {
+      nextPanels.addOne(panel)
+    }
+  }
+
+  /** This method returns a Random Wild Unit to fight */
   def battle_with(): WildUnit = {
     val a: Random = new Random()
     var b: Int = a.nextInt(3) + 1

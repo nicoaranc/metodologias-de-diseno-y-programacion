@@ -34,8 +34,15 @@ class BonusPanelTest extends munit.FunSuite {
     panel1.removeCharacter(player1)
     assertEquals(panel1.characters.isEmpty, true)
   }
-  /** tests of "give_stars" method */
 
+  test("Adding panels next to the current Panel") {
+    assertEquals(panel1.nextPanels.isEmpty, true)
+    val p1: bonus = new bonus()
+    panel1.addPanel(p1)
+    assertEquals(panel1.nextPanels.isEmpty, false)
+  }
+
+  /** tests of "give_stars" method */
   test("First stars"){
     assertEquals(player1.stars, 0)
     panel1.give_stars(player1)

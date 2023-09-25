@@ -33,6 +33,13 @@ class bonus extends Panel{
     }
   }
 
+  /** the addPanel method adds a Panel to the list of nextPanels */
+  def addPanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) == -1) {
+      nextPanels.addOne(panel)
+    }
+  }
+
   /** the "give_stars" method of the class gives the minimum quantity of stars between roll*norma or roll*3 to
    * the player */
   def give_stars(player: PlayerCharacter): Unit = {

@@ -48,6 +48,7 @@ class PlayerCharacter(val name: String,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random()) extends Units{
 
+  /** instances of each Norma */
   private val n1: Norma = new Norma1()
   private val n2: Norma = new Norma2()
   private val n3: Norma = new Norma3()
@@ -55,13 +56,20 @@ class PlayerCharacter(val name: String,
   private val n5: Norma = new Norma5()
   private val n6: Norma = new Norma6()
 
+  /** current Hp of the player, at the beginning of the game is the maxHp */
   var Hp: Int = maxHp
+  /** current stars of the player, at the beginning of the game is 0 */
   var stars: Int = 0
+  /** current Norma of the player, at the beginning of the game is 1 */
   var norma: Norma = n1
   var norma_id: Int = 1
+  /** current victories of the player, at the beginning of the game is 0 */
   var victories: Int = 0
+  /** current Recovery status */
   var Recovery: Boolean = false
+  /** current state of playing */
   var Can_play: Boolean = true
+  /** Array that contains all the instances of each Norma */
   var NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
   NormaArray.addOne(n1)
   NormaArray.addOne(n2)
@@ -70,6 +78,7 @@ class PlayerCharacter(val name: String,
   NormaArray.addOne(n5)
   NormaArray.addOne(n6)
 
+  /** the goal to reach the next level of Norma and the kind of the goal */
   var goal: Int = 0
   var kind_goal: String = ""
 
@@ -118,6 +127,7 @@ class PlayerCharacter(val name: String,
     stars += u.stars
   }
 
+  /** when the player is defeated, teh player enters to the Recovery phase */
   def defeated(): Unit = {
     if (Hp == 0){
       Recovery = true

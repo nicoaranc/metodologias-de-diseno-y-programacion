@@ -32,4 +32,11 @@ class HomePanelTest extends munit.FunSuite {
     panel1.removeCharacter(player1)
     assertEquals(panel1.characters.isEmpty, true)
   }
+
+  test("Adding panels next to the current Panel") {
+    assertEquals(panel1.nextPanels.isEmpty, true)
+    val p1: home = new home()
+    panel1.addPanel(p1)
+    assertEquals(panel1.nextPanels.isEmpty, false)
+  }
 }

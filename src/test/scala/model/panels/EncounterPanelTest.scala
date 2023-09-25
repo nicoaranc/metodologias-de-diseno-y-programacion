@@ -38,6 +38,13 @@ class EncounterPanelTest extends munit.FunSuite {
     assertEquals(panel1.characters.isEmpty, true)
   }
 
+  test("Adding panels next to the current Panel") {
+    assertEquals(panel1.nextPanels.isEmpty, true)
+    val p1: encounter = new encounter()
+    panel1.addPanel(p1)
+    assertEquals(panel1.nextPanels.isEmpty, false)
+  }
+
   test("battle against a random Wild Unit"){
     val npc: WildUnit = panel1.battle_with()
     assertEquals(npc != null, true)

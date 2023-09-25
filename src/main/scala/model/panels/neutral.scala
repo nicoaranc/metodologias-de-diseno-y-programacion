@@ -32,4 +32,11 @@ class neutral extends Panel {
       characters.remove(index)
     }
   }
+
+  /** the addPanel method adds a Panel to the list of nextPanels */
+  def addPanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) == -1){
+      nextPanels.addOne(panel)
+    }
+  }
 }

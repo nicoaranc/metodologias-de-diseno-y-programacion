@@ -33,6 +33,13 @@ class home  extends Panel {
     }
   }
 
+  /** the addPanel method adds a Panel to the list of nextPanels */
+  def addPanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) == -1) {
+      nextPanels.addOne(panel)
+    }
+  }
+
   /** the "stop" method of the class is the function that verifies if the current player over the panel is the
    * owner of the same panel, in the case it is, the owner can stop on the panel and activate it, but if the
    * player isn't the owner of the panel, the player must continues if it have more movements to do
