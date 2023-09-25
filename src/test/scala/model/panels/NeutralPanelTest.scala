@@ -15,8 +15,6 @@ class NeutralPanelTest extends munit.FunSuite {
     2, new Random(11))
 
   private val panel1: neutral = new neutral()
-  private val panel2: neutral = new neutral()
-  private var nextPanels: ArrayBuffer[Panel] = ArrayBuffer[Panel](panel1, panel2)
 
 
   /** the test of the methods of addCharacter and removeCharacter are going to take place here,

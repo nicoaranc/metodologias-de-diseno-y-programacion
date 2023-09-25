@@ -18,9 +18,4 @@ class RoboBall extends WildUnit {
 
   var stars: Int = 0
 
-
-
-  def winStars(player: PlayerCharacter): Unit = {
-    stars += (player.stars) / 2
-  }
 }
