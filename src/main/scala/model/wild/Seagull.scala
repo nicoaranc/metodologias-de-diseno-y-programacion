@@ -6,6 +6,8 @@ import cl.uchile.dcc.citric.model.traits.WildUnit
 
 class Seagull extends WildUnit {
 
+  /** Seagull stats */
+
   val maxHp: Int = 3
 
   var Hp: Int = maxHp

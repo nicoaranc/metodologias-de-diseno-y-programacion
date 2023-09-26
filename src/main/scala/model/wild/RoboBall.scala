@@ -6,6 +6,8 @@ import cl.uchile.dcc.citric.model.traits.WildUnit
 
 class RoboBall extends WildUnit {
 
+  /** RoboBall stats */
+
   val maxHp: Int = 3
 
   var Hp: Int = maxHp
