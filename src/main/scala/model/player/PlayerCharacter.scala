@@ -56,6 +56,14 @@ class PlayerCharacter(val name: String,
   private val n5: Norma = new Norma5()
   private val n6: Norma = new Norma6()
 
+  def _n1: Norma = n1
+
+  def setn1(newN: Norma): Unit = {
+    _n1
+  }
+
+
+
   /** current Hp of the player, at the beginning of the game is the maxHp */
   var Hp: Int = maxHp
   /** current stars of the player, at the beginning of the game is 0 */
