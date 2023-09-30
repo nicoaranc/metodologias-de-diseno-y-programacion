@@ -10,7 +10,11 @@ class RoboBall extends WildUnit {
 
   val maxHp: Int = 3
 
-  var Hp: Int = maxHp
+  private var _Hp: Int = maxHp
+  def Hp: Int = _Hp
+  def Hp_=(NewHp: Int): Unit = {
+    _Hp = NewHp
+  }
 
   val attack: Int = -1
 
@@ -18,6 +22,10 @@ class RoboBall extends WildUnit {
 
   val evasion: Int = -1
 
-  var stars: Int = 0
+  private var _stars: Int = 0
+  def stars: Int = _stars
+  def stars_=(NewStars: Int): Unit = {
+    _stars = NewStars
+  }
 
 }

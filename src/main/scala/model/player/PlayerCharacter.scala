@@ -56,29 +56,49 @@ class PlayerCharacter(val name: String,
   private val n5: Norma = new Norma5()
   private val n6: Norma = new Norma6()
 
-  def _n1: Norma = n1
-
-  def setn1(newN: Norma): Unit = {
-    _n1
-  }
-
-
-
   /** current Hp of the player, at the beginning of the game is the maxHp */
-  var Hp: Int = maxHp
+  private var _Hp: Int = maxHp
+  def Hp: Int = _Hp
+  def Hp_=(NewHp: Int): Unit = {
+    _Hp = NewHp
+  }
   /** current stars of the player, at the beginning of the game is 0 */
-  var stars: Int = 0
+  private var _stars: Int = 0
+  def stars: Int = _stars
+  def stars_=(NewStars: Int): Unit = {
+    _stars = NewStars
+  }
   /** current Norma of the player, at the beginning of the game is 1 */
-  var norma: Norma = n1
-  var norma_id: Int = 1
+  private var _norma: Norma = n1
+  def norma: Norma = _norma
+  def norma_=(NewNorma: Norma): Unit = {
+    _norma = NewNorma
+  }
+  private var _norma_id: Int = 1
+  def norma_id: Int = _norma_id
+  def norma_id_=(NewNormaId: Int): Unit = {
+    _norma_id = NewNormaId
+  }
   /** current victories of the player, at the beginning of the game is 0 */
-  var victories: Int = 0
+  private var _victories: Int = 0
+  def victories: Int = _victories
+  def victories_=(NewVictories: Int): Unit = {
+    _victories = NewVictories
+  }
   /** current Recovery status */
-  var Recovery: Boolean = false
+  private var _Recovery: Boolean = false
+  def Recovery: Boolean = _Recovery
+  def Recovery_=(NewRecovery: Boolean): Unit = {
+    _Recovery = NewRecovery
+  }
   /** current state of playing */
-  var Can_play: Boolean = true
+  private var _Can_play: Boolean = true
+  def Can_play: Boolean = _Can_play
+  def Can_play_=(NewCanPlay: Boolean): Unit = {
+    _Can_play = NewCanPlay
+  }
   /** Array that contains all the instances of each Norma */
-  var NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
+  val NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
   NormaArray.addOne(n1)
   NormaArray.addOne(n2)
   NormaArray.addOne(n3)
@@ -87,8 +107,16 @@ class PlayerCharacter(val name: String,
   NormaArray.addOne(n6)
 
   /** the goal to reach the next level of Norma and the kind of the goal */
-  var goal: Int = 0
-  var kind_goal: String = ""
+  private var _goal: Int = 0
+  def goal: Int = _goal
+  def goal_=(NewGoal: Int): Unit = {
+    _goal = NewGoal
+  }
+  private var _kind_goal: String = ""
+  def kind_goal: String = _kind_goal
+  def kind_goal_=(NewKindGoal: String): Unit = {
+    _kind_goal = NewKindGoal
+  }
 
   /**
   def def_objective(): Unit = {
