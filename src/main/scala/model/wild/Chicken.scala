@@ -28,5 +28,7 @@ class Chicken extends WildUnit{
     _stars = NewStars
   }
 
+  var alive = true
+
 
 }

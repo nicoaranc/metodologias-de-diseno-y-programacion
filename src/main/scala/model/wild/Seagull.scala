@@ -28,4 +28,6 @@ class Seagull extends WildUnit {
     _stars = NewStars
   }
 
+  var alive = true
+
 }

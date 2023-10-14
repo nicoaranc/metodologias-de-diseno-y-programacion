@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citric
 package model.traits
 
+import model.player.PlayerCharacter
+
 trait Units {
   var Hp: Int
 
@@ -13,4 +15,10 @@ trait Units {
   val evasion: Int
 
   var stars: Int
+
+  def attacking(u: PlayerCharacter): Int
+
+  def defending(a: Int): Unit
+
+  def evading(a: Int): Unit
 }

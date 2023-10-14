@@ -127,4 +127,41 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.winStars_battle(npc3)
     assertEquals(a,character.stars)
   }
+
+  test("Attacking a WildUnit"){
+    val npc: WildUnit = new RoboBall()
+    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val aux: Int = player.attacking(npc)
+    assertEquals(aux != 0, true)
+  }
+
+  test("Attacking a Player"){
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val play2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11))
+    val play3 = new PlayerCharacter("Diego", 0, 1, 1, -1, new Random(11))
+    var aux: Int = play1.attacking(play2)
+    assertEquals(aux != 0, true)
+    play3.defeated()
+    aux = play1.attacking(play3)
+    assertEquals(aux == 0, true)
+  }
+
+  test("Defending"){
+    var a: Int = 1
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    play1.defending(a)
+    assertEquals(play1.Hp, 4)
+  }
+
+  test("Evading"){
+    var a: Int = 0
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    play1.evading(a)
+    assertEquals(play1.Hp, 5)
+    a = 10000
+    play1.evading(a)
+    assertEquals(play1.Hp, 0)
+  }
+
+
 }

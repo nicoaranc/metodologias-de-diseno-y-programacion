@@ -173,17 +173,78 @@ class PlayerCharacter(val name: String,
   
 
   /** the process to leave the Recovery phase */
+
   /** if (Recovery){
-    Can_play = false
-    var q: Int = 6
-    while(Recovery){
-      var dice: Int = rollDice()
-      if (dice >= q){
-        Can_play = true
-        q = 6
-        Recovery = false
+   * Can_play = false
+   * var q: Int = 6
+   * while(Recovery){
+   * var dice: Int = rollDice()
+   * if (dice >= q){
+   * Can_play = true
+   * q = 6
+   * Recovery = false
+   * }
+   * q -= 1 // the condition to leave the Recovery phase decreases 1 when pass one turn
+   * }
+   * } */
+
+  def attacking(u: PlayerCharacter): Int = {
+    if (Can_play && u.Can_play){
+        val rollATK = rollDice()
+        return rollATK + attack
       }
-      q -= 1 // the condition to leave the Recovery phase decreases 1 when pass one turn
+    else{
+      return 0
     }
-  } */
+  }
+
+  def attacking(u: WildUnit): Int = {
+    if (Can_play && !u.dead()) {
+        val rollATK = rollDice()
+        val aux = rollATK + attack
+        if (aux >= 0) {
+          return aux
+        }
+        else{
+          return 0;
+        }
+
+    }
+    else{
+      return 0
+    }
+  }
+
+  override def defending(a: Int): Unit = {
+    val rollDEF = rollDice()
+    val receive = a - (rollDEF + defense)
+    if (receive < 1){
+      Hp -= 1
+    }
+    else{
+      if (receive >= Hp){
+        Hp = 0
+      }
+      else{
+        Hp -= receive
+      }
+    }
+  }
+
+  override def evading(a: Int): Unit = {
+    val rollEVA = rollDice()
+    val aux = rollEVA + evasion
+    if (aux > a){
+      Hp = Hp
+    }
+    else{
+      if (a > Hp){
+        Hp = 0
+      }
+      else{
+        Hp -= a
+      }
+    }
+  }
+
 }

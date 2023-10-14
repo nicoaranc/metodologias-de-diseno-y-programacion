@@ -28,4 +28,6 @@ class RoboBall extends WildUnit {
     _stars = NewStars
   }
 
+  var alive = true
+
 }
