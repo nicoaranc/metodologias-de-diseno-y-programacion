@@ -15,34 +15,8 @@ class drop extends Panel{
    * every direction of the panel */
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
-  /** the "addCharacter" method of the class add the player to the ArrayBuffer of the players on the panel
-   * if the player is not in te Panel yet, but if the player already is on the Panel, the method don't do
-   * anything */
-  def addCharacter(player: PlayerCharacter): Unit = {
-    if (characters.indexOf(player) == -1) {
-      characters.addOne(player)
-    }
-  }
 
-  /** the "removeCharacter" method of the class removes the player if it is on the ArrayBuffer of the players
-   * on the Panel, but if the player is not on the Panel, the method don't do anything */
-  def removeCharacter(player: PlayerCharacter): Unit = {
-    if (characters.indexOf(player) != -1) {
-      val index: Int = characters.indexOf(player)
-      characters.remove(index)
-    }
-  }
-
-  /** the addPanel method adds a Panel to the list of nextPanels */
-  def addPanel(panel: Panel): Unit = {
-    if (nextPanels.indexOf(panel) == -1) {
-      nextPanels.addOne(panel)
-    }
-  }
-
-  /** the "remove_stars" method drops the quantity of roll*norma from the player, if this quantity is higher than
-   * the current count of stars of the player, the count of stars become to zero */
-  def remove_stars(player: PlayerCharacter): Unit = {
+  def apply(player: PlayerCharacter): Unit = {
     val q: Int = player.rollDice() * player.norma_id
     if (q >= player.stars){
       player.stars = 0

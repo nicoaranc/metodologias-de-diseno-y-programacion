@@ -45,13 +45,13 @@ class BonusPanelTest extends munit.FunSuite {
   /** tests of "give_stars" method */
   test("First stars"){
     assertEquals(player1.stars, 0)
-    panel1.give_stars(player1)
+    panel1.apply(player1)
     assertEquals(player1.stars != 0, true)
   }
 
   test("Giving more stars"){
     assertEquals(player2.stars, 7)
-    panel1.give_stars(player2)
+    panel1.apply(player2)
     assertEquals(player2.stars != 7, true)
   }
 }

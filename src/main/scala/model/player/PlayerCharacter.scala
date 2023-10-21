@@ -1,8 +1,9 @@
 package cl.uchile.dcc.citric
 package model.player
-
+import model.wild.{Seagull,RoboBall,Chicken}
 import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
-import model.traits.{Norma, Units, WildUnit}
+import model.traits.{Norma, Units, WildUnit, Panel}
+
 
 import scala.util.Random
 import scala.collection.mutable.ArrayBuffer
@@ -46,7 +47,8 @@ class PlayerCharacter(val name: String,
               val attack: Int,
               val defense: Int,
               val evasion: Int,
-              val randomNumberGenerator: Random = new Random()) extends Units{
+              val randomNumberGenerator: Random = new Random(),
+              val panelOwned: Panel) extends Units{
 
   /** instances of each Norma */
   private val n1: Norma = new Norma1()
@@ -136,11 +138,6 @@ class PlayerCharacter(val name: String,
     randomNumberGenerator.nextInt(6) + 1
   }
 
-  /** The player wins some stars at the beginning of the turn
-  def stars_perChapter(c: Int): Unit = {
-    stars += (c/5) + 1
-  }
-   */
 
   /** when the player defeats a Wild Unit wins one victory to the count */
   def victories_perBattle(u: WildUnit): Unit = {
@@ -158,9 +155,16 @@ class PlayerCharacter(val name: String,
     stars = stars/2
   }
 
-  /** when the player defeats a Wild Unit, wins the mount of stars that the Wild Unit have */
-  def winStars_battle(u: WildUnit): Unit = {
-    stars += u.stars
+  def winStars_battle(u: Chicken): Unit = {
+    stars += u.stars + 3
+  }
+
+  def winStars_battle(u: RoboBall): Unit = {
+    stars += u.stars + 2
+  }
+
+  def winStars_battle(u: Seagull): Unit = {
+    stars += u.stars + 2
   }
 
   /** when the player is defeated, teh player enters to the Recovery phase */
@@ -172,21 +176,6 @@ class PlayerCharacter(val name: String,
   }
   
 
-  /** the process to leave the Recovery phase */
-
-  /** if (Recovery){
-   * Can_play = false
-   * var q: Int = 6
-   * while(Recovery){
-   * var dice: Int = rollDice()
-   * if (dice >= q){
-   * Can_play = true
-   * q = 6
-   * Recovery = false
-   * }
-   * q -= 1 // the condition to leave the Recovery phase decreases 1 when pass one turn
-   * }
-   * } */
 
   def attacking(u: PlayerCharacter): Int = {
     if (Can_play && u.Can_play){

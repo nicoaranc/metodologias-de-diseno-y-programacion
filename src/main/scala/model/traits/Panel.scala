@@ -39,7 +39,11 @@ trait Panel {
     *
     * @param player The player character to add to this panel.
     */
-  def addCharacter(player: PlayerCharacter): Unit
+  def addCharacter(player: PlayerCharacter): Unit = {
+    if (characters.indexOf(player) == -1) {
+      characters.addOne(player)
+    }
+  }
 
   /** Removes a character from the list of characters currently on this panel.
     *
@@ -47,7 +51,24 @@ trait Panel {
     *
     * @param player The player character to remove from this panel.
     */
-  def removeCharacter(player: PlayerCharacter): Unit
+  def removeCharacter(player: PlayerCharacter): Unit = {
+    if (characters.indexOf(player) != -1) {
+      val index: Int = characters.indexOf(player)
+      characters.remove(index)
+    }
+  }
 
-  def addPanel(panel: Panel): Unit
+  def addPanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) == -1) {
+      nextPanels.addOne(panel)
+    }
+  }
+
+  def removePanel(panel: Panel): Unit = {
+    if (nextPanels.indexOf(panel) != -1){
+      val index: Int = nextPanels.indexOf(panel)
+      nextPanels.remove(index)
+    }
+  }
+
 }

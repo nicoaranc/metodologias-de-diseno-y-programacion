@@ -28,7 +28,12 @@ class Chicken extends WildUnit{
     _stars = NewStars
   }
 
-  var alive = true
+  private var _alive: Boolean = true
 
+  def alive: Boolean = _alive
+
+  def alive_(NewBool: Boolean): Unit = {
+    _alive = NewBool
+  }
 
 }
