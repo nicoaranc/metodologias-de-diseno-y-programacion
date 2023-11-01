@@ -3,6 +3,7 @@ package model.player
 import model.wild.{Seagull,RoboBall,Chicken}
 import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
 import model.traits.{Norma, Units, WildUnit, Panel}
+import model.panels.home
 
 
 import scala.util.Random
@@ -234,6 +235,17 @@ class PlayerCharacter(val name: String,
         Hp -= a
       }
     }
+  }
+
+  /** norma_Clear checks if the player already done the norma_check
+   * with positive results, increases his norma level */
+  def norma_Clear(panel: home): Unit = {
+    if (panel.norma_check(this)){
+      val a: Int = norma_id
+      norma = NormaArray(a)
+      norma_id += 1
+    }
+
   }
 
 }

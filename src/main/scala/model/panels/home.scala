@@ -53,7 +53,7 @@ class home  extends Panel {
 
 
   /** norma_Clear checks if the player already done the norma_check
-   * with positive results, increases his norma level
+   * with positive results, increases his norma level */
   def norma_Clear(player: PlayerCharacter): Unit = {
     val a: Int = player.norma_id
     if (norma_check(player)){
@@ -61,6 +61,6 @@ class home  extends Panel {
       player.norma_id += 1
     }
   }
-  */
+
 
 }
