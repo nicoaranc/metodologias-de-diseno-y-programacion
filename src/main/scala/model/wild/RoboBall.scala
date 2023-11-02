@@ -28,13 +28,7 @@ class RoboBall extends WildUnit {
     _stars = NewStars
   }
 
-  private var _alive: Boolean = true
 
-  def alive: Boolean = _alive
-
-  def alive_(NewBool: Boolean): Unit = {
-    _alive = NewBool
-  }
 
   def winStars(p: PlayerCharacter) = {
     val a: Int = p.stars / 2
@@ -43,9 +37,6 @@ class RoboBall extends WildUnit {
   }
 
   override def defending(a: Int): Unit = {
-    if (a == 0) {
-      return
-    }
     val rollDEF = rollDice_wu()
     val receive = a - (rollDEF + defense)
 
@@ -65,9 +56,6 @@ class RoboBall extends WildUnit {
   }
 
   override def evading(a: Int): Unit = {
-    if (a == 0) {
-      return
-    }
     val rollEVA = rollDice_wu()
     val aux = rollEVA + evasion
     if (aux > a) {

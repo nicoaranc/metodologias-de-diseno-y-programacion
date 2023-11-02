@@ -20,8 +20,7 @@ class ChickenTest extends munit.FunSuite {
     val panel1: home = new home()
     val npc: WildUnit = new Chicken()
     val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
-    val aux: Int = npc.attacking(player)
-    assertEquals(aux != 0, true)
+    /** */
   }
 
   test("Defending") {

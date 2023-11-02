@@ -16,7 +16,11 @@ trait Units {
 
   var stars: Int
 
-  def attacking(u: PlayerCharacter): Int
+  def winStars(p: PlayerCharacter): Unit
+
+  def can_attack(u: PlayerCharacter): Int
+
+  def attacking(): Int
 
   def defending(a: Int): Unit
 

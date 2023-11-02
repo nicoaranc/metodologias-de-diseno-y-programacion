@@ -19,10 +19,11 @@ class drop extends Panel{
   def apply(player: PlayerCharacter): Unit = {
     val q: Int = player.rollDice() * player.norma_id
     if (q >= player.stars){
-      player.stars = 0
+      player.stars_=( 0)
     }
     else{
-      player.stars -= q
+      val a: Int = player.stars - q
+      player.stars_=(a)
     }
   }
 }

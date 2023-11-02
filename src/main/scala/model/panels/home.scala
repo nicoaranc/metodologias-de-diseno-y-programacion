@@ -32,7 +32,7 @@ class home  extends Panel {
   }
 
   /** the method of "norma_check" checks if the player reached the goal to increase the norma level */
-  def norma_check(player: PlayerCharacter): Boolean = {
+  def apply(player: PlayerCharacter): Boolean = {
     if (player.kind_goal == "stars"){
       if (player.stars >= player.goal){
         return true
@@ -52,15 +52,6 @@ class home  extends Panel {
   }
 
 
-  /** norma_Clear checks if the player already done the norma_check
-   * with positive results, increases his norma level */
-  def norma_Clear(player: PlayerCharacter): Unit = {
-    val a: Int = player.norma_id
-    if (norma_check(player)){
-      player.norma = player.NormaArray(a)
-      player.norma_id += 1
-    }
-  }
 
 
 }

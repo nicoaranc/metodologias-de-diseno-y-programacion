@@ -2,6 +2,9 @@ package cl.uchile.dcc.citric
 package model.traits
 
 import model.player.PlayerCharacter
+
+import cl.uchile.dcc.citric.exceptions.CannotAttack
+
 import scala.util.Random
 
 trait WildUnit extends Units{
@@ -33,19 +36,23 @@ trait WildUnit extends Units{
     random_wu.nextInt(6) + 1
   }
 
-  def attacking(u: PlayerCharacter): Int = {
+  def can_attack(u: PlayerCharacter): Int = {
     if (u.Can_play){
+      attacking()
+    }
+    else{
+      throw new CannotAttack("The opponent player can't attack")
+    }
+  }
+
+  def attacking(): Int = {
       val rollATK = rollDice_wu()
-      if (rollATK + attack >= 0){
+      if (rollATK + attack > 0){
         return rollATK + attack
       }
       else{
         return 0
       }
-    }
-    else{
-      return 0
-    }
   }
 
 

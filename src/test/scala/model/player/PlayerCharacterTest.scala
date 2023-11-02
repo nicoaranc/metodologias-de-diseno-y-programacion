@@ -3,6 +3,7 @@ package model.player
 import model.panels.home
 import cl.uchile.dcc.citric.model.traits.WildUnit
 import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
+import exceptions.CannotAttack
 
 import scala.util.Random
 
@@ -75,82 +76,185 @@ class PlayerCharacterTest extends munit.FunSuite {
     }
   }
 
+  test("The player can/can't stop on the Home Panel") {
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
+
+    val panel2: home = new home()
+    val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel2)
+
+    val panel3: home = new home()
+
+    assertEquals(player1.canStop(panel1), true)
+    assertEquals(player1.canStop(panel2), false)
+    assertEquals(player1.canStop(panel3), false)
+    assertEquals(player2.canStop(panel2), true)
+    assertEquals(player2.canStop(panel1), false)
+    assertEquals(player2.canStop(panel3), false)
+
+  }
 
   test("The player enters to the Recovery phase") {
-    character.defeated()
-    assertEquals(character.Recovery, false)
-    assertEquals(character.Can_play, true)
-    character.Hp = 0
-    character.defeated()
-    assertEquals(character.Recovery,true)
-    assertEquals(character.Can_play, false)
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
+
+    assertEquals(player1.Recovery, false)
+    assertEquals(player1.Can_play, true)
+
+    player1.Hp_=(0)
+    player1.defeated()
+    assertEquals(player1.Recovery, true)
+    assertEquals(player1.Can_play, false)
   }
 
   test("A character earns victories winning a battle") {
     val panel1: home = new home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel1)
+
     val panel2: home = new home()
-    val a: Int = player1.victories
     val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel2)
+
+    val a: Int = player1.victories
     player1.victories_perBattle(player2)
     assertEquals(a + 2, player1.victories)
     player1.victories = a
+
     val npc1: WildUnit = new RoboBall()
     val npc2: WildUnit = new Seagull()
     val npc3: WildUnit = new Chicken()
+
     player1.victories_perBattle(npc1)
     player1.victories_perBattle(npc2)
     player1.victories_perBattle(npc3)
+
     assertEquals(a + 3,player1.victories)
   }
 
   test("Count of stars when a player wins/loose against a WildUnit"){
-    character.stars = 14
-    val a : Int = character.stars
-    val npc1: RoboBall = new RoboBall()
-    npc1.stars = 4
-    val npc2: Seagull = new Seagull()
-    npc2.stars = 2
-    val npc3: Chicken = new Chicken()
-    character.dropStars_battle(npc1)
-    assertEquals(a/2,character.stars)
-    assertEquals(4 + a/2, npc1.stars)
-    character.stars = a
-    character.winStars_battle(npc2)
-    assertEquals(a + npc2.stars, character.stars)
-    character.stars = a
-    character.winStars_battle(npc3)
-    assertEquals(a,character.stars)
-  }
-
-  test("Attacking a WildUnit"){
-    val panel: home = new home()
-    val npc: WildUnit = new RoboBall()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel)
-    val aux: Int = player.attacking(npc)
-    assertEquals(aux != 0, true)
-  }
-
-  test("Attacking a Player"){
     val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
+    player1.stars_= (14)
+
+    /** The player defeats every kind of wild unit */
+    val npc1: RoboBall = new RoboBall()
+    npc1.stars_= (4)
+    player1.winStars_battle(npc1)
+    assertEquals(player1.stars, 20)
+
+    val npc2: Seagull = new Seagull()
+    npc2.stars_= (2)
+    player1.winStars_battle(npc2)
+    assertEquals(player1.stars, 24)
+
+    val npc3: Chicken = new Chicken()
+    npc3.stars_=(1)
+    player1.winStars_battle(npc3)
+    assertEquals(player1.stars,28)
+
+    /** The player is defeated by every kind of wild unit */
+    player1.dropStars_battle(npc1)
+    assertEquals(player1.stars,14)
+
+    player1.dropStars_battle(npc2)
+    assertEquals(player1.stars, 7)
+
+    player1.dropStars_battle(npc3)
+    assertEquals(player1.stars,3)
+  }
+
+  test("Count of stars when a player wins/loose against a other PlayerCharacter"){
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
+    player1.stars_=(10)
+
     val panel2: home = new home()
+    val player2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11), panel2)
+    player2.stars_=(8)
+
     val panel3: home = new home()
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
-    val play2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11),panel2)
-    val play3 = new PlayerCharacter("Diego", 0, 1, 1, -1, new Random(11),panel3)
-    var aux: Int = play1.attacking(play2)
-    assertEquals(aux != 0, true)
-    play3.defeated()
-    aux = play1.attacking(play3)
-    assertEquals(aux == 0, true)
+    val player3 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel3)
+    player3.stars_=(14)
+
+    /** player1 defeats player2 */
+    player1.winStars(player2)
+    assertEquals(player1.stars, 14)
+    player2.dropStars_battle(player1)
+    assertEquals(player2.stars, 4)
+
+    /** player3 defeats player1 */
+    player3.winStars(player1)
+    assertEquals(player3.stars, 21)
+    player1.dropStars_battle(player3)
+    assertEquals(player1.stars, 7)
+
+    /** player2 defeats player3 */
+    player2.winStars(player3)
+    assertEquals(player2.stars, 14)
+    player3.dropStars_battle(player2)
+    assertEquals(player3.stars, 11)
+  }
+
+  test("Attacking"){
+    val panel: home = new home()
+    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel)
+
+    /** attacking a npc */
+    val npc: WildUnit = new RoboBall()
+    val a: Int = player.can_attack(npc)
+    assertEquals(a >= 0, true)
+
+    /** attacking a PlayerCharacter */
+    val panel2: home = new home()
+    val player2 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel2)
+    val b: Int = player.can_attack(player2)
+    assertEquals(b >= 0, true)
+  }
+
+  test("Attack isn't possible in many ways"){
+    val panel: home = new home()
+    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel)
+
+    val panel2: home = new home()
+    val player2 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel2)
+
+    val npc: WildUnit = new Chicken()
+
+    /** player is in Recovery phase */
+    player.Hp_=(0)
+    player.defeated()
+
+    intercept[CannotAttack]{
+      player.can_attack(player2)
+    }
+
+    /** the playerCharacter rival is in Recovery phase */
+    intercept[CannotAttack]{
+      player2.can_attack(player)
+    }
+
+    /** the wild unit can't attack a PlayerCharacter in RecoveryPhase */
+    intercept[CannotAttack]{
+      npc.can_attack(player)
+    }
+
+    /** the player character can't attack to a dead wild unit */
+    npc.Hp_= (0)
+    intercept[CannotAttack]{
+      player2.can_attack(npc)
+    }
+
   }
 
   test("Defending"){
     val panel1: home = new home()
-    var a: Int = 1
+    val a: Int = 1
     val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
     play1.defending(a)
     assertEquals(play1.Hp, 4)
+
+    val b: Int = 1000000000
+    play1.defending(b)
+    assertEquals(play1.Hp, 0)
   }
 
   test("Evading"){
@@ -164,5 +268,8 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(play1.Hp, 0)
   }
 
+  test("Norma Clear"){
+
+  }
 
 }

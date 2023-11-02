@@ -4,6 +4,7 @@ import model.wild.{Seagull,RoboBall,Chicken}
 import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
 import model.traits.{Norma, Units, WildUnit, Panel}
 import model.panels.home
+import exceptions.CannotAttack
 
 
 import scala.util.Random
@@ -127,6 +128,14 @@ class PlayerCharacter(val name: String,
     randomNumberGenerator.nextInt(6) + 1
   }
 
+  def canStop(panel: home): Boolean = {
+    if (panelOwned == panel){
+      return true
+    }
+    else{
+      return false
+    }
+  }
 
   /** when the player defeats a Wild Unit wins one victory to the count */
   def victories_perBattle(u: WildUnit): Unit = {
@@ -141,11 +150,15 @@ class PlayerCharacter(val name: String,
   }
 
   /** when the player is defeated by a Wild Unit, drops the half of the stars and gives it to the Wild Unit */
-  def dropStars_battle(u: WildUnit): Unit = {
-    val a: Int = stars/2
+  def dropStars_battle(u: Units): Unit = {
+    val a: Int = stars - stars/2
     stars_=(a)
   }
 
+  def winStars(u: PlayerCharacter): Unit = {
+    val a: Int = stars + u.stars/2
+    stars_=(a)
+  }
   def winStars_battle(u: Chicken): Unit = {
     val a: Int = stars + u.stars + 3
     stars_=(a)
@@ -169,34 +182,45 @@ class PlayerCharacter(val name: String,
     }
   }
   
-
-
-  def attacking(u: PlayerCharacter): Int = {
+  def can_attack(u:PlayerCharacter): Int = {
     if (Can_play && u.Can_play){
-        val rollATK = rollDice()
-        return rollATK + attack
+      return attacking()
+    }
+    else{
+      if (!Can_play){
+        throw new CannotAttack("Current player can't attack")
       }
-    else{
-      return 0
+      else {
+        throw new CannotAttack("Rival already got a KO")
+      }
     }
   }
 
-  def attacking(u: WildUnit): Int = {
+  def can_attack(u: WildUnit): Int = {
     if (Can_play && !u.dead()) {
-        val rollATK = rollDice()
-        val aux = rollATK + attack
-        if (aux >= 0) {
-          return aux
-        }
-        else{
-          return 0;
-        }
-
+      return attacking()
+    }
+    else{
+      if (!Can_play){
+        throw new CannotAttack("Current player can't attack")
+      }
+      else{
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+  def attacking(): Int = {
+    val rollATK = rollDice()
+    val aux = rollATK + attack
+    if (aux >= 0) {
+      return aux
     }
     else{
       return 0
     }
   }
+
+
 
   override def defending(a: Int): Unit = {
     val rollDEF = rollDice()
@@ -222,9 +246,7 @@ class PlayerCharacter(val name: String,
   override def evading(a: Int): Unit = {
     val rollEVA = rollDice()
     val aux = rollEVA + evasion
-    if (a == 0){
-      return
-    }
+
     if (aux > a){
       return
     }
@@ -242,7 +264,7 @@ class PlayerCharacter(val name: String,
   /** norma_Clear checks if the player already done the norma_check
    * with positive results, increases his norma level */
   def norma_Clear(panel: home): Unit = {
-    if (panel.norma_check(this)){
+    if (panel.apply(this)){
       val a: Int = norma_id
       norma_= (NormaArray(a))
       norma_id_= (a + 1)

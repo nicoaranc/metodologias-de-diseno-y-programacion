@@ -21,10 +21,12 @@ class bonus extends Panel{
     val a = roll * Norm
     val b = roll * 3
     if (a <= b){
-      player.stars += a
+      val c: Int = player.stars + a
+      player.stars_= (c)
     }
     else{
-      player.stars += b
+      val c: Int = player.stars + b
+      player.stars_=(c)
     }
   }
 }
