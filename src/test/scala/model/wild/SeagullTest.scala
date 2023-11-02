@@ -2,8 +2,11 @@ package cl.uchile.dcc.citric
 package model.wild
 
 import model.player.PlayerCharacter
+
 import scala.util.Random
 import model.traits.WildUnit
+
+import cl.uchile.dcc.citric.model.panels.home
 
 class SeagullTest extends munit.FunSuite {
   val npc: Seagull = new Seagull()
@@ -15,8 +18,9 @@ class SeagullTest extends munit.FunSuite {
     assertEquals(npc.dead(), true)
   }
   test("Attacking a WildUnit") {
+    val panel1: home = new home()
     val npc: WildUnit = new Seagull()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
     val aux: Int = npc.attacking(player)
     assertEquals(aux != 0, true)
   }

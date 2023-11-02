@@ -2,14 +2,17 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
-import model.panels.bonus
+import model.panels.{bonus,home}
 import scala.util.Random
 
 class BonusPanelTest extends munit.FunSuite {
+  val panel_a: home = new home()
+  val panel_b: home = new home()
+
   val player1: PlayerCharacter = new PlayerCharacter("Juan",6,7,
-    4,6, new Random(11))
+    4,6, new Random(11),panel_a)
   val player2: PlayerCharacter = new PlayerCharacter("Pedro",6, 7,
-    4, 6, new Random(11))
+    4, 6, new Random(11),panel_b)
 
   player2.stars = 7
 

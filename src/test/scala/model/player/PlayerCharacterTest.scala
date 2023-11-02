@@ -1,6 +1,6 @@
 package cl.uchile.dcc.citric
 package model.player
-
+import model.panels.home
 import cl.uchile.dcc.citric.model.traits.WildUnit
 import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
 
@@ -21,6 +21,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   private var randomNumberGenerator : Random = _
   private var stars = 0
   private var norma = 1
+  private val panel_a : home = new home()
   /* Add any other constants you need here... */
 
   /*
@@ -42,6 +43,7 @@ class PlayerCharacterTest extends munit.FunSuite {
       defense,
       evasion,
       randomNumberGenerator,
+      panel_a
     )
   }
 
@@ -67,22 +69,12 @@ class PlayerCharacterTest extends munit.FunSuite {
   // are always the same for the same seed.
   test("A character should be able to roll a dice with a fixed seed") {
     val other =
-      new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
+      new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11),panel_a)
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
   }
 
-  /**
-  test("A character obtains stars per chapter"){
-    val a: Int = character.stars
-    character.stars_perChapter(1)
-    assertEquals(a + (1/5) + 1, character.stars)
-    character.stars = a
-    character.stars_perChapter(11)
-    assertEquals(a + (11/5) + 1, character.stars)
-  }
-  */
 
   test("The player enters to the Recovery phase") {
     character.defeated()
@@ -95,28 +87,31 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("A character earns victories winning a battle") {
-    val a: Int = character.victories
-    val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11))
-    character.victories_perBattle(player2)
-    assertEquals(a + 2, character.victories)
-    character.victories = a
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel1)
+    val panel2: home = new home()
+    val a: Int = player1.victories
+    val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel2)
+    player1.victories_perBattle(player2)
+    assertEquals(a + 2, player1.victories)
+    player1.victories = a
     val npc1: WildUnit = new RoboBall()
     val npc2: WildUnit = new Seagull()
     val npc3: WildUnit = new Chicken()
-    character.victories_perBattle(npc1)
-    character.victories_perBattle(npc2)
-    character.victories_perBattle(npc3)
-    assertEquals(a + 3,character.victories)
+    player1.victories_perBattle(npc1)
+    player1.victories_perBattle(npc2)
+    player1.victories_perBattle(npc3)
+    assertEquals(a + 3,player1.victories)
   }
 
   test("Count of stars when a player wins/loose against a WildUnit"){
     character.stars = 14
     val a : Int = character.stars
-    val npc1: WildUnit = new RoboBall()
+    val npc1: RoboBall = new RoboBall()
     npc1.stars = 4
-    val npc2: WildUnit = new Seagull()
+    val npc2: Seagull = new Seagull()
     npc2.stars = 2
-    val npc3: WildUnit = new Chicken()
+    val npc3: Chicken = new Chicken()
     character.dropStars_battle(npc1)
     assertEquals(a/2,character.stars)
     assertEquals(4 + a/2, npc1.stars)
@@ -129,16 +124,20 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("Attacking a WildUnit"){
+    val panel: home = new home()
     val npc: WildUnit = new RoboBall()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel)
     val aux: Int = player.attacking(npc)
     assertEquals(aux != 0, true)
   }
 
   test("Attacking a Player"){
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
-    val play2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11))
-    val play3 = new PlayerCharacter("Diego", 0, 1, 1, -1, new Random(11))
+    val panel1: home = new home()
+    val panel2: home = new home()
+    val panel3: home = new home()
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
+    val play2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11),panel2)
+    val play3 = new PlayerCharacter("Diego", 0, 1, 1, -1, new Random(11),panel3)
     var aux: Int = play1.attacking(play2)
     assertEquals(aux != 0, true)
     play3.defeated()
@@ -147,15 +146,17 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("Defending"){
+    val panel1: home = new home()
     var a: Int = 1
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
     play1.defending(a)
     assertEquals(play1.Hp, 4)
   }
 
   test("Evading"){
+    val panel1: home = new home()
     var a: Int = 0
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11))
+    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
     play1.evading(a)
     assertEquals(play1.Hp, 5)
     a = 10000

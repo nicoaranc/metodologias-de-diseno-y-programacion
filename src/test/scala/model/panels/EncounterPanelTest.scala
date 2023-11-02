@@ -6,11 +6,12 @@ import scala.util.Random
 import model.traits.WildUnit
 
 class EncounterPanelTest extends munit.FunSuite {
-
+  val panel_a: home = new home()
+  val panel_b: home = new home()
   private val player1: PlayerCharacter = new PlayerCharacter("pedro", 7, 4, 5,
-    3, new Random(11))
+    3, new Random(11),panel_a)
   private val player2: PlayerCharacter = new PlayerCharacter("juan", 8, 6, 3,
-    2, new Random(11))
+    2, new Random(11),panel_b)
 
   private val panel1: encounter = new encounter()
 
@@ -46,7 +47,7 @@ class EncounterPanelTest extends munit.FunSuite {
   }
 
   test("battle against a random Wild Unit"){
-    val npc: WildUnit = panel1.battle_with()
+    val npc: WildUnit = panel1.apply()
     assertEquals(npc != null, true)
   }
 }

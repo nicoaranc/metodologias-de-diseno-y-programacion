@@ -48,36 +48,6 @@ trait WildUnit extends Units{
     }
   }
 
-  override def defending(a: Int): Unit = {
-    val rollDEF = rollDice_wu()
-    val receive = a - (rollDEF + defense)
-    if (receive < 1){
-      Hp -= 1
-    }
-    else{
-      if (receive > Hp){
-        Hp = 0
-      }
-      else{
-        Hp -= receive
-      }
-    }
-  }
 
-  override def evading(a: Int): Unit = {
-    val rollEVA = rollDice_wu()
-    val aux = rollEVA + evasion
-    if (aux > a){
-      Hp = Hp
-    }
-    else{
-      if (a > Hp){
-        Hp = 0
-      }
-      else{
-        Hp -= a
-      }
-    }
-  }
 
 }

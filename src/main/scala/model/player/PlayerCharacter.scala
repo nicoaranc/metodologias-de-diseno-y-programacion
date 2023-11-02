@@ -49,7 +49,7 @@ class PlayerCharacter(val name: String,
               val defense: Int,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
-              val panelOwned: Panel) extends Units{
+              val panelOwned: home) extends Units{
 
   /** instances of each Norma */
   private val n1: Norma = new Norma1()
@@ -121,18 +121,6 @@ class PlayerCharacter(val name: String,
     _kind_goal = NewKindGoal
   }
 
-  /**
-  def def_objective(): Unit = {
-    if (Input to stars goal) {
-      goal = (NormaArray[norma_id]).stars
-      kind_goal = "stars"
-    }
-    if (Input to victories goal) {
-      goal = (NormaArray[norma_id]).victories
-      kind_goal = "victories"
-    }
-  }
-  */
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {
@@ -142,37 +130,42 @@ class PlayerCharacter(val name: String,
 
   /** when the player defeats a Wild Unit wins one victory to the count */
   def victories_perBattle(u: WildUnit): Unit = {
-    victories += 1
+    val a: Int = victories + 1
+    victories_=(a)
   }
 
   /** when the player defeats another Player wins two victories to the count */
   def victories_perBattle(u: PlayerCharacter): Unit = {
-    victories += 2
+    val a: Int = victories + 2
+    victories_=(a)
   }
 
   /** when the player is defeated by a Wild Unit, drops the half of the stars and gives it to the Wild Unit */
   def dropStars_battle(u: WildUnit): Unit = {
-    u.stars += stars/2
-    stars = stars/2
+    val a: Int = stars/2
+    stars_=(a)
   }
 
   def winStars_battle(u: Chicken): Unit = {
-    stars += u.stars + 3
+    val a: Int = stars + u.stars + 3
+    stars_=(a)
   }
 
   def winStars_battle(u: RoboBall): Unit = {
-    stars += u.stars + 2
+    val a: Int = stars + u.stars + 2
+    stars_=(a)
   }
 
   def winStars_battle(u: Seagull): Unit = {
-    stars += u.stars + 2
+    val a: Int = stars + u.stars + 2
+    stars_=(a)
   }
 
   /** when the player is defeated, teh player enters to the Recovery phase */
   def defeated(): Unit = {
     if (Hp == 0){
-      Recovery = true
-      Can_play = false
+      Recovery_= (true)
+      Can_play_= (false)
     }
   }
   
@@ -208,15 +201,20 @@ class PlayerCharacter(val name: String,
   override def defending(a: Int): Unit = {
     val rollDEF = rollDice()
     val receive = a - (rollDEF + defense)
+    if (a == 0){
+      return
+    }
     if (receive < 1){
-      Hp -= 1
+      val b = Hp - 1
+      Hp_=(b)
     }
     else{
       if (receive >= Hp){
-        Hp = 0
+        Hp_= (0)
       }
       else{
-        Hp -= receive
+        val b = Hp - receive
+        Hp_= (b)
       }
     }
   }
@@ -224,15 +222,19 @@ class PlayerCharacter(val name: String,
   override def evading(a: Int): Unit = {
     val rollEVA = rollDice()
     val aux = rollEVA + evasion
+    if (a == 0){
+      return
+    }
     if (aux > a){
-      Hp = Hp
+      return
     }
     else{
       if (a > Hp){
-        Hp = 0
+        Hp_= (0)
       }
       else{
-        Hp -= a
+        val b = Hp - a
+        Hp_= (b)
       }
     }
   }
@@ -242,8 +244,8 @@ class PlayerCharacter(val name: String,
   def norma_Clear(panel: home): Unit = {
     if (panel.norma_check(this)){
       val a: Int = norma_id
-      norma = NormaArray(a)
-      norma_id += 1
+      norma_= (NormaArray(a))
+      norma_id_= (a + 1)
     }
 
   }
