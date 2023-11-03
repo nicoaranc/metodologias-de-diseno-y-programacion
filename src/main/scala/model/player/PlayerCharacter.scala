@@ -4,7 +4,7 @@ import model.wild.{Seagull,RoboBall,Chicken}
 import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
 import model.traits.{Norma, Units}
 import model.panels.home
-import exceptions.CannotAttack
+import exceptions.{CannotAttack,InvalidPlayerCharacterStats}
 import cl.uchile.dcc.citric.model.abstractclasses.{Panel, WildUnit}
 
 
@@ -65,7 +65,12 @@ class PlayerCharacter(val name: String,
   private var _Hp: Int = maxHp
   def Hp: Int = _Hp
   def Hp_=(NewHp: Int): Unit = {
-    _Hp = NewHp
+    if (NewHp <= maxHp){
+      _Hp = NewHp
+    }
+    else{
+      throw new InvalidPlayerCharacterStats("The new Hp value exceeds the maxHp of the player")
+    }
   }
   /** current stars of the player, at the beginning of the game is 0 */
   private var _stars: Int = 0
@@ -129,6 +134,7 @@ class PlayerCharacter(val name: String,
     randomNumberGenerator.nextInt(6) + 1
   }
 
+  /** Checks if the player can stop in the Home panel */
   def canStop(panel: home): Boolean = {
     if (panelOwned == panel){
       return true
@@ -156,10 +162,14 @@ class PlayerCharacter(val name: String,
     stars_=(a)
   }
 
+  /** when the player defeats another player, wins the half of the rival's stars */
   def winStars(u: PlayerCharacter): Unit = {
     val a: Int = stars + u.stars/2
     stars_=(a)
   }
+
+  /** when the player defeats a Wild Unit, wins all the stars from the rival plus a bonus
+   * that depends of kind of Wild Unit */
   def winStars_battle(u: Chicken): Unit = {
     val a: Int = stars + u.stars + 3
     stars_=(a)
@@ -182,7 +192,8 @@ class PlayerCharacter(val name: String,
       Can_play_= (false)
     }
   }
-  
+
+  /** checks if the player can attack to other player */
   def can_attack(u:PlayerCharacter): Int = {
     if (Can_play && u.Can_play){
       return attacking()
@@ -197,6 +208,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** checks if the player can attack to a Wild Unit */
   def can_attack(u: WildUnit): Int = {
     if (Can_play && !u.dead()) {
       return attacking()
@@ -210,6 +222,8 @@ class PlayerCharacter(val name: String,
       }
     }
   }
+
+  /** method of the attack of the player*/
   def attacking(): Int = {
     val rollATK = rollDice()
     val aux = rollATK + attack
@@ -221,8 +235,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
-
-
+  /** method of the defense of the player */
   override def defending(a: Int): Unit = {
     val rollDEF = rollDice()
     val receive = a - (rollDEF + defense)
@@ -244,6 +257,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method of the evasion of the player */
   override def evading(a: Int): Unit = {
     val rollEVA = rollDice()
     val aux = rollEVA + evasion
@@ -262,8 +276,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** norma_Clear checks if the player already done the norma_check
-   * with positive results, increases his norma level */
+  /** increase the Norma of the player if the Norma Check is already done */
   def norma_Clear(panel: home): Unit = {
     if (panel.apply(this)){
       val a: Int = norma_id

@@ -28,13 +28,14 @@ class Seagull extends WildUnit {
     _stars = NewStars
   }
 
-
+  /** when a Seagull defeats a player, wins the half of the rival's stars */
   def winStars(p: PlayerCharacter) = {
     val a: Int = p.stars / 2
     val b: Int = stars + a
     stars_=(b)
   }
 
+  /** method of the defense of a Seagull */
   override def defending(a: Int): Unit = {
     val rollDEF = rollDice_wu()
     val receive = a - (rollDEF + defense)
@@ -54,6 +55,7 @@ class Seagull extends WildUnit {
     }
   }
 
+  /** method of the evasion of a Seagull */
   override def evading(a: Int): Unit = {
     val rollEVA = rollDice_wu()
     val aux = rollEVA + evasion

@@ -23,6 +23,7 @@ abstract class WildUnit extends Units{
 
   val random_wu: Random = new Random()
 
+  /** checks if the Wild Unit is dead */
   def dead(): Boolean = {
     if (Hp == 0){
       return true
@@ -32,10 +33,12 @@ abstract class WildUnit extends Units{
     }
   }
 
+  /** returns the result of the Wil Unit rolling a dice */
   def rollDice_wu(): Int = {
     random_wu.nextInt(6) + 1
   }
 
+  /** checks if the Wild Unit can attack to a Player Character */
   def can_attack(u: PlayerCharacter): Int = {
     if (u.Can_play){
       attacking()
@@ -45,6 +48,7 @@ abstract class WildUnit extends Units{
     }
   }
 
+  /** method of the attack of the Wild Unit*/
   def attacking(): Int = {
       val rollATK = rollDice_wu()
       if (rollATK + attack > 0){

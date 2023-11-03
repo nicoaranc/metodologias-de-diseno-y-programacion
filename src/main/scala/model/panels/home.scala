@@ -18,19 +18,6 @@ class home  extends Panel {
 
 
 
-  /** the "stop" method of the class is the function that verifies if the current player over the panel is the
-   * owner of the same panel, in the case it is, the owner can stop on the panel and activate it, but if the
-   * player isn't the owner of the panel, the player must continues if it have more movements to do */
-
-  def canStop(player: PlayerCharacter): Boolean = {
-    if (player.panelOwned == this) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-
   /** the method of "norma_check" checks if the player reached the goal to increase the norma level */
   def apply(player: PlayerCharacter): Boolean = {
     if (player.kind_goal == "stars"){

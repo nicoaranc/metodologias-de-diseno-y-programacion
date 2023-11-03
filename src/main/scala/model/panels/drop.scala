@@ -16,6 +16,7 @@ class drop extends Panel{
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
 
+  /** drop stars from the player on the panel */
   def apply(player: PlayerCharacter): Unit = {
     val q: Int = player.rollDice() * player.norma_id
     if (q >= player.stars){

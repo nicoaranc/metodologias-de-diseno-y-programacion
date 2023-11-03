@@ -15,6 +15,7 @@ class bonus extends Panel{
    * every direction of the panel */
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
+  /** gives stars to the player on the panel */
   def apply(player: PlayerCharacter): Unit = {
     val roll: Int = player.rollDice()
     val Norm: Int = player.norma_id

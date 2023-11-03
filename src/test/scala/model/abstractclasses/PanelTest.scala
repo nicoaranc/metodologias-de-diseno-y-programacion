@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.abstractclasses
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
-import model.panels.{bonus,home}
+import model.panels.{bonus,home,neutral,drop,encounter}
 import scala.util.Random
 
 class PanelTest extends munit.FunSuite {
@@ -44,7 +44,22 @@ class PanelTest extends munit.FunSuite {
     assertEquals(panel1.nextPanels.isEmpty, false)
   }
 
-  test("Removing panels next to the current panel"){
+  val p2: bonus = new bonus()
+  val p3: encounter = new encounter()
+  val p4: neutral = new neutral()
+  val p5: drop = new drop()
 
+  panel1.addPanel(p2)
+  panel1.addPanel(p3)
+  panel1.addPanel(p4)
+  panel1.addPanel(p5)
+
+  test("Removing panels next to the current panel"){
+    assertEquals(panel1.nextPanels.isEmpty, false)
+    panel1.removePanel(p2)
+    panel1.removePanel(p3)
+    panel1.removePanel(p4)
+    panel1.removePanel(p5)
+    assertEquals(panel1.nextPanels.isEmpty,true)
   }
 }

@@ -2,8 +2,8 @@ package cl.uchile.dcc.citric
 package model.player
 import model.panels.home
 import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
-import exceptions.CannotAttack
 import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
+import model.traits.Norma
 
 import scala.util.Random
 
@@ -74,6 +74,57 @@ class PlayerCharacterTest extends munit.FunSuite {
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
+  }
+
+  test("getters and setters"){
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
+
+    /** Hit points */
+    assertEquals(player1.Hp, 5)
+    player1.Hp_=(3)
+    assertEquals(player1.Hp, 3)
+
+    /** Stars */
+    assertEquals(player1.stars, 0)
+    player1.stars_=(7)
+    assertEquals(player1.stars, 7)
+
+    /** Victories */
+    assertEquals(player1.victories, 0)
+    player1.victories_=(2)
+    assertEquals(player1.victories, 2)
+
+    /** Norma & Norma Id */
+    val nom1: Norma = player1.NormaArray(0)
+    val nom2: Norma = player1.NormaArray(1)
+
+    assertEquals(player1.norma, nom1)
+    assertEquals(player1.norma_id, 1)
+    player1.norma_=(nom2)
+    player1.norma_id_=(2)
+    assertEquals(player1.norma, nom2)
+    assertEquals(player1.norma_id, 2)
+
+    /** Recovery & Can Play */
+    assertEquals(player1.Recovery, false)
+    assertEquals(player1.Can_play, true)
+    player1.Recovery_=(true)
+    player1.Can_play_=(false)
+    assertEquals(player1.Recovery, true)
+    assertEquals(player1.Can_play, false)
+
+    /** Kind of Goal & Goal */
+    assertEquals(player1.kind_goal, "")
+    assertEquals(player1.goal, 0)
+    player1.kind_goal_=("stars")
+    player1.goal_=(10)
+    assertEquals(player1.kind_goal, "stars")
+    assertEquals(player1.goal, nom2.stars_goal)
+    player1.kind_goal_=("victories")
+    player1.goal_=(1)
+    assertEquals(player1.kind_goal, "victories")
+    assertEquals(player1.goal, nom2.victories_goal)
   }
 
   test("The player can/can't stop on the Home Panel") {
@@ -236,7 +287,29 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("Norma Clear"){
+    val panel1: home = new home()
+    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
+    val nom1: Norma = player1.NormaArray(0)
+    val nom2: Norma = player1.NormaArray(1)
+    val nom3: Norma = player1.NormaArray(2)
 
+    /** to Norma2 */
+    player1.kind_goal_=("stars")
+    player1.goal_=(nom2.stars_goal)
+    player1.norma_Clear(panel1)
+    assertEquals((player1.norma,player1.norma_id), (nom1, 1))
+    player1.stars_=(12)
+    player1.norma_Clear(panel1)
+    assertEquals((player1.norma,player1.norma_id), (nom2, 2))
+
+    /** to Norma 3 */
+    player1.kind_goal_=("victories")
+    player1.goal_=(nom3.victories_goal)
+    player1.norma_Clear(panel1)
+    assertEquals((player1.norma, player1.norma_id), (nom2, 2))
+    player1.victories_=(3)
+    player1.norma_Clear(panel1)
+    assertEquals((player1.norma, player1.norma_id), (nom3, 3))
   }
 
 }

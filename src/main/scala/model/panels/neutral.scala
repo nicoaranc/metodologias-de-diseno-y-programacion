@@ -15,8 +15,7 @@ class neutral extends Panel {
    * every direction of the panel */
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
-
-
+    /** this method doesn't make any kind of effect */
   def apply(): Unit = {
 
   }

@@ -59,12 +59,14 @@ abstract class Panel {
     }
   }
 
+  /** method that add panels to the nextPanels array of the current panel */
   def addPanel(panel: Panel): Unit = {
     if (nextPanels.indexOf(panel) == -1) {
       nextPanels.addOne(panel)
     }
   }
 
+  /** method that remove panels to the nextPanels array of the current panel */
   def removePanel(panel: Panel): Unit = {
     if (nextPanels.indexOf(panel) != -1){
       val index: Int = nextPanels.indexOf(panel)
