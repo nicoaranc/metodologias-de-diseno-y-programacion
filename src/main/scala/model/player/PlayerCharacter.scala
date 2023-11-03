@@ -2,9 +2,10 @@ package cl.uchile.dcc.citric
 package model.player
 import model.wild.{Seagull,RoboBall,Chicken}
 import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
-import model.traits.{Norma, Units, WildUnit, Panel}
+import model.traits.{Norma, Units}
 import model.panels.home
 import exceptions.CannotAttack
+import cl.uchile.dcc.citric.model.abstractclasses.{Panel, WildUnit}
 
 
 import scala.util.Random

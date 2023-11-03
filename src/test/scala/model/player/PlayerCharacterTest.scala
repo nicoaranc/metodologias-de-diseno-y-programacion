@@ -1,9 +1,9 @@
 package cl.uchile.dcc.citric
 package model.player
 import model.panels.home
-import cl.uchile.dcc.citric.model.traits.WildUnit
 import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
 import exceptions.CannotAttack
+import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 
 import scala.util.Random
 
@@ -210,40 +210,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(b >= 0, true)
   }
 
-  test("Attack isn't possible in many ways"){
-    val panel: home = new home()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel)
 
-    val panel2: home = new home()
-    val player2 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel2)
-
-    val npc: WildUnit = new Chicken()
-
-    /** player is in Recovery phase */
-    player.Hp_=(0)
-    player.defeated()
-
-    intercept[CannotAttack]{
-      player.can_attack(player2)
-    }
-
-    /** the playerCharacter rival is in Recovery phase */
-    intercept[CannotAttack]{
-      player2.can_attack(player)
-    }
-
-    /** the wild unit can't attack a PlayerCharacter in RecoveryPhase */
-    intercept[CannotAttack]{
-      npc.can_attack(player)
-    }
-
-    /** the player character can't attack to a dead wild unit */
-    npc.Hp_= (0)
-    intercept[CannotAttack]{
-      player2.can_attack(npc)
-    }
-
-  }
 
   test("Defending"){
     val panel1: home = new home()

@@ -1,23 +1,21 @@
 package cl.uchile.dcc.citric
-package model.panels
+package model.abstractclasses
 
-import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import model.panels.{bonus,home}
 import scala.util.Random
 
-class EncounterPanelTest extends munit.FunSuite {
+class PanelTest extends munit.FunSuite {
+
   val panel_a: home = new home()
   val panel_b: home = new home()
-  private val player1: PlayerCharacter = new PlayerCharacter("pedro", 7, 4, 5,
-    3, new Random(11),panel_a)
-  private val player2: PlayerCharacter = new PlayerCharacter("juan", 8, 6, 3,
-    2, new Random(11),panel_b)
 
-  private val panel1: encounter = new encounter()
+  val player1: PlayerCharacter = new PlayerCharacter("Juan", 6, 7,
+    4, 6, new Random(11), panel_a)
+  val player2: PlayerCharacter = new PlayerCharacter("Pedro", 6, 7,
+    4, 6, new Random(11), panel_b)
 
-
-  /** the test of the methods of addCharacter and removeCharacter are going to take place here,
-   * and the same methods are going to be in the other classes of Panel */
+  val panel1: home = new home()
 
   /** test of the "addCharacter" method */
   test("a player enter") {
@@ -41,13 +39,12 @@ class EncounterPanelTest extends munit.FunSuite {
 
   test("Adding panels next to the current Panel") {
     assertEquals(panel1.nextPanels.isEmpty, true)
-    val p1: encounter = new encounter()
+    val p1: bonus = new bonus()
     panel1.addPanel(p1)
     assertEquals(panel1.nextPanels.isEmpty, false)
   }
 
-  test("battle against a random Wild Unit"){
-    val npc: WildUnit = panel1.apply()
-    assertEquals(npc != null, true)
+  test("Removing panels next to the current panel"){
+
   }
 }

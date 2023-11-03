@@ -1,10 +1,9 @@
 package cl.uchile.dcc.citric
 package model.panels
 
-import model.traits.Panel
-import model.traits.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 import model.wild.{RoboBall,Chicken,Seagull}
+import cl.uchile.dcc.citric.model.abstractclasses.{Panel, WildUnit}
 import scala.util.Random
 
 import scala.collection.mutable.ArrayBuffer

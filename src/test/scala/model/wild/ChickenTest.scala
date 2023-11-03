@@ -2,9 +2,9 @@ package cl.uchile.dcc.citric
 package model.wild
 
 import model.player.PlayerCharacter
+import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 
 import scala.util.Random
-import model.traits.WildUnit
 
 import cl.uchile.dcc.citric.model.panels.home
 

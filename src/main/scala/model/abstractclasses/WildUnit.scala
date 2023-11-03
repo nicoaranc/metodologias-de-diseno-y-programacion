@@ -1,13 +1,13 @@
 package cl.uchile.dcc.citric
-package model.traits
+package model.abstractclasses
 
+import exceptions.CannotAttack
 import model.player.PlayerCharacter
-
-import cl.uchile.dcc.citric.exceptions.CannotAttack
+import model.traits.Units
 
 import scala.util.Random
 
-trait WildUnit extends Units{
+abstract class WildUnit extends Units{
   var Hp: Int
 
   val maxHp: Int
@@ -54,7 +54,5 @@ trait WildUnit extends Units{
         return 0
       }
   }
-
-
 
 }
