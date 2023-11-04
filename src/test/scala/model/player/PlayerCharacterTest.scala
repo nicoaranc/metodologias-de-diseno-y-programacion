@@ -210,7 +210,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(player1.stars, 7)
 
     player1.dropStars_battle(npc3)
-    assertEquals(player1.stars,3)
+    assertEquals(player1.stars,4)
   }
 
   test("Count of stars when a player wins/loose against a other PlayerCharacter"){

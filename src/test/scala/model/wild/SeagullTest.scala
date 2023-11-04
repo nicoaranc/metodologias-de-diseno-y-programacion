@@ -17,12 +17,7 @@ class SeagullTest extends munit.FunSuite {
     npc.Hp = 0
     assertEquals(npc.dead(), true)
   }
-  test("Attacking a WildUnit") {
-    val panel1: home = new home()
-    val npc: WildUnit = new Seagull()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
- /** */
-  }
+
   test("Defending") {
     var a: Int = 1
     val npc = new Seagull()

@@ -3,6 +3,7 @@ package model.wild
 
 import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import exceptions.CannotAttack
 
 class RoboBall extends WildUnit {
 
@@ -30,47 +31,15 @@ class RoboBall extends WildUnit {
 
 
   /** when a RoboBall defeats a player, wins the half of the rival's stars */
-  def winStars(p: PlayerCharacter) = {
+  def winStars(p: PlayerCharacter): Unit = {
     val a: Int = p.stars / 2
     val b: Int = stars + a
     stars_=(b)
   }
 
-  /** method of the defense of a RoboBall */
-  override def defending(a: Int): Unit = {
-    val rollDEF = rollDice_wu()
-    val receive = a - (rollDEF + defense)
-
-    if (receive < 1) {
-      val b = Hp - 1
-      Hp_=(b)
-    }
-    else {
-      if (receive > Hp) {
-        Hp_=(0)
-      }
-      else {
-        val b = Hp - receive
-        Hp_=(b)
-      }
-    }
+  def attacking(u: PlayerCharacter): Unit = {
+    u.defending_to_RoboBall(this)
   }
 
-  /** method of the evasion of a RoboBall */
-  override def evading(a: Int): Unit = {
-    val rollEVA = rollDice_wu()
-    val aux = rollEVA + evasion
-    if (aux > a) {
-      return
-    }
-    else {
-      if (a > Hp) {
-        Hp_=(0)
-      }
-      else {
-        val b = Hp - a
-        Hp_=(b)
-      }
-    }
-  }
+
 }

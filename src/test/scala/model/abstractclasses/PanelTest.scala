@@ -37,25 +37,23 @@ class PanelTest extends munit.FunSuite {
     assertEquals(panel1.characters.isEmpty, true)
   }
 
-  test("Adding panels next to the current Panel") {
+  test("Adding/removing panels next to the current Panel") {
     assertEquals(panel1.nextPanels.isEmpty, true)
     val p1: bonus = new bonus()
     panel1.addPanel(p1)
     assertEquals(panel1.nextPanels.isEmpty, false)
-  }
 
-  val p2: bonus = new bonus()
-  val p3: encounter = new encounter()
-  val p4: neutral = new neutral()
-  val p5: drop = new drop()
+    val p2: bonus = new bonus()
+    val p3: encounter = new encounter()
+    val p4: neutral = new neutral()
+    val p5: drop = new drop()
 
-  panel1.addPanel(p2)
-  panel1.addPanel(p3)
-  panel1.addPanel(p4)
-  panel1.addPanel(p5)
-
-  test("Removing panels next to the current panel"){
+    panel1.addPanel(p2)
+    panel1.addPanel(p3)
+    panel1.addPanel(p4)
+    panel1.addPanel(p5)
     assertEquals(panel1.nextPanels.isEmpty, false)
+    panel1.removePanel(p1)
     panel1.removePanel(p2)
     panel1.removePanel(p3)
     panel1.removePanel(p4)

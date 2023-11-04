@@ -38,25 +38,70 @@ abstract class WildUnit extends Units{
     random_wu.nextInt(6) + 1
   }
 
-  /** checks if the Wild Unit can attack to a Player Character */
-  def can_attack(u: PlayerCharacter): Int = {
-    if (u.Can_play){
-      attacking()
+  def attacking(): Int = {
+    val rollATK = rollDice_wu()
+    val aux = rollATK + attack
+    if (aux > 0) {
+      return aux
     }
-    else{
-      throw new CannotAttack("The opponent player can't attack")
+    else {
+      return 0
     }
   }
 
-  /** method of the attack of the Wild Unit*/
-  def attacking(): Int = {
-      val rollATK = rollDice_wu()
-      if (rollATK + attack > 0){
-        return rollATK + attack
+  def defending(a: Int): Unit = {
+    val rollDEF = rollDice_wu()
+    val receive = a - (rollDEF + defense)
+    if (receive < 1) {
+      val b = Hp - 1
+      Hp_=(b)
+    }
+    else {
+      if (receive >= Hp) {
+        Hp_=(0)
       }
-      else{
-        return 0
+      else {
+        val b = Hp - receive
+        Hp_=(b)
       }
+    }
+  }
+
+  def evading(a: Int): Unit = {
+    val rollEVA = rollDice_wu()
+    val aux = rollEVA + evasion
+
+    if (aux > a) {
+      return
+    }
+    else {
+      if (a > Hp) {
+        Hp_=(0)
+      }
+      else {
+        val b = Hp - a
+        Hp_=(b)
+      }
+    }
+  }
+
+  def defending_to_PlayChar(u: PlayerCharacter): Unit = {
+    if (u.Can_play) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      throw new CannotAttack("Current player can't attack")
+    }
+  }
+  def evading_to_PlayChar(u: PlayerCharacter): Unit = {
+    if (u.Can_play) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      throw new CannotAttack("Current player can't attack")
+    }
   }
 
 }

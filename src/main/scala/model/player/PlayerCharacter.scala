@@ -185,7 +185,7 @@ class PlayerCharacter(val name: String,
     stars_=(a)
   }
 
-  /** when the player is defeated, teh player enters to the Recovery phase */
+  /** when the player is defeated, the player enters into the Recovery phase */
   def defeated(): Unit = {
     if (Hp == 0){
       Recovery_= (true)
@@ -193,88 +193,177 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** checks if the player can attack to other player */
-  def can_attack(u:PlayerCharacter): Int = {
-    if (Can_play && u.Can_play){
-      return attacking()
-    }
-    else{
-      if (!Can_play){
-        throw new CannotAttack("Current player can't attack")
-      }
-      else {
-        throw new CannotAttack("Rival already got a KO")
-      }
-    }
-  }
 
-  /** checks if the player can attack to a Wild Unit */
-  def can_attack(u: WildUnit): Int = {
-    if (Can_play && !u.dead()) {
-      return attacking()
-    }
-    else{
-      if (!Can_play){
-        throw new CannotAttack("Current player can't attack")
-      }
-      else{
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
-  }
 
-  /** method of the attack of the player*/
+
+  /** method of the attack of the player */
   def attacking(): Int = {
     val rollATK = rollDice()
     val aux = rollATK + attack
     if (aux >= 0) {
       return aux
     }
-    else{
+    else {
       return 0
     }
   }
 
   /** method of the defense of the player */
-  override def defending(a: Int): Unit = {
+  def defending(a: Int): Unit = {
     val rollDEF = rollDice()
     val receive = a - (rollDEF + defense)
-    if (a == 0){
-      return
-    }
-    if (receive < 1){
+    if (receive < 1) {
       val b = Hp - 1
       Hp_=(b)
     }
-    else{
-      if (receive >= Hp){
-        Hp_= (0)
+    else {
+      if (receive >= Hp) {
+        Hp_=(0)
       }
-      else{
+      else {
         val b = Hp - receive
-        Hp_= (b)
+        Hp_=(b)
       }
     }
   }
 
   /** method of the evasion of the player */
-  override def evading(a: Int): Unit = {
+  def evading(a: Int): Unit = {
     val rollEVA = rollDice()
     val aux = rollEVA + evasion
 
-    if (aux > a){
+    if (aux > a) {
       return
     }
-    else{
-      if (a > Hp){
-        Hp_= (0)
+    else {
+      if (a > Hp) {
+        Hp_=(0)
       }
-      else{
+      else {
         val b = Hp - a
-        Hp_= (b)
+        Hp_=(b)
       }
     }
   }
+  def defending_to_PlayChar(u: PlayerCharacter): Unit = {
+    if (Can_play && u.Can_play) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      if (!u.Can_play) {
+        throw new CannotAttack("Current player can't attack")
+      }
+      else {
+        throw new CannotAttack("Rival is in Recovery phase")
+      }
+    }
+  }
+
+  def defending_to_Chicken(u: Chicken): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+
+  def defending_to_RoboBall(u: RoboBall): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+
+  def defending_to_Seagull(u: Seagull): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+  def evading_to_PlayChar(u: PlayerCharacter): Unit = {
+    if (Can_play && u.Can_play) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      if (!u.Can_play) {
+        throw new CannotAttack("Current player can't attack")
+      }
+      else {
+        throw new CannotAttack("Rival is in Recovery phase")
+      }
+    }
+  }
+
+  def evading_to_Chicken(u: Chicken): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+
+  def evading_to_RoboBall(u: RoboBall): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+
+  def evading_to_Seagull(u: Seagull): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      if (!Can_play) {
+        throw new CannotAttack("Current player is in Recovery phase")
+      }
+      else {
+        throw new CannotAttack("The wild unit is dead")
+      }
+    }
+  }
+
 
   /** increase the Norma of the player if the Norma Check is already done */
   def norma_Clear(panel: home): Unit = {
