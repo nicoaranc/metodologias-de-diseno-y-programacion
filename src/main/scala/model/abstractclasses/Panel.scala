@@ -14,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
   * structures.
   *
   * @author [[https://github.com/r8vnhill Ignacio Slater M.]]
-  * @author [[https://github.com/YOUR-USERNAME YOUR NAME]]
+  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
   */
 abstract class Panel {
 
@@ -61,14 +61,24 @@ abstract class Panel {
     }
   }
 
-  /** method that add panels to the nextPanels array of the current panel */
+  /** Adds a panel to the list of nextPanels currently on this panel.
+   *
+   * This might be invoked when the map of the game is in construction.
+   *
+   * @param panel The panel to add to next this panel.
+   */
   def addPanel(panel: Panel): Unit = {
     if (nextPanels.indexOf(panel) == -1) {
       nextPanels.addOne(panel)
     }
   }
 
-  /** method that remove panels to the nextPanels array of the current panel */
+  /** Removes a panel from the list of nextPanels currently on this panel.
+   *
+   * This might be invoked when the map of the game is in construction.
+   *
+   * @param panel The panel to remove from the next of this panel.
+   */
   def removePanel(panel: Panel): Unit = {
     if (nextPanels.indexOf(panel) != -1){
       val index: Int = nextPanels.indexOf(panel)

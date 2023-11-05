@@ -6,6 +6,13 @@ import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
+/** Represents a home panel.
+ *
+ * A Home Panel make teh NormaCheck effect to the players.
+ *
+ * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
+ */
+
 class home  extends Panel {
 
   /** "characters" is the ArrayBuffer of the players that are on the Panel */
@@ -16,9 +23,12 @@ class home  extends Panel {
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
 
-
-
-  /** the method of "norma_check" checks if the player reached the goal to increase the norma level */
+  /** Makes the Norma Check, and if it's possible the Norma Clear.
+   *
+   * This might be invoked when a player moves to this panel.
+   *
+   * @param player The player that is on the panel.
+   */
   def apply(player: PlayerCharacter): Unit = {
     if (player.kind_goal == "stars"){
       if (player.stars >= player.goal){

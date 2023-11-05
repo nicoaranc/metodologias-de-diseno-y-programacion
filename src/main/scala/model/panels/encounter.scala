@@ -8,6 +8,13 @@ import scala.util.Random
 
 import scala.collection.mutable.ArrayBuffer
 
+/** Represents a encounter panel.
+ *
+ * A Encounter Panel gives a random Wild Unit to battle with the players.
+ *
+ * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
+ */
+
 class encounter  extends Panel{
 
   /** "characters" is the ArrayBuffer of the players that are on the Panel */

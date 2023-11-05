@@ -6,6 +6,13 @@ import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
+
+/** Represents a bonus panel.
+ *
+ * A Bonus Panel gives stars to the players.
+ *
+ * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
+ */
 class bonus extends Panel{
 
   /** "characters" is the ArrayBuffer of the players that are on the Panel */
@@ -15,7 +22,12 @@ class bonus extends Panel{
    * every direction of the panel */
   var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
-  /** gives stars to the player on the panel */
+  /** Gives stars to the player.
+   *
+   * This might be invoked when a player moves to this panel.
+   *
+   * @param player The player that is on the panel.
+   */
   def apply(player: PlayerCharacter): Unit = {
     val roll: Int = player.rollDice()
     val Norm: Int = player.norma_id

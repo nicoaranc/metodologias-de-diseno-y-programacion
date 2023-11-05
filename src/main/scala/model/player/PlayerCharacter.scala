@@ -5,7 +5,6 @@ import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
 import model.traits.{Norma, Units}
 import model.panels.home
 import exceptions.{CannotAttack,InvalidPlayerCharacterStats}
-import cl.uchile.dcc.citric.model.abstractclasses.{Panel, WildUnit}
 
 
 import scala.util.Random
@@ -38,12 +37,13 @@ import scala.collection.mutable.ArrayBuffer
   * @param evasion The player's skill to completely avoid certain attacks.
   * @param randomNumberGenerator A utility to generate random numbers. Defaults to a new `Random`
   *                              instance.
+  * @param panelOwned The player's Home Panel.
   *
   * @author [[https://github.com/danielRamirezL/ Daniel Ramírez L.]]
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
   * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
   * @author [[https://github.com/Seivier/ Vicente González B.]]
-  * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
   */
 class PlayerCharacter(val name: String,
               val maxHp: Int,
@@ -53,7 +53,9 @@ class PlayerCharacter(val name: String,
               val randomNumberGenerator: Random = new Random(),
               val panelOwned: home) extends Units{
 
-  /** instances of each Norma */
+  /** instances of each Norma,
+   * specifies each possible Norma to reach
+   * */
   private val n1: Norma = new Norma1()
   private val n2: Norma = new Norma2()
   private val n3: Norma = new Norma3()
@@ -63,7 +65,16 @@ class PlayerCharacter(val name: String,
 
   /** current Hp of the player, at the beginning of the game is the maxHp */
   private var _Hp: Int = maxHp
+
+  /** Getter of the Hp of the player */
   def Hp: Int = _Hp
+
+  /** Setter of the Hp of the player.
+   *
+   * This function might be invoked in a battle.
+   *
+   * @param NewHp The new Hit Points of the player.
+   */
   def Hp_=(NewHp: Int): Unit = {
     if (NewHp <= maxHp){
       _Hp = NewHp
@@ -72,41 +83,103 @@ class PlayerCharacter(val name: String,
       throw new InvalidPlayerCharacterStats("The new Hp value exceeds the maxHp of the player")
     }
   }
+
   /** current stars of the player, at the beginning of the game is 0 */
   private var _stars: Int = 0
+
+  /** Getter of the stars of the player */
   def stars: Int = _stars
+
+  /** Setter of the stars of the player.
+   *
+   * This function might be invoked when a battle finishes, the player is on a
+   * bonus or drop panel.
+   *
+   * @param NewStars The new stars of the player.
+   */
   def stars_=(NewStars: Int): Unit = {
     _stars = NewStars
   }
+
   /** current Norma of the player, at the beginning of the game is 1 */
   private var _norma: Norma = n1
+
+  /** Getter of the Norma of the player */
   def norma: Norma = _norma
+
+  /** Setter of the Norma of the player.
+   *
+   * This function might be invoked in the Norma Check.
+   *
+   * @param NewNorma The new Norma of the player.
+   */
   def norma_=(NewNorma: Norma): Unit = {
     _norma = NewNorma
   }
+
   private var _norma_id: Int = 1
+
+  /** Getter of the Norma Id of the player */
   def norma_id: Int = _norma_id
+
+  /** Setter of the Norma Id of the player.
+   *
+   * This function might be invoked in the Norma Check.
+   *
+   * @param NewNormaId The new Norma Id of the player.
+   */
   def norma_id_=(NewNormaId: Int): Unit = {
     _norma_id = NewNormaId
   }
   /** current victories of the player, at the beginning of the game is 0 */
   private var _victories: Int = 0
+
+  /** Getter of the victories of the player */
   def victories: Int = _victories
+
+  /** Setter of the victories of the player.
+   *
+   * This function might be invoked when a player defeats an unit.
+   *
+   * @param NewVictories The new victories count of the player.
+   */
   def victories_=(NewVictories: Int): Unit = {
     _victories = NewVictories
   }
+
   /** current Recovery status */
   private var _Recovery: Boolean = false
+
+  /** Getter of the Recovery state of the player */
   def Recovery: Boolean = _Recovery
+
+  /** Setter of the Recovery state of the player.
+   *
+   * This function might be invoked when the player is defeated.
+   *
+   * @param NewRecovery The new Recovery state of the player.
+   */
   def Recovery_=(NewRecovery: Boolean): Unit = {
     _Recovery = NewRecovery
   }
+
   /** current state of playing */
   private var _Can_play: Boolean = true
+
+  /** Getter of the Playable state of the player */
   def Can_play: Boolean = _Can_play
+
+  /** Setter of the Playable state of the player.
+   *
+   * This function might be invoked when the player is defeated.
+   *
+   * @param NewCanPlay The new Playable state of the player.
+   */
   def Can_play_=(NewCanPlay: Boolean): Unit = {
     _Can_play = NewCanPlay
   }
+
+
   /** Array that contains all the instances of each Norma */
   val NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
   NormaArray.addOne(n1)
@@ -116,25 +189,56 @@ class PlayerCharacter(val name: String,
   NormaArray.addOne(n5)
   NormaArray.addOne(n6)
 
-  /** the goal to reach the next level of Norma and the kind of the goal */
+  /** the goal to reach the next level of Norma */
   private var _goal: Int = 0
+
+  /** Getter of the goal of the player */
   def goal: Int = _goal
+
+  /** Setter of the goal of the player.
+   *
+   * This function might be invoked in the Norma Clear.
+   *
+   * @param NewGoal The new goal of the player.
+   */
   def goal_=(NewGoal: Int): Unit = {
     _goal = NewGoal
   }
+
+  /** the kind of goal of the player*/
   private var _kind_goal: String = ""
+
+  /** Getter of the kind of goal of the player */
   def kind_goal: String = _kind_goal
+
+  /** Setter of the kind of goal of the player.
+   *
+   * This function might be invoked in the Norma Clear.
+   *
+   * @param NewKindGoal The new kind of goal of the player.
+   */
   def kind_goal_=(NewKindGoal: String): Unit = {
     _kind_goal = NewKindGoal
   }
 
-
-  /** Rolls a dice and returns a value between 1 to 6. */
+  /** Rolls a dice and returns a random number between 1 to 6.
+   *
+   * This function might be invoked in combat, when a player is
+   * on a drop or bonus panel.
+   *
+   */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
   }
 
-  /** Checks if the player can stop in the Home panel */
+
+  /** checks if the player can stop in the Home panel.
+   *
+   * This function might be invoked when the player
+   * passes through a Home panel.
+   *
+   * @param panel The home panel to check.
+   */
   def canStop(panel: home): Boolean = {
     if (panelOwned == panel){
       return true
@@ -144,44 +248,83 @@ class PlayerCharacter(val name: String,
     }
   }
 
-
-  /** when the player defeats another Player wins two victories to the count */
+  /** gives two victories ot the player's victories count.
+   *
+   * This function might be invoked when the player defeats another player.
+   *
+   * @param u The player defeated by the winner of the battle.
+   */
   def victories_perBattle(u: PlayerCharacter): Unit = {
     val a: Int = victories + 2
     victories_=(a)
   }
 
-  /** when the player is defeated by a Wild Unit, drops the half of the stars and gives it to the Wild Unit */
+
+  /** drops the half of stars from the player.
+   *
+   * This function might be invoked when the player is defeated.
+   *
+   * @param u The opponent that defeated the player.
+   */
   def dropStars_battle(u: Units): Unit = {
     val a: Int = stars - stars/2
     stars_=(a)
   }
 
-  /** when the player defeats another player, wins the half of the rival's stars */
+  /** give stars to the player.
+   *
+   * This function might be invoked when the player wins
+   * a battle against another player.
+   *
+   * @param u The player defeated.
+   */
   def winStars(u: PlayerCharacter): Unit = {
     val a: Int = stars + u.stars/2
     stars_=(a)
   }
 
-  /** when the player defeats a Wild Unit, wins all the stars from the rival plus a bonus
-   * that depends of kind of Wild Unit */
+  /** give stars to the player.
+   *
+   * This function might be invoked when the player wins
+   * a battle against a Chicken.
+   *
+   * @param u The Chicken defeated.
+   */
   def winStars_battle(u: Chicken): Unit = {
     val a: Int = stars + u.stars + 3
     stars_=(a)
   }
 
+  /** give stars to the player.
+   *
+   * This function might be invoked when the player wins
+   * a battle against a RoboBall.
+   *
+   * @param u The RoboBall defeated.
+   */
   def winStars_battle(u: RoboBall): Unit = {
     val a: Int = stars + u.stars + 2
     stars_=(a)
   }
 
+  /** give stars to the player.
+   *
+   * This function might be invoked when the player wins
+   * a battle against a Seagull.
+   *
+   * @param u The Seagull defeated.
+   */
   def winStars_battle(u: Seagull): Unit = {
     val a: Int = stars + u.stars + 2
     stars_=(a)
   }
 
-  /** methods when the battle ends */
-
+  /** makes the exchange of stars and sets the new states of the player when is defeated.
+   *
+   * This function might be invoked when the battle ends.
+   *
+   * @param u The winner Unit.
+   */
   def defeated(u: Units): Unit = {
     u.win_against_PlayChar(this)
     dropStars_battle(u)
@@ -189,30 +332,58 @@ class PlayerCharacter(val name: String,
     Can_play_=(false)
   }
 
+  /** gives stars and victories to the player.
+   *
+   * This function might be invoked when the battle ends.
+   *
+   * @param u The player defeated.
+   */
   def win_against_PlayChar(u: PlayerCharacter): Unit = {
     victories_perBattle(u)
     winStars(u)
   }
 
+  /** gives stars and victories to the player.
+   *
+   * This function might be invoked when the battle ends.
+   *
+   * @param u The Chicken defeated.
+   */
   def win_against_Chicken(u: Chicken): Unit = {
     val a: Int = victories + 1
     victories_=(a)
     winStars_battle(u)
   }
 
+  /** gives stars and victories to the player.
+   *
+   * This function might be invoked when the battle ends.
+   *
+   * @param u The RoboBall defeated.
+   */
   def win_against_RoboBall(u: RoboBall): Unit = {
     val a: Int = victories + 1
     victories_=(a)
     winStars_battle(u)
   }
 
+  /** gives stars and victories to the player.
+   *
+   * This function might be invoked when the battle ends.
+   *
+   * @param u The Seagull defeated.
+   */
   def win_against_Seagull(u: Seagull): Unit = {
     val a: Int = victories + 1
     victories_=(a)
     winStars_battle(u)
   }
 
-  /** method of the attack of the player */
+  /** Makes the attack, return the attack points.
+   *
+   * This function might be invoked during the battle.
+   *
+   */
   def attacking(): Int = {
     val rollATK = rollDice()
     val aux = rollATK + attack
@@ -224,7 +395,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method of the defense of the player */
+  /** Makes the defense of the player.
+   *
+   * This function might be invoked during the battle.
+   *
+   * @param a The attack points to defend.
+   */
   def defending(a: Int): Unit = {
     val rollDEF = rollDice()
     val receive = a - (rollDEF + defense)
@@ -243,7 +419,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method of the evasion of the player */
+  /** Makes the evasion of the player.
+   *
+   * This function might be invoked during the battle.
+   *
+   * @param a The attack points to evade.
+   */
   def evading(a: Int): Unit = {
     val rollEVA = rollDice()
     val aux = rollEVA + evasion
@@ -272,7 +453,12 @@ class PlayerCharacter(val name: String,
   }
   */
 
-  /** method that makes the defense of the PlayCharacter from a PlayerCharacter's attack*/
+  /** Starts the defense of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking player.
+   */
   def defending_to_PlayChar(u: PlayerCharacter): Unit = {
     if (Can_play && u.Can_play) {
       val atk: Int = u.attacking()
@@ -288,7 +474,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the defense of the PlayCharacter from a Chicken's attack*/
+  /** Starts the defense of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Chicken.
+   */
   def defending_to_Chicken(u: Chicken): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -304,7 +495,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the defense of the PlayCharacter from a RoboBall's attack*/
+  /** Starts the defense of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking RoboBall.
+   */
   def defending_to_RoboBall(u: RoboBall): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -320,7 +516,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the defense of the PlayCharacter from a Seagull's attack*/
+  /** Starts the defense of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Seagull.
+   */
   def defending_to_Seagull(u: Seagull): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -336,7 +537,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the evade movement of the PlayCharacter from a PlayerCharacter's attack*/
+  /** Starts the evasion of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking player.
+   */
   def evading_to_PlayChar(u: PlayerCharacter): Unit = {
     if (Can_play && u.Can_play) {
       val atk: Int = u.attacking()
@@ -352,7 +558,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the evade movement of the PlayCharacter from a Chicken's attack*/
+  /** Starts the evasion of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Chicken.
+   */
   def evading_to_Chicken(u: Chicken): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -368,7 +579,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the evade movement of the PlayCharacter from a RoboBall's attack*/
+  /** Starts the evasion of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking RoboBall.
+   */
   def evading_to_RoboBall(u: RoboBall): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -384,7 +600,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** method that makes the evade movement of the PlayCharacter from a Seagull's attack*/
+  /** Starts the evasion of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Seagull.
+   */
   def evading_to_Seagull(u: Seagull): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -401,7 +622,12 @@ class PlayerCharacter(val name: String,
   }
 
 
-  /** increase the Norma of the player if the Norma Check is already done */
+  /** Increase the Norma of the player.
+   *
+   * This function might be invoked when the Norma Check is done.
+   *
+   * @param panel The home panel where the Norma Check is done.
+   */
   def norma_Clear(panel: home): Unit = {
     val a: Int = norma_id
     norma_= (NormaArray(a))
