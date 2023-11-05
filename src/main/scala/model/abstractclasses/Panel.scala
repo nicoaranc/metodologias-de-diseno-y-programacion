@@ -34,6 +34,8 @@ abstract class Panel {
    */
   var nextPanels: ArrayBuffer[Panel]
 
+
+
   /** Adds a character to the list of characters currently on this panel.
     *
     * This might be invoked when a player moves to this panel or starts their turn on it.

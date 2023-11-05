@@ -21,6 +21,8 @@ abstract class WildUnit extends Units{
   var stars: Int
 
 
+
+
   val random_wu: Random = new Random()
 
   /** checks if the Wild Unit is dead */
@@ -33,11 +35,12 @@ abstract class WildUnit extends Units{
     }
   }
 
-  /** returns the result of the Wil Unit rolling a dice */
+  /** returns the result of the Wild Unit rolling a dice */
   def rollDice_wu(): Int = {
     random_wu.nextInt(6) + 1
   }
 
+  /** method of the attack of the Wild Unit */
   def attacking(): Int = {
     val rollATK = rollDice_wu()
     val aux = rollATK + attack
@@ -49,6 +52,7 @@ abstract class WildUnit extends Units{
     }
   }
 
+  /** method of the defense of the Wild Unit */
   def defending(a: Int): Unit = {
     val rollDEF = rollDice_wu()
     val receive = a - (rollDEF + defense)
@@ -67,6 +71,7 @@ abstract class WildUnit extends Units{
     }
   }
 
+  /** method of the evasion of the Wild Unit */
   def evading(a: Int): Unit = {
     val rollEVA = rollDice_wu()
     val aux = rollEVA + evasion
@@ -85,22 +90,40 @@ abstract class WildUnit extends Units{
     }
   }
 
+  /** method that stars an attack from a Wild Unit to a PlayerCharacter */
+  /**
+  def attacking_to_PlayChar(u: PlayerCharacter): Unit
+   */
+
+  /** method that make the defense of the Wild Unit from a PlayerCharacter's attack */
   def defending_to_PlayChar(u: PlayerCharacter): Unit = {
-    if (u.Can_play) {
+    if (u.Can_play && !dead()) {
       val atk: Int = u.attacking()
       defending(atk)
     }
     else {
-      throw new CannotAttack("Current player can't attack")
+      if (!u.Can_play) {
+        throw new CannotAttack("Current player can't attack")
+      }
+      else{
+        throw new CannotAttack("The Wild Unit is dead")
+      }
     }
   }
+
+  /** method that make the evade movement of the Wild Unit from a PlayerCharacter's attack */
   def evading_to_PlayChar(u: PlayerCharacter): Unit = {
-    if (u.Can_play) {
+    if (u.Can_play && !dead()) {
       val atk: Int = u.attacking()
       evading(atk)
     }
     else {
-      throw new CannotAttack("Current player can't attack")
+      if (!u.Can_play) {
+        throw new CannotAttack("Current player can't attack")
+      }
+      else {
+        throw new CannotAttack("The Wild Unit is dead")
+      }
     }
   }
 

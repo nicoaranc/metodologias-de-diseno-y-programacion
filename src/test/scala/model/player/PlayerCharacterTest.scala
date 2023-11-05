@@ -149,167 +149,131 @@ class PlayerCharacterTest extends munit.FunSuite {
     val panel1: home = new home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
 
+    val npc: Seagull = new Seagull()
+
     assertEquals(player1.Recovery, false)
     assertEquals(player1.Can_play, true)
 
     player1.Hp_=(0)
-    player1.defeated()
+    player1.defeated(npc)
     assertEquals(player1.Recovery, true)
     assertEquals(player1.Can_play, false)
   }
 
-  test("A character earns victories winning a battle") {
+  test("A character wins/loose a battle") {
     val panel1: home = new home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel1)
 
     val panel2: home = new home()
     val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel2)
+    player2.stars_=(6)
 
-    val a: Int = player1.victories
-    player1.victories_perBattle(player2)
-    assertEquals(a + 2, player1.victories)
-    player1.victories = a
+    player2.defeated(player1)
+    assertEquals(player1.stars, 3)
+    assertEquals(player2.stars, 3)
+    assertEquals(player1.victories, 2)
 
-    val npc1: WildUnit = new RoboBall()
-    val npc2: WildUnit = new Seagull()
-    val npc3: WildUnit = new Chicken()
-
-    player1.victories_perBattle(npc1)
-    player1.victories_perBattle(npc2)
-    player1.victories_perBattle(npc3)
-
-    assertEquals(a + 3,player1.victories)
-  }
-
-  test("Count of stars when a player wins/loose against a WildUnit"){
-    val panel1: home = new home()
-    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
-    player1.stars_= (14)
-
-    /** The player defeats every kind of wild unit */
     val npc1: RoboBall = new RoboBall()
-    npc1.stars_= (4)
-    player1.winStars_battle(npc1)
-    assertEquals(player1.stars, 20)
-
     val npc2: Seagull = new Seagull()
-    npc2.stars_= (2)
-    player1.winStars_battle(npc2)
-    assertEquals(player1.stars, 24)
-
     val npc3: Chicken = new Chicken()
-    npc3.stars_=(1)
-    player1.winStars_battle(npc3)
-    assertEquals(player1.stars,28)
 
-    /** The player is defeated by every kind of wild unit */
-    player1.dropStars_battle(npc1)
-    assertEquals(player1.stars,14)
+    player2.defeated(npc1)
+    assertEquals(player2.stars, 2)
+    assertEquals(npc1.stars, 1)
 
-    player1.dropStars_battle(npc2)
-    assertEquals(player1.stars, 7)
+    npc2.defeated(player1)
+    assertEquals(npc2.stars, 0)
+    assertEquals(player1.stars, 5)
+    assertEquals(player1.victories,3)
 
-    player1.dropStars_battle(npc3)
-    assertEquals(player1.stars,4)
+    npc3.defeated(player1)
+    assertEquals(npc3.stars, 0)
+    assertEquals(player1.stars, 8)
+    assertEquals(player1.victories,4)
+
+    npc1.defeated(player1)
+    assertEquals(npc1.stars, 0)
+    assertEquals(player1.stars, 11)
+    assertEquals(player1.victories,5)
+
   }
 
-  test("Count of stars when a player wins/loose against a other PlayerCharacter"){
-    val panel1: home = new home()
-    val player1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
-    player1.stars_=(10)
 
+  test("Defending an attack"){
+    val panel1: home = new home()
+    val play1: PlayerCharacter = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
+
+    /** from other PlayerCharacter */
     val panel2: home = new home()
-    val player2 = new PlayerCharacter("Juan", 5, 1, 1, -1, new Random(11), panel2)
-    player2.stars_=(8)
+    val play2: PlayerCharacter = new PlayerCharacter("Francesco", 5, 1, 1, -1, new Random(11), panel2)
+    val a: Int = play1.Hp
+    play1.defending_to_PlayChar(play2)
+    assertEquals(play1.Hp != a, true)
 
-    val panel3: home = new home()
-    val player3 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel3)
-    player3.stars_=(14)
+    /** from a Chicken */
+    val b: Int = play1.Hp
+    val chicken: Chicken = new Chicken()
+    play1.defending_to_Chicken(chicken)
+    assertEquals(play1.Hp != b, true)
 
-    /** player1 defeats player2 */
-    player1.winStars(player2)
-    assertEquals(player1.stars, 14)
-    player2.dropStars_battle(player1)
-    assertEquals(player2.stars, 4)
+    /** from a RoboBall */
+    val c: Int = play1.Hp
+    val roboball: RoboBall = new RoboBall()
+    play1.defending_to_RoboBall(roboball)
+    assertEquals(play1.Hp != c, true)
 
-    /** player3 defeats player1 */
-    player3.winStars(player1)
-    assertEquals(player3.stars, 21)
-    player1.dropStars_battle(player3)
-    assertEquals(player1.stars, 7)
-
-    /** player2 defeats player3 */
-    player2.winStars(player3)
-    assertEquals(player2.stars, 14)
-    player3.dropStars_battle(player2)
-    assertEquals(player3.stars, 11)
+    /** from a Seagull */
+    val d: Int = play1.Hp
+    val seagull: Seagull = new Seagull()
+    play1.defending_to_Seagull(seagull)
+    assertEquals(play1.Hp != d, true)
   }
 
-  test("Attacking"){
-    val panel: home = new home()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel)
+  test("Evading an attack"){
+    val panel4: home = new home()
+    val play4: PlayerCharacter = new PlayerCharacter("Francesco", 5, 1, 1, -100000, new Random(11), panel4)
 
-    /** attacking a npc */
-    val npc: WildUnit = new RoboBall()
-    val a: Int = player.can_attack(npc)
-    assertEquals(a >= 0, true)
-
-    /** attacking a PlayerCharacter */
-    val panel2: home = new home()
-    val player2 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel2)
-    val b: Int = player.can_attack(player2)
-    assertEquals(b >= 0, true)
-  }
+    val panel5: home = new home()
+    val play5: PlayerCharacter = new PlayerCharacter("Martín", 5, 1, 1, 100000, new Random(11), panel5)
 
 
+    /** from other PlayerCharacter */
+    val panel6: home = new home()
+    val play6: PlayerCharacter = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel6)
+    val a: Int = play5.Hp
+    play5.evading_to_PlayChar(play6)
+    assertEquals(play5.Hp, a)
+    val b: Int = play4.Hp
+    play4.evading_to_PlayChar(play6)
+    assertEquals(play4.Hp != b, true)
+    play4.Hp_=(play4.maxHp)
 
-  test("Defending"){
-    val panel1: home = new home()
-    val a: Int = 1
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
-    play1.defending(a)
-    assertEquals(play1.Hp, 4)
 
-    val b: Int = 1000000000
-    play1.defending(b)
-    assertEquals(play1.Hp, 0)
-  }
+    /** from a Chicken */
+    val chicken: Chicken = new Chicken()
+    play5.evading_to_Chicken(chicken)
+    assertEquals(play5.Hp, a)
+    play4.evading_to_Chicken(chicken)
+    assertEquals(play4.Hp != b, true)
+    play4.Hp_= (play4.maxHp)
 
-  test("Evading"){
-    val panel1: home = new home()
-    var a: Int = 0
-    val play1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11),panel1)
-    play1.evading(a)
-    assertEquals(play1.Hp, 5)
-    a = 10000
-    play1.evading(a)
-    assertEquals(play1.Hp, 0)
-  }
+    /** from a RoboBall */
+    val roboball: RoboBall = new RoboBall()
+    play5.evading_to_RoboBall(roboball)
+    assertEquals(play5.Hp, a)
+    play4.evading_to_Chicken(chicken)
+    assertEquals(play4.Hp != b, true)
+    play4.Hp_= (play4.maxHp)
 
-  test("Norma Clear"){
-    val panel1: home = new home()
-    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
-    val nom1: Norma = player1.NormaArray(0)
-    val nom2: Norma = player1.NormaArray(1)
-    val nom3: Norma = player1.NormaArray(2)
+    /** from a Seagull */
+    val seagull: Seagull = new Seagull()
+    play5.evading_to_Seagull(seagull)
+    assertEquals(play5.Hp, a)
+    play4.evading_to_Seagull(seagull)
+    assertEquals(play4.Hp != b, true)
+    play4.Hp_=(play4.maxHp)
 
-    /** to Norma2 */
-    player1.kind_goal_=("stars")
-    player1.goal_=(nom2.stars_goal)
-    player1.norma_Clear(panel1)
-    assertEquals((player1.norma,player1.norma_id), (nom1, 1))
-    player1.stars_=(12)
-    player1.norma_Clear(panel1)
-    assertEquals((player1.norma,player1.norma_id), (nom2, 2))
 
-    /** to Norma 3 */
-    player1.kind_goal_=("victories")
-    player1.goal_=(nom3.victories_goal)
-    player1.norma_Clear(panel1)
-    assertEquals((player1.norma, player1.norma_id), (nom2, 2))
-    player1.victories_=(3)
-    player1.norma_Clear(panel1)
-    assertEquals((player1.norma, player1.norma_id), (nom3, 3))
   }
 
 }

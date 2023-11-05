@@ -36,11 +36,24 @@ class Seagull extends WildUnit {
     stars_=(b)
   }
 
-  def attacking(u: PlayerCharacter): Unit = {
-    u.defending_to_Seagull(this)
+  /** methods when the battle ends */
+  def defeated(u: PlayerCharacter): Unit = {
+    u.win_against_Seagull(this)
+    stars_=(0)
   }
 
+  def win_against_PlayChar(u: PlayerCharacter): Unit = {
+    winStars(u)
+  }
 
+  /** method that stars an attack from the Seagull to a PlayerCharacter */
+  /**
+   * def attacking_to_PlayChar(u: PlayerCharacter): Unit = {
+   * the PlayerCharacter makes a decision between defend or evade the Seagull's attack
+   * u.defending_to_Seagull(this)
+   * or
+   * u.evading_to_Seagull(this)
+   * } */
 
 
 }

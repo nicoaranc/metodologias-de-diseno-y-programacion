@@ -41,42 +41,34 @@ class WildUnitTest extends munit.FunSuite {
     assertEquals(npc3.stars, 8)
   }
 
-  test("Winning some stars") {
+
+  test("Defending an attack"){
     val npc1: WildUnit = new RoboBall()
-    val npc2: WildUnit = new Chicken()
-    val npc3: WildUnit = new Seagull()
+    val a: Int = npc1.Hp
 
     val panel1: home = new home()
     val player1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
-    player1.stars_=(10)
-    assertEquals(npc1.stars, 0)
-    npc1.winStars(player1)
-    player1.dropStars_battle(npc1)
-    assertEquals(npc1.stars, 5)
 
-    npc2.winStars(player1)
-    player1.dropStars_battle(npc2)
-    assertEquals(npc2.stars, 2)
-
-    npc3.winStars(player1)
-    player1.dropStars_battle(npc3)
-    assertEquals(npc3.stars, 1)
+    npc1.defending_to_PlayChar(player1)
+    assertEquals(npc1.Hp != a, true)
   }
 
-  test("attacking a PlayerCharacter"){
+
+  test("Evading an attack") {
     val npc1: WildUnit = new RoboBall()
-    val npc2: WildUnit = new Chicken()
-    val npc3: WildUnit = new Seagull()
+
 
     val panel: home = new home()
-    val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel)
+    val player = new PlayerCharacter("Pedro", 5, 10000, 1, -1, new Random(11), panel)
 
-    val a: Int = npc1.can_attack(player)
-    assertEquals(a >= 0, true)
-    val b: Int = npc2.can_attack(player)
-    assertEquals(b >= 0, true)
-    val c: Int = npc3.can_attack(player)
-    assertEquals(c >= 0, true)
+    val panel2: home = new home()
+    val player2 = new PlayerCharacter("Pedro2", 5, -10000, 1, -1, new Random(11), panel2)
+
+    val a: Int = npc1.Hp
+    npc1.evading_to_PlayChar(player2)
+    assertEquals(npc1.Hp, a)
+    npc1.evading_to_PlayChar(player)
+    assertEquals(npc1.Hp, 0)
   }
 
 }

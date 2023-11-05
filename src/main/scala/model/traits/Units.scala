@@ -28,6 +28,8 @@ trait Units {
   def evading(a: Int): Unit
    */
 
+  def win_against_PlayChar(u: PlayerCharacter): Unit
+
   def attacking(): Int
 
   def defending(a: Int) : Unit

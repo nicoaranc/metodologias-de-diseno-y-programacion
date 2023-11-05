@@ -144,11 +144,6 @@ class PlayerCharacter(val name: String,
     }
   }
 
-  /** when the player defeats a Wild Unit wins one victory to the count */
-  def victories_perBattle(u: WildUnit): Unit = {
-    val a: Int = victories + 1
-    victories_=(a)
-  }
 
   /** when the player defeats another Player wins two victories to the count */
   def victories_perBattle(u: PlayerCharacter): Unit = {
@@ -185,16 +180,37 @@ class PlayerCharacter(val name: String,
     stars_=(a)
   }
 
-  /** when the player is defeated, the player enters into the Recovery phase */
-  def defeated(): Unit = {
-    if (Hp == 0){
-      Recovery_= (true)
-      Can_play_= (false)
-    }
+  /** methods when the battle ends */
+
+  def defeated(u: Units): Unit = {
+    u.win_against_PlayChar(this)
+    dropStars_battle(u)
+    Recovery_=(true)
+    Can_play_=(false)
   }
 
+  def win_against_PlayChar(u: PlayerCharacter): Unit = {
+    victories_perBattle(u)
+    winStars(u)
+  }
 
+  def win_against_Chicken(u: Chicken): Unit = {
+    val a: Int = victories + 1
+    victories_=(a)
+    winStars_battle(u)
+  }
 
+  def win_against_RoboBall(u: RoboBall): Unit = {
+    val a: Int = victories + 1
+    victories_=(a)
+    winStars_battle(u)
+  }
+
+  def win_against_Seagull(u: Seagull): Unit = {
+    val a: Int = victories + 1
+    victories_=(a)
+    winStars_battle(u)
+  }
 
   /** method of the attack of the player */
   def attacking(): Int = {
@@ -245,6 +261,18 @@ class PlayerCharacter(val name: String,
       }
     }
   }
+
+  /** method that stars an attack to other Unit */
+  /**
+  def attacking_to(u: Units): Unit = {
+    the opponent decides between defend or evade the attack
+      u.defending_to_PlayChar(this)
+    or
+      u.evading_to_PlayChar(this)
+  }
+  */
+
+  /** method that makes the defense of the PlayCharacter from a PlayerCharacter's attack*/
   def defending_to_PlayChar(u: PlayerCharacter): Unit = {
     if (Can_play && u.Can_play) {
       val atk: Int = u.attacking()
@@ -260,6 +288,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the defense of the PlayCharacter from a Chicken's attack*/
   def defending_to_Chicken(u: Chicken): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -275,6 +304,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the defense of the PlayCharacter from a RoboBall's attack*/
   def defending_to_RoboBall(u: RoboBall): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -290,6 +320,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the defense of the PlayCharacter from a Seagull's attack*/
   def defending_to_Seagull(u: Seagull): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -304,6 +335,8 @@ class PlayerCharacter(val name: String,
       }
     }
   }
+
+  /** method that makes the evade movement of the PlayCharacter from a PlayerCharacter's attack*/
   def evading_to_PlayChar(u: PlayerCharacter): Unit = {
     if (Can_play && u.Can_play) {
       val atk: Int = u.attacking()
@@ -319,6 +352,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the evade movement of the PlayCharacter from a Chicken's attack*/
   def evading_to_Chicken(u: Chicken): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -334,6 +368,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the evade movement of the PlayCharacter from a RoboBall's attack*/
   def evading_to_RoboBall(u: RoboBall): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -349,6 +384,7 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** method that makes the evade movement of the PlayCharacter from a Seagull's attack*/
   def evading_to_Seagull(u: Seagull): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -367,12 +403,9 @@ class PlayerCharacter(val name: String,
 
   /** increase the Norma of the player if the Norma Check is already done */
   def norma_Clear(panel: home): Unit = {
-    if (panel.apply(this)){
-      val a: Int = norma_id
-      norma_= (NormaArray(a))
-      norma_id_= (a + 1)
-    }
-
+    val a: Int = norma_id
+    norma_= (NormaArray(a))
+    norma_id_= (a + 1)
   }
 
 }
