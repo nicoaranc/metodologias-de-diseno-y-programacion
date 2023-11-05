@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 
 /** Represents a home panel.
  *
- * A Home Panel make teh NormaCheck effect to the players.
+ * A Home Panel makes the NormaCheck effect to the players.
  *
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
