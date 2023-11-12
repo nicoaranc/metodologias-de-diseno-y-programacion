@@ -21,6 +21,11 @@ depends on the player decision to defend or evade the attack, so the idea is to 
 future. \
 Besides to implement the getters and setters of every private variables of the Units (PlayerCharacter & WildUnits).
 
+
+## States diagram
+
+![Diagrama de estados](docs/diagrama-estados.png)
+
 <div style="text-align:center;">
     <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License">
 </div>
