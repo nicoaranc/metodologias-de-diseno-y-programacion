@@ -3,8 +3,21 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class Movement(context: Gamecontroller) extends GameState(context){
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class Movement extends AbstractState{
+
+  override def rollsDice(): Unit = {
+    val number: Int = context.currentPlayer.get.rollDice()
+    var a = 0
+
+    for (a <- 1 to number){
+      /** Choose path*/
+    }
+
+    context.setState(new OnAPanel())
+
+  }
 
 }

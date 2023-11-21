@@ -3,8 +3,14 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class DecFightWU(context: Gamecontroller) extends GameState(context) {
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class DecFightWU extends AbstractState {
+
+  override def fight_decision(): Unit = {
+    /** context.currentPlayer.get.attacking_to(Unit) */
+    context.setState(new WUAlive())
+  }
 
 }

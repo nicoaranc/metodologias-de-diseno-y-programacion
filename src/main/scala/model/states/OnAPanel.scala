@@ -3,8 +3,18 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class OnAPanel(context: Gamecontroller) extends GameState(context){
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class OnAPanel extends AbstractState{
+
+  override def checkPanel(): Unit = {
+    /** if (panel vacío){
+     *      context.setState(new ApplyPanel())
+     *  }
+     *  else{
+     *      context.setState(new DecisionToFight())*/
+  }
 
 }

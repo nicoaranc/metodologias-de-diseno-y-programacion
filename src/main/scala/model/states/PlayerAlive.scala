@@ -3,8 +3,21 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class PlayerAlive(context: Gamecontroller) extends GameState(context){
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class PlayerAlive extends AbstractState{
+
+  override def checkHp(): Unit = {
+    val player: PlayerCharacter = context.currentPlayer.get
+    if (player.Hp == 0){
+      context.setPlayer()
+      context.setState(new PlayerTurn())
+    }
+    else{
+      context.setState(new AppPanel())
+    }
+  }
 
 }

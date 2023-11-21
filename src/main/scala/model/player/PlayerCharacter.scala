@@ -1,11 +1,13 @@
 package cl.uchile.dcc.citric
 package model.player
-import model.wild.{Seagull,RoboBall,Chicken}
-import model.norma.{Norma1,Norma2,Norma3,Norma4,Norma5,Norma6}
-import model.traits.{Norma, Units}
+import model.wild.{Chicken, RoboBall, Seagull}
+import model.norma.{Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
+import model.traits.{GameState, Norma, Units}
 import model.panels.home
-import exceptions.{CannotAttack,InvalidPlayerCharacterStats}
+import exceptions.{CannotAttack, InvalidPlayerCharacterStats}
 
+import cl.uchile.dcc.citric.model.controller.Gamecontroller
+import cl.uchile.dcc.citric.model.states.PlayerTurn
 
 import scala.util.Random
 import scala.collection.mutable.ArrayBuffer
@@ -220,6 +222,7 @@ class PlayerCharacter(val name: String,
   def kind_goal_=(NewKindGoal: String): Unit = {
     _kind_goal = NewKindGoal
   }
+
 
   /** Rolls a dice and returns a random number between 1 to 6.
    *

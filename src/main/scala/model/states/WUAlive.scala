@@ -3,8 +3,21 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class WUAlive(context: Gamecontroller) extends GameState(context) {
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class WUAlive extends AbstractState {
+
+  override def checkHp(): Unit = {
+    /** Hp from the wild unit
+     * if (Hp == 0){
+     *    context.setPlayer()
+     *    context.setState(new PlayerTurn())
+     * }
+     * else{
+     *    context.setState(new DecFightPlayerEnd())
+     * }
+     */
+  }
 
 }

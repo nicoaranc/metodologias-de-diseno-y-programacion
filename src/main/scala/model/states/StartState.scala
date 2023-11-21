@@ -3,8 +3,10 @@ package model.states
 
 import model.controller.Gamecontroller
 
-class StartState(context: Gamecontroller) extends GameState (context){
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
+import cl.uchile.dcc.citric.model.traits.GameState
 
-  context.state = this
+class StartState extends AbstractState {
+
 
 }
