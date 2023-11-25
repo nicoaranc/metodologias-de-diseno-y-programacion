@@ -5,7 +5,7 @@ import model.player.PlayerCharacter
 
 import cl.uchile.dcc.citric.model.panels.home
 import cl.uchile.dcc.citric.model.states.StartState
-import cl.uchile.dcc.citric.model.traits.GameState
+import cl.uchile.dcc.citric.model.traits.{GameState, Panel, Units}
 
 import scala.collection.mutable
 import scala.util.Random
@@ -21,6 +21,8 @@ class Gamecontroller {
   private val turnsOrder = mutable.Queue.empty[PlayerCharacter]
 
   var currentPlayer: Option[PlayerCharacter] = None
+
+  var currentPanel: Option[Panel] = None
 
 
   def addPlayer(name: String, maxHp: Int, attack: Int, defense: Int,
@@ -38,12 +40,9 @@ class Gamecontroller {
     state = s
   }
 
-  def setPlayer(): Unit = {
-    /** POR IMPLEMENTAR*/
-  }
 
-  def checkHp(): Unit = {
-    state.checkHp()
+  def checkHp(u: Units): Unit = {
+    state.checkHp(u)
   }
 
   def rollsDice(): Unit = {
@@ -54,16 +53,12 @@ class Gamecontroller {
     state.checkPanel()
   }
 
-  def fight_decision(): Unit = {
-    state.fight_decision()
+  def fight_decision(input: String): Unit = {
+    state.fight_decision(input)
   }
 
-  def defend(): Unit = {
-    state.defend()
-  }
+  def setPlayer(): Unit = {
 
-  def evade(): Unit = {
-    state.evade()
   }
 
   def doEffect(): Unit = {
@@ -75,5 +70,9 @@ class Gamecontroller {
   def onABonusPanel(): Boolean = state.onABonusPanel()
   def onADropPanel(): Boolean = state.onADropPanel()
   def onAEncounterPanel(): Boolean = state.onAEncounterPanel()
+
+  def rival(opp: PlayerCharacter): Unit = {
+    opp
+  }
 
 }

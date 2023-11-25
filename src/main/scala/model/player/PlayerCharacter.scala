@@ -447,14 +447,12 @@ class PlayerCharacter(val name: String,
   }
 
   /** method that stars an attack to other Unit */
-  /**
+
   def attacking_to(u: Units): Unit = {
-    the opponent decides between defend or evade the attack
-      u.defending_to_PlayChar(this)
-    or
-      u.evading_to_PlayChar(this)
+
+
   }
-  */
+
 
   /** Starts the defense of the player.
    *

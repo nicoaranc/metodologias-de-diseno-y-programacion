@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.panels
 
-import cl.uchile.dcc.citric.model.abstractclasses.Panel
+import cl.uchile.dcc.citric.model.abstractclasses.AbsPanel
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
@@ -12,14 +12,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
-class drop extends Panel{
-
-  /** "characters" is the ArrayBuffer of the players that are on the Panel */
-  val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
-
-  /** "nextPanels" is the ArrayBuffer of the panels that they are next in
-   * every direction of the panel */
-  var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
+class drop extends AbsPanel{
 
 
   /** Drops the stars from the player.

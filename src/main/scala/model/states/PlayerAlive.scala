@@ -5,13 +5,12 @@ import model.controller.Gamecontroller
 
 import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
-import cl.uchile.dcc.citric.model.traits.GameState
+import cl.uchile.dcc.citric.model.traits.{GameState, Units}
 
 class PlayerAlive extends AbstractState{
 
-  override def checkHp(): Unit = {
-    val player: PlayerCharacter = context.currentPlayer.get
-    if (player.Hp == 0){
+  override def checkHp(p: Units): Unit = {
+    if (p.Hp == 0){
       context.setPlayer()
       context.setState(new PlayerTurn())
     }

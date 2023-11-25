@@ -20,7 +20,7 @@ trait GameState {
 
   def error(): Unit
 
-  def checkHp(): Unit
+  def checkHp(u: Units): Unit
 
   def rollsDice(): Unit
 
@@ -28,8 +28,7 @@ trait GameState {
 
   def checkPanel(): Unit
 
-  def fight_decision(): Unit
-
+  def fight_decision(input: String): Unit
 
   def doEffect(): Unit
 

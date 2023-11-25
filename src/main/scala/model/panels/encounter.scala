@@ -2,10 +2,12 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
-import model.wild.{RoboBall,Chicken,Seagull}
-import cl.uchile.dcc.citric.model.abstractclasses.{Panel, WildUnit}
-import scala.util.Random
+import model.wild.{Chicken, RoboBall, Seagull}
 
+import cl.uchile.dcc.citric.model.abstractclasses.{AbsPanel, WildUnit}
+import cl.uchile.dcc.citric.model.traits.Units
+
+import scala.util.Random
 import scala.collection.mutable.ArrayBuffer
 
 /** Represents a encounter panel.
@@ -15,29 +17,25 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-class encounter  extends Panel{
+class encounter  extends AbsPanel{
 
-  /** "characters" is the ArrayBuffer of the players that are on the Panel */
-  val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
-
-  /** "nextPanels" is the ArrayBuffer of the panels that they are next in
-   * every direction of the panel */
-  var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
-
-
+  var w_unit: Units = _
 
   /** This method returns a Random Wild Unit to fight */
-  def apply(): WildUnit = {
+  def apply(p: PlayerCharacter): Unit = {
     val a: Random = new Random()
     val b: Int = a.nextInt(3) + 1
     if (b == 1){
-      new RoboBall()
+      w_unit = new RoboBall()
+      p.attacking_to(w_unit)
     }
     else if (b == 2){
-      new Chicken()
+      w_unit = new Chicken()
+      p.attacking_to(w_unit)
     }
     else{
-      new Seagull()
+      w_unit = new Seagull()
+      p.attacking_to(w_unit)
     }
   }
 }

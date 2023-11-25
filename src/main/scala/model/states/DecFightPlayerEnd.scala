@@ -9,7 +9,7 @@ import cl.uchile.dcc.citric.model.traits.GameState
 
 class DecFightPlayerEnd extends AbstractState {
 
-  override def fight_decision(): Unit = {
+  override def fight_decision(input: String): Unit = {
     val player : PlayerCharacter = context.currentPlayer.get
     /** WU attack_to_playChar(player) */
     context.setPlayer()

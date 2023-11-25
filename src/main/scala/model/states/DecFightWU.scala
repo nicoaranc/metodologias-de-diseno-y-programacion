@@ -8,7 +8,7 @@ import cl.uchile.dcc.citric.model.traits.GameState
 
 class DecFightWU extends AbstractState {
 
-  override def fight_decision(): Unit = {
+  override def fight_decision(input: String): Unit = {
     /** context.currentPlayer.get.attacking_to(Unit) */
     context.setState(new WUAlive())
   }

@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.abstractclasses
 
-import model.traits.GameState
+import model.traits.{GameState, Units}
 
 import cl.uchile.dcc.citric.model.controller.Gamecontroller
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
@@ -24,7 +24,7 @@ abstract class AbstractState extends GameState{
     throw new AssertionError("Wrong State")
   }
 
-  def checkHp(): Unit = {
+  def checkHp(u: Units): Unit = {
     this.error()
   }
 
@@ -40,7 +40,7 @@ abstract class AbstractState extends GameState{
     this.error()
   }
 
-  def fight_decision(): Unit = {
+  def fight_decision(input: String): Unit = {
     this.error()
   }
 

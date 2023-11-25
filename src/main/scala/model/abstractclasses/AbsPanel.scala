@@ -3,27 +3,24 @@ package model.abstractclasses
 
 import model.player.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.traits.Panel
+
 import scala.collection.mutable.ArrayBuffer
 
-/** Represents a single cell on a board, known as a Panel.
+/** Represents an Abstract single cell on a board, known as a Panel.
   *
-  * Each panel has its own effect, which can be applied to a character.
-  * In the context of the board game, a panel represents a tile or space that a character lands on
-  * and experiences an effect (e.g., losing stars, fighting an enemy, etc.).
-  * Panels can also be connected to other panels, allowing for the formation of complex board
-  * structures.
   *
   * @author [[https://github.com/r8vnhill Ignacio Slater M.]]
   * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
   */
-abstract class Panel {
+abstract class AbsPanel extends Panel{
 
   /** Array of the characters currently positioned on this panel.
     *
     * In the game, multiple characters might be on the same panel at once, e.g., if multiple players
     * land on the same space.
     */
-  val characters: ArrayBuffer[PlayerCharacter]
+  val characters: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 
   /** An array of panels that are directly connected to this one.
    *
@@ -32,7 +29,7 @@ abstract class Panel {
    *
    * @return a List of Panel instances that are adjacent or connected to this panel.
    */
-  var nextPanels: ArrayBuffer[Panel]
+  var nextPanels: ArrayBuffer[Panel] = new ArrayBuffer[Panel]()
 
 
 
