@@ -4,7 +4,7 @@ package model.states
 import model.controller.Gamecontroller
 
 import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
-import cl.uchile.dcc.citric.model.traits.GameState
+import cl.uchile.dcc.citric.model.traits.{GameState, Units}
 
 
 class PlayerTurn extends AbstractState {

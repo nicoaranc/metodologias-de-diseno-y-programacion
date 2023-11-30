@@ -10,21 +10,29 @@ abstract class AbstractState extends GameState{
 
   protected val context: Gamecontroller = new Gamecontroller()
 
-  def onADropPanel(): Boolean = false
 
-  def onAHomePanel(): Boolean = false
-
-  def onAEncounterPanel(): Boolean = false
-
-  def onABonusPanel(): Boolean = false
-
-  def onANeutralPanel(): Boolean = false
 
   def error(): Unit = {
     throw new AssertionError("Wrong State")
   }
 
-  def checkHp(u: Units): Unit = {
+  def startGame(): Unit = {
+    this.error()
+  }
+
+  def newChapter(): Unit = {
+    this.error()
+  }
+
+  def playTurn(): Unit = {
+    this.error()
+  }
+
+  def normaSixReached(): Unit = {
+    this.error()
+  }
+
+  def checkHp(): Unit = {
     this.error()
   }
 

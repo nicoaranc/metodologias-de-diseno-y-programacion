@@ -8,19 +8,17 @@ trait GameState {
 
   protected val context: Gamecontroller
 
-  def onAHomePanel(): Boolean
-
-  def onANeutralPanel(): Boolean
-
-  def onADropPanel(): Boolean
-
-  def onAEncounterPanel(): Boolean
-
-  def onABonusPanel(): Boolean
-
   def error(): Unit
 
-  def checkHp(u: Units): Unit
+  def startGame(): Unit
+
+  def newChapter(): Unit
+
+  def playTurn(): Unit
+
+  def normaSixReached(): Unit
+
+  def checkHp(): Unit
 
   def rollsDice(): Unit
 

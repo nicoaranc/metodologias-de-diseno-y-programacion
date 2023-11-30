@@ -11,14 +11,9 @@ class AppPanel extends AbstractState{
   override def doEffect(): Unit = {
     val panel: Panel = context.currentPanel.get
     val player: PlayerCharacter = context.currentPlayer.get
-    if (context.onAEncounterPanel()){
-      context.setState(new DecFightWU())
-    }
-    else{
-      panel.apply(player)
-      context.setPlayer()
-      context.setState(new PlayerTurn())
-    }
+    panel.apply(player)
+    context.setPlayer()
+    context.setState(new Chapter())
   }
 
 }

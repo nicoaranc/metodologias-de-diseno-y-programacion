@@ -8,7 +8,7 @@ import cl.uchile.dcc.citric.model.traits.GameState
 
 class RecoveryPhase extends AbstractState {
 
-  var roll_to_leave: Int = 7 - context.chapters
+  private var roll_to_leave: Int = 7 - context.chapters
 
   override def rollsDice(): Unit = {
     if (roll_to_leave <= 1){
@@ -21,7 +21,7 @@ class RecoveryPhase extends AbstractState {
       }
       else{
         context.setPlayer()
-        context.setState(new PlayerTurn())
+        context.setState(new Chapter())
       }
     }
   }

@@ -6,11 +6,10 @@ import model.controller.Gamecontroller
 import cl.uchile.dcc.citric.model.abstractclasses.AbstractState
 import cl.uchile.dcc.citric.model.traits.GameState
 
-class DecFightWU extends AbstractState {
+class PreGame extends AbstractState {
 
-  override def fight_decision(input: String): Unit = {
-    /** context.currentPlayer.get.attacking_to(Unit) */
-    context.setState(new WUAlive())
+  override def startGame(): Unit = {
+    context.setState(new Chapter())
   }
 
 }

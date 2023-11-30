@@ -448,7 +448,7 @@ class PlayerCharacter(val name: String,
 
   /** method that stars an attack to other Unit */
 
-  def attacking_to(u: Units): Unit = {
+  def attacking_to(u: PlayerCharacter): Unit = {
 
 
   }
