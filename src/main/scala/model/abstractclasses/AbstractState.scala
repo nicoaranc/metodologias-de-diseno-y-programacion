@@ -3,17 +3,16 @@ package model.abstractclasses
 
 import model.traits.{GameState, Units}
 
-import cl.uchile.dcc.citric.model.controller.Gamecontroller
+import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
-abstract class AbstractState extends GameState{
+abstract class AbstractState (val context: GameController) extends GameState{
 
-  protected val context: Gamecontroller = new Gamecontroller()
-
-
+  context.state = this
 
   def error(): Unit = {
     throw new AssertionError("Wrong State")
+    /** CAMBIAR */
   }
 
   def startGame(): Unit = {
@@ -48,7 +47,7 @@ abstract class AbstractState extends GameState{
     this.error()
   }
 
-  def fight_decision(input: String): Unit = {
+  def fight_decision(): Unit = {
     this.error()
   }
 

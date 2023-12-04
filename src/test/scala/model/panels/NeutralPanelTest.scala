@@ -18,6 +18,6 @@ class NeutralPanelTest extends munit.FunSuite {
   private val panel1: neutral = new neutral()
 
   test("Apply from Neutral Panel"){
-    panel1.apply()
+    panel1.apply(player1)
   }
 }

@@ -1,12 +1,12 @@
 package cl.uchile.dcc.citric
 package model.traits
 
-import model.controller.Gamecontroller
+import model.controller.GameController
 import model.player.PlayerCharacter
 
 trait GameState {
 
-  protected val context: Gamecontroller
+  val context: GameController
 
   def error(): Unit
 
@@ -26,7 +26,7 @@ trait GameState {
 
   def checkPanel(): Unit
 
-  def fight_decision(input: String): Unit
+  def fight_decision(): Unit
 
   def doEffect(): Unit
 

@@ -4,6 +4,8 @@ package model.wild
 import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
+import scala.util.Random
+
 /** Represents a single Chicken.
  *
  * Each Chicken have the same stats, and the same behaviour.
@@ -93,12 +95,15 @@ class Chicken extends WildUnit{
 
 
   /** method that stars an attack from the Chicken to a PlayerCharacter */
-  /**
   def attacking_to_PlayChar(u: PlayerCharacter): Unit = {
-    the PlayerCharacter makes a decision between defend or evade the Chicken's attack
+    val roll: Int = new Random().nextInt(2) + 1
+    if (roll == 1) {
       u.defending_to_Chicken(this)
-    or
+    }
+    else{
       u.evading_to_Chicken(this)
-  } */
+    }
+
+  }
 
 }

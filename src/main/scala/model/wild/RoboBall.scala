@@ -4,6 +4,8 @@ package model.wild
 import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
+import scala.util.Random
+
 /** Represents a single RoboBall.
  *
  * Each RoboBall have the same stats, and the same behaviour.
@@ -92,13 +94,16 @@ class RoboBall extends WildUnit {
   }
 
   /** method that stars an attack from the RoboBall to a PlayerCharacter */
-  /**
-   * def attacking_to_PlayChar(u: PlayerCharacter): Unit = {
-   * the PlayerCharacter makes a decision between defend or evade the RoboBall's attack
-   * u.defending_to_RoboBall(this)
-   * or
-   * u.evading_to_RoboBall(this)
-   * } */
+
+   def attacking_to_PlayChar(u: PlayerCharacter): Unit = {
+     val roll: Int = new Random().nextInt(2) + 1
+     if (roll == 1){
+       u.defending_to_RoboBall(this)
+     }
+     else{
+       u.evading_to_RoboBall(this)
+     }
+   }
 
 
 }

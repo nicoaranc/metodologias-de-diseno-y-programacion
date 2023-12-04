@@ -24,14 +24,20 @@ class home  extends AbsPanel {
   def apply(player: PlayerCharacter): Unit = {
     if (player.kind_goal == "stars"){
       if (player.stars >= player.goal){
-        player.norma_Clear(this)
+        increase_norma(player)
       }
     }
     else {
       if (player.victories >= player.goal){
-        player.norma_Clear(this)
+        increase_norma(player)
       }
     }
+  }
+
+  private def increase_norma(player: PlayerCharacter): Unit = {
+    val a: Int = player.norma_id
+    player.norma_=(player.NormaArray(a))
+    player.norma_id_=(a + 1)
   }
 
 }

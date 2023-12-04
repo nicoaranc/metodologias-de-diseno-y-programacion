@@ -8,23 +8,30 @@ import cl.uchile.dcc.citric.model.states.PreGame
 import cl.uchile.dcc.citric.model.traits.{GameState, Panel, Units}
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-class Gamecontroller {
+class GameController {
 
   var chapters: Int = 1
 
-  var state: GameState = new PreGame()
+  var turns: Int = 0
+
+  var state: GameState = new PreGame(this)
 
   private var players = List.empty[PlayerCharacter]
 
   private val turnsOrder = mutable.Queue.empty[PlayerCharacter]
+
+  var panel: home = new home()
 
   var currentPlayer: Option[PlayerCharacter] = None
 
   var currentPanel: Option[Panel] = None
 
   var currentRival: Option[PlayerCharacter] = None
+
+
 
 
   def addPlayer(name: String, maxHp: Int, attack: Int, defense: Int,
@@ -42,6 +49,27 @@ class Gamecontroller {
     state = s
   }
 
+  def setRival(): Unit = {
+    var rivals: ArrayBuffer[PlayerCharacter] = currentPanel.get.characters
+    val panel: Panel = currentPanel.get
+    val position: Int = rivals.indexOf(currentPlayer.get)
+    rivals.remove(position)
+    val number_rivals: Int = rivals.size
+    val roll: Int = new Random().nextInt(number_rivals)
+    currentRival = Some(panel.characters(roll))
+  }
+
+  def setPanel(): Unit = {
+    val player: PlayerCharacter = currentPlayer.get
+    val panel: Panel = currentPanel.get
+    val number_path: Int = panel.nextPanels.size
+    panel.removeCharacter(player)
+    val rand: Random = new Random()
+    val roll: Int = rand.nextInt(number_path)
+    currentPanel = Some(panel.nextPanels(roll))
+    currentPanel.get.addCharacter(player)
+  }
+
 
   def startGame(): Unit = {
     state.startGame()
@@ -53,6 +81,10 @@ class Gamecontroller {
 
   def playTurn(): Unit = {
     state.playTurn()
+  }
+
+  def starsForPlayer(): Unit = {
+    state.starsForPlayer()
   }
 
   def checkHp(): Unit = {
@@ -67,8 +99,8 @@ class Gamecontroller {
     state.checkPanel()
   }
 
-  def fight_decision(input: String): Unit = {
-    state.fight_decision(input)
+  def fight_decision(): Unit = {
+    state.fight_decision()
   }
 
   def setPlayer(): Unit = {
@@ -80,9 +112,5 @@ class Gamecontroller {
   }
 
 
-
-  def rival(opp: PlayerCharacter): Unit = {
-    opp
-  }
 
 }

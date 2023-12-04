@@ -2,11 +2,11 @@ package cl.uchile.dcc.citric
 package model.player
 import model.wild.{Chicken, RoboBall, Seagull}
 import model.norma.{Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
-import model.traits.{GameState, Norma, Units}
+import model.traits.{GameState, Norma, Panel, Units}
 import model.panels.home
 import exceptions.{CannotAttack, InvalidPlayerCharacterStats}
 
-import cl.uchile.dcc.citric.model.controller.Gamecontroller
+import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.states.PlayerTurn
 
 import scala.util.Random
@@ -78,11 +78,8 @@ class PlayerCharacter(val name: String,
    * @param NewHp The new Hit Points of the player.
    */
   def Hp_=(NewHp: Int): Unit = {
-    if (NewHp <= maxHp){
+    if (NewHp <= maxHp && NewHp >= 0){
       _Hp = NewHp
-    }
-    else{
-      throw new InvalidPlayerCharacterStats("The new Hp value exceeds the maxHp of the player")
     }
   }
 
@@ -100,7 +97,9 @@ class PlayerCharacter(val name: String,
    * @param NewStars The new stars of the player.
    */
   def stars_=(NewStars: Int): Unit = {
-    _stars = NewStars
+    if (NewStars >= 0){
+      _stars = NewStars
+    }
   }
 
   /** current Norma of the player, at the beginning of the game is 1 */
@@ -146,7 +145,9 @@ class PlayerCharacter(val name: String,
    * @param NewVictories The new victories count of the player.
    */
   def victories_=(NewVictories: Int): Unit = {
-    _victories = NewVictories
+    if (NewVictories > victories){
+      _victories = NewVictories
+    }
   }
 
   /** current Recovery status */
@@ -235,6 +236,20 @@ class PlayerCharacter(val name: String,
   }
 
 
+  def setGoal(s: String): Unit = {
+    if (s == "stars"){
+      val a: Int = NormaArray(norma_id).stars_goal
+      kind_goal_=(s)
+      goal_=(a)
+    }
+    else{
+      val a: Int = NormaArray(norma_id).victories_goal
+      kind_goal_=(s)
+      goal_=(a)
+    }
+  }
+
+
   /** checks if the player can stop in the Home panel.
    *
    * This function might be invoked when the player
@@ -242,7 +257,7 @@ class PlayerCharacter(val name: String,
    *
    * @param panel The home panel to check.
    */
-  def canStop(panel: home): Boolean = {
+  def canStop(panel: Panel): Boolean = {
     if (panelOwned == panel){
       return true
     }
@@ -448,8 +463,14 @@ class PlayerCharacter(val name: String,
 
   /** method that stars an attack to other Unit */
 
-  def attacking_to(u: PlayerCharacter): Unit = {
-
+  def attacking_to(u: Units): Unit = {
+    val roll: Int = new Random().nextInt(2) + 1
+    if (roll == 1){
+      u.defending_to_PlayChar(this)
+    }
+    else{
+      u.evading_to_PlayChar(this)
+    }
 
   }
 
@@ -623,16 +644,5 @@ class PlayerCharacter(val name: String,
   }
 
 
-  /** Increase the Norma of the player.
-   *
-   * This function might be invoked when the Norma Check is done.
-   *
-   * @param panel The home panel where the Norma Check is done.
-   */
-  def norma_Clear(panel: home): Unit = {
-    val a: Int = norma_id
-    norma_= (NormaArray(a))
-    norma_id_= (a + 1)
-  }
 
 }

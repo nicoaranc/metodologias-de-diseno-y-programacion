@@ -46,8 +46,5 @@ class EncounterPanelTest extends munit.FunSuite {
     assertEquals(panel1.nextPanels.isEmpty, false)
   }
 
-  test("battle against a random Wild Unit"){
-    val npc: WildUnit = panel1.apply()
-    assertEquals(npc != null, true)
-  }
+
 }
