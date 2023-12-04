@@ -3,6 +3,8 @@ package model.norma
 
 import model.traits.Norma
 
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractNorma
+
 /** Represents the 1st Norma.
  *
  * The 1st Norma don't have any goals, because is the current Norma of
@@ -11,7 +13,7 @@ import model.traits.Norma
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-class Norma1 extends Norma{
+class Norma1 extends AbstractNorma{
 
   /** The Norma1 is the initial level of the player,
    * this norma doesn't have a stars or victories goal*/

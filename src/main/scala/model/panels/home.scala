@@ -2,7 +2,9 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import cl.uchile.dcc.citric.model.abstractclasses.AbsPanel
+import cl.uchile.dcc.citric.model.events.NormaSixEvent
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
+import cl.uchile.dcc.citric.model.traits.Norma
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -38,6 +40,10 @@ class home  extends AbsPanel {
     val a: Int = player.norma_id
     player.norma_=(player.NormaArray(a))
     player.norma_id_=(a + 1)
+    val level: Norma = player.norma
+    if (level.normaSix()) {
+      player.notifyObservers(new NormaSixEvent())
+    }
   }
 
 }

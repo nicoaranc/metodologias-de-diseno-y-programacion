@@ -2,11 +2,13 @@ package cl.uchile.dcc.citric
 package model.player
 import model.wild.{Chicken, RoboBall, Seagull}
 import model.norma.{Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
-import model.traits.{GameState, Norma, Panel, Units}
+import model.traits.{GameState, Norma, Observer, Panel, Subject, Units}
 import model.panels.home
 import exceptions.{CannotAttack, InvalidPlayerCharacterStats}
 
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractSubject
 import cl.uchile.dcc.citric.model.controller.GameController
+import cl.uchile.dcc.citric.model.events.NormaSixEvent
 import cl.uchile.dcc.citric.model.states.PlayerTurn
 
 import scala.util.Random
@@ -53,7 +55,7 @@ class PlayerCharacter(val name: String,
               val defense: Int,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
-              val panelOwned: home) extends Units{
+              val panelOwned: home) extends AbstractSubject[NormaSixEvent] with Units{
 
   /** instances of each Norma,
    * specifies each possible Norma to reach
@@ -225,6 +227,8 @@ class PlayerCharacter(val name: String,
   }
 
 
+
+
   /** Rolls a dice and returns a random number between 1 to 6.
    *
    * This function might be invoked in combat, when a player is
@@ -346,7 +350,6 @@ class PlayerCharacter(val name: String,
   def defeated(u: Units): Unit = {
     u.win_against_PlayChar(this)
     dropStars_battle(u)
-    Recovery_=(true)
     Can_play_=(false)
   }
 

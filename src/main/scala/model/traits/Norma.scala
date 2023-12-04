@@ -15,4 +15,6 @@ trait Norma {
 
   /** the victories goal of the norma */
   val victories_goal: Int
+
+  def normaSix(): Boolean
 }

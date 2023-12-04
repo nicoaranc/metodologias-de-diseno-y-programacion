@@ -3,15 +3,19 @@ package model.controller
 
 import model.player.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.events.NormaSixEvent
+import cl.uchile.dcc.citric.model.norma.Norma6
 import cl.uchile.dcc.citric.model.panels.home
 import cl.uchile.dcc.citric.model.states.PreGame
-import cl.uchile.dcc.citric.model.traits.{GameState, Panel, Units}
+import cl.uchile.dcc.citric.model.traits.{GameState, Norma, Observer, Panel, Subject, Units}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-class GameController {
+class GameController extends Observer[NormaSixEvent]{
+
+  private var finishedGame: Boolean = false
 
   var chapters: Int = 1
 
@@ -31,7 +35,14 @@ class GameController {
 
   var currentRival: Option[PlayerCharacter] = None
 
+  private var _winner: Option[PlayerCharacter] = None
 
+  def winner: Option[PlayerCharacter] = _winner
+
+
+  def update(observable: Subject[NormaSixEvent], value: NormaSixEvent): Unit = {
+    _winner = currentPlayer
+  }
 
 
   def addPlayer(name: String, maxHp: Int, attack: Int, defense: Int,
@@ -70,6 +81,11 @@ class GameController {
     currentPanel.get.addCharacter(player)
   }
 
+  def normaSixReached(): Unit = {
+    if (finishedGame){
+      state.normaSixReached()
+    }
+  }
 
   def startGame(): Unit = {
     state.startGame()

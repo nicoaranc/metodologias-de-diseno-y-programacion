@@ -12,6 +12,7 @@ class RecoveryPhase (context: GameController) extends AbstractState (context){
     if (context.currentPlayer.get.Recovery) {
       val roll_to_leave: Int = 7 - context.chapters
       if (roll_to_leave <= 1){
+        context.currentPlayer.get.Recovery_=(false)
         context.setState(new PlayerCanPlay(context))
       }
       else{
@@ -21,16 +22,17 @@ class RecoveryPhase (context: GameController) extends AbstractState (context){
     else{
       val roll_to_leave: Int = 6
       leave_recovery(roll_to_leave)
-      context.currentPlayer.get.Recovery_=(true)
     }
   }
 
   def leave_recovery(a: Int): Unit = {
     val rollNumber: Int = context.currentPlayer.get.rollDice()
     if (rollNumber >= a) {
+      context.currentPlayer.get.Recovery_=(false)
       context.setState(new PlayerCanPlay(context))
     }
     else {
+      context.currentPlayer.get.Recovery_=(true)
       context.setPlayer()
       context.setState(new Chapter(context))
     }
