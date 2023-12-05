@@ -221,6 +221,17 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(playerTest.observers.isEmpty, false)
   }
 
+  test("Setting a new Goal"){
+    val testPlayer: PlayerCharacter = new PlayerCharacter("Pedro", 1,1, 1,
+                                            3, new Random(), new Home())
+    assertEquals(testPlayer.kind_goal, "")
+    assertEquals(testPlayer.goal, 0)
+    testPlayer.setGoal()
+    assertEquals(testPlayer.kind_goal == "", false)
+    assertEquals(testPlayer.goal == 0, false)
+
+  }
+
 
 
 }

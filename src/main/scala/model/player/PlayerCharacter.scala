@@ -6,7 +6,7 @@ import model.traits.{GameState, Norma, Observer, Panel, Subject, Units}
 import model.panels.Home
 import exceptions.CannotAttack
 
-import cl.uchile.dcc.citric.model.abstractclasses.AbstractSubject
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractFighter
 import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.events.NormaSixEvent
 import cl.uchile.dcc.citric.model.states.PlayerTurn
@@ -55,7 +55,32 @@ class PlayerCharacter(val name: String,
               val defense: Int,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
-              val panelOwned: Home) extends AbstractSubject[NormaSixEvent] with Units{
+              val panelOwned: Home) extends AbstractFighter with Subject[NormaSixEvent]{
+
+  /** the List where observers observes the Subject */
+  var observers: List[Observer[NormaSixEvent]] = List.empty
+
+  /** adds an observer to the Subject's observers List.
+   *
+   * This function might be invoked when the game starts.
+   *
+   * @param observer The observer to add.
+   * */
+  def addObserver(observer: Observer[NormaSixEvent]): Unit = {
+    observers = observer :: observers
+  }
+
+  /** notifies every observer in the Subject's observers List.
+   *
+   * This function might be invoked when a player reach the 6th Norma.
+   *
+   * @param value The event to notify.
+   * */
+  def notifyObservers(value: NormaSixEvent): Unit = {
+    for (observer <- observers) {
+      observer.update(this, value)
+    }
+  }
 
   /** instances of each Norma,
    * specifies each possible Norma to reach
@@ -231,6 +256,7 @@ class PlayerCharacter(val name: String,
   }
 
 
+  /** the number of the chapter when the player enters to the RecoveryPhase */
   var recoveryChapter: Int = 0
 
 
@@ -245,15 +271,21 @@ class PlayerCharacter(val name: String,
   }
 
 
-  def setGoal(s: String): Unit = {
-    if (s == "stars"){
+  /** Sets a new goal for the player.
+   *
+   * This function might be invoked when the NormaCheck is done
+   *
+   */
+  def setGoal(): Unit = {
+    val roll: Int = new Random().nextInt(2) + 1
+    if (roll == 1){
       val a: Int = NormaArray(norma_id).stars_goal
-      kind_goal_=(s)
+      kind_goal_=("stars")
       goal_=(a)
     }
     else{
       val a: Int = NormaArray(norma_id).victories_goal
-      kind_goal_=(s)
+      kind_goal_=("victories")
       goal_=(a)
     }
   }
@@ -482,6 +514,7 @@ class PlayerCharacter(val name: String,
 
   }
 
+  /** Throws an Exception if the fight isn't possible */
   private def impossibleToFight(u: Units): Unit = {
     if (u.dead()) {
       throw new CannotAttack("Current player can't attack")
@@ -508,6 +541,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** makes the defense of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Unit (wildUnit).
+   */
   private def defending_to(u: Units): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -564,6 +603,12 @@ class PlayerCharacter(val name: String,
     }
   }
 
+  /** makes the evasion of the player.
+   *
+   * This function might be invoked when the battle starts.
+   *
+   * @param u The attacking Unit (wildUnit).
+   */
   private def evading_to(u: Units): Unit = {
     if (Can_play && !u.dead()) {
       val atk: Int = u.attacking()
@@ -603,7 +648,5 @@ class PlayerCharacter(val name: String,
   def evading_to_Seagull(u: Seagull): Unit = {
     evading_to(u)
   }
-
-
 
 }

@@ -15,4 +15,6 @@ import cl.uchile.dcc.citric.model.controller.GameController
 
 class EndGame (context: GameController) extends AbstractState (context){
 
+
+
 }

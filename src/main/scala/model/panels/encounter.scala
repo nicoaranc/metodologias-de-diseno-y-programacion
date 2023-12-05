@@ -20,10 +20,22 @@ import scala.collection.mutable.ArrayBuffer
 
 class Encounter extends AbsPanel{
 
+  /** the chicken on the panel */
   var chicken: Option[Chicken] = None
+
+  /** the seagull on the panel */
   var seagull: Option[Seagull] = None
+
+  /** the roboBall on the panel */
   var roboBall: Option[RoboBall] = None
 
+
+  /** Makes a Fight between a player and a Seagull
+   *
+   * This function might be invoked when the panels applies his effect.
+   *
+   * @param p The player on the panel.
+   */
   private def seagullFights(p: PlayerCharacter): Unit = {
     p.attacking_to(seagull.get)
     if (seagull.get.dead()) {
@@ -38,6 +50,12 @@ class Encounter extends AbsPanel{
     }
   }
 
+  /** Makes a Fight between a player and a Chicken
+   *
+   * This function might be invoked when the panels applies his effect.
+   *
+   * @param p The player on the panel.
+   */
   private def chickenFights(p: PlayerCharacter): Unit = {
     p.attacking_to(chicken.get)
     if (chicken.get.dead()) {
@@ -52,6 +70,12 @@ class Encounter extends AbsPanel{
     }
   }
 
+  /** Makes a Fight between a player and a RoboBall
+   *
+   * This function might be invoked when the panels applies his effect.
+   *
+   * @param p The player on the panel.
+   */
   private def roboBallFights(p: PlayerCharacter): Unit = {
     p.attacking_to(roboBall.get)
     if (roboBall.get.dead()) {
@@ -67,7 +91,13 @@ class Encounter extends AbsPanel{
   }
 
 
-  /** This method returns a Random Wild Unit to fight */
+  /** Initialize a fight between a player and a WildUnit, and also
+   * sets the Wild Unit on the panel is there no Wild Unit yet
+   *
+   * This function might be invoked when the panels applies his effect.
+   *
+   * @param p The player on the panel.
+   */
   def apply(p: PlayerCharacter): Unit = {
     if (chicken.isEmpty && seagull.isEmpty && roboBall.isEmpty){
       val a: Random = new Random()

@@ -98,14 +98,7 @@ trait GameState {
    * */
   def doEffect(): Unit
 
-  /** sets a new State for the GameController
-   *
-   * This function might be invoked when
-   * a state transition happens
-   *
-   * @param state The new state to set
-   * */
-  def setState(state: GameState): Unit
+
 
 
 }

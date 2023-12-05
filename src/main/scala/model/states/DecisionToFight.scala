@@ -41,4 +41,6 @@ class DecisionToFight (context: GameController) extends AbstractState (context) 
     }
   }
 
+
+
 }

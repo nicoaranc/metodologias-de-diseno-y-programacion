@@ -15,28 +15,11 @@ import scala.util.Random
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-abstract class WildUnit extends Units{
+abstract class WildUnit extends AbstractFighter {
 
-  /** the current Hit Points of the wild unit */
-  var Hp: Int
-
-  /** the max Hit Points of the wild unit */
-  val maxHp: Int
-
-  /** the attack stat of the wild unit */
-  val attack: Int
-
-  /** the defense stat of the wild unit */
-  val defense: Int
-
-  /** the evasion stat of the wild unit */
-  val evasion: Int
-
-  /** the current stars of the wild unit */
-  var stars: Int
 
   /** to give random numbers, mainly for the battle */
-  val random_wu: Random = new Random()
+  private val random_wu: Random = new Random()
 
 
   /** Checks if the Wild Unit is dead.
@@ -58,7 +41,7 @@ abstract class WildUnit extends Units{
    * This might be invoked when the wild unit is attacking, defending, or evading.
    *
    */
-  def rollDice_wu(): Int = {
+  private def rollDice_wu(): Int = {
     random_wu.nextInt(6) + 1
   }
 
@@ -140,12 +123,7 @@ abstract class WildUnit extends Units{
       defending(atk)
     }
     else {
-      if (!u.Can_play) {
-        throw new CannotAttack("Current player can't attack")
-      }
-      else{
-        throw new CannotAttack("The Wild Unit is dead")
-      }
+      impossibleToFight(u)
     }
   }
 
@@ -161,12 +139,16 @@ abstract class WildUnit extends Units{
       evading(atk)
     }
     else {
-      if (!u.Can_play) {
-        throw new CannotAttack("Current player can't attack")
-      }
-      else {
-        throw new CannotAttack("The Wild Unit is dead")
-      }
+      impossibleToFight(u)
+    }
+  }
+
+  private def impossibleToFight(u: PlayerCharacter): Unit = {
+    if (!u.Can_play) {
+      throw new CannotAttack("Current player can't attack")
+    }
+    else if (dead()) {
+      throw new CannotAttack("Rival is in Recovery phase")
     }
   }
 

@@ -21,6 +21,7 @@ abstract class AbstractState (val context: GameController) extends GameState{
   /** sets the context's state */
   context.state = this
 
+
   /** throws an InvalidTransition Exception
    *
    * This function might be invoked when
@@ -121,15 +122,5 @@ abstract class AbstractState (val context: GameController) extends GameState{
     this.error()
   }
 
-  /** sets a new State for the GameController
-   *
-   * This function might be invoked when
-   * a state transition happens
-   *
-   * @param state The new state to set
-   * */
-  def setState(state: GameState): Unit = {
-    context.setState(state)
-  }
 
 }

@@ -55,8 +55,8 @@ class EncounterPanelTest extends munit.FunSuite {
     testPanel.chicken = Some(new Chicken())
     testPanel.apply(testPlayer)
     assertEquals(testPanel.chicken, None)
-    val testPlayer2: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -1,
-      -1, new Random(), new Home())
+    val testPlayer2: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -1000000,
+      -1000000, new Random(), new Home())
     testPanel.chicken = Some(new Chicken())
     testPanel.apply(testPlayer2)
     assertEquals(testPlayer2.Hp, 0)
@@ -69,8 +69,8 @@ class EncounterPanelTest extends munit.FunSuite {
     testPanel.roboBall = Some(new RoboBall())
     testPanel.apply(testPlayer3)
     assertEquals(testPanel.roboBall, None)
-    val testPlayer4: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -1000,
-      -10000, new Random(), new Home())
+    val testPlayer4: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -100000,
+      -10000000, new Random(), new Home())
     testPanel.roboBall = Some(new RoboBall())
     testPanel.apply(testPlayer4)
     assertEquals(testPlayer4.Hp, 0)
@@ -83,8 +83,8 @@ class EncounterPanelTest extends munit.FunSuite {
     testPanel.seagull = Some(new Seagull())
     testPanel.apply(testPlayer)
     assertEquals(testPanel.seagull, None)
-    val testPlayer2: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -1,
-      -1, new Random(), new Home())
+    val testPlayer2: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -10000,
+      -10000, new Random(), new Home())
     testPanel.seagull = Some(new Seagull())
     testPanel.apply(testPlayer2)
     assertEquals(testPlayer2.Hp, 0)

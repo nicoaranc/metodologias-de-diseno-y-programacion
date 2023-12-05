@@ -5,12 +5,24 @@ import cl.uchile.dcc.citric.model.panels.{Home, Neutral}
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 import cl.uchile.dcc.citric.model.traits.Panel
 
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 class GameControllerTest extends munit.FunSuite {
 
   test("Setting all the players"){
-
+    val controller: GameController = new GameController()
+    val player1: PlayerCharacter = new PlayerCharacter("Juan", 1, 1, 1, 1, new Random(), new Home())
+    val player2: PlayerCharacter = new PlayerCharacter("Diego", 1, 1, 1, 1, new Random(), new Home())
+    val player3: PlayerCharacter = new PlayerCharacter("Martín", 1, 1, 1, 1, new Random(), new Home())
+    val player4: PlayerCharacter = new PlayerCharacter("Pedro", 1, 1, 1, 1, new Random(), new Home())
+    val playersArray: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
+    playersArray.addOne(player1)
+    playersArray.addOne(player2)
+    playersArray.addOne(player3)
+    playersArray.addOne(player4)
+    controller.setOrder(playersArray)
+    assertEquals(controller.currentPlayer.isDefined, true)
   }
 
   test("Setting Rivals"){

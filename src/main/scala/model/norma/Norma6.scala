@@ -19,6 +19,12 @@ class Norma6 extends AbstractNorma{
   /** stars goal of the Norma to reach */
   val victories_goal = 14
 
+  /** The current Norma is the 6th
+   *
+   * This might be invoked when a player reach a new Norma level.
+   *
+   */
+
   override def normaSix(): Boolean = {
     true
   }
