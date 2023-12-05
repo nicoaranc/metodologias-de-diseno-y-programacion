@@ -3,8 +3,8 @@ package model.player
 import model.wild.{Chicken, RoboBall, Seagull}
 import model.norma.{Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
 import model.traits.{GameState, Norma, Observer, Panel, Subject, Units}
-import model.panels.home
-import exceptions.{CannotAttack, InvalidPlayerCharacterStats}
+import model.panels.Home
+import exceptions.CannotAttack
 
 import cl.uchile.dcc.citric.model.abstractclasses.AbstractSubject
 import cl.uchile.dcc.citric.model.controller.GameController
@@ -55,7 +55,7 @@ class PlayerCharacter(val name: String,
               val defense: Int,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
-              val panelOwned: home) extends AbstractSubject[NormaSixEvent] with Units{
+              val panelOwned: Home) extends AbstractSubject[NormaSixEvent] with Units{
 
   /** instances of each Norma,
    * specifies each possible Norma to reach
@@ -184,6 +184,10 @@ class PlayerCharacter(val name: String,
     _Can_play = NewCanPlay
   }
 
+  def dead: Boolean = {
+    !Can_play
+  }
+
 
   /** Array that contains all the instances of each Norma */
   val NormaArray: ArrayBuffer[Norma] = new ArrayBuffer[Norma]()
@@ -227,6 +231,7 @@ class PlayerCharacter(val name: String,
   }
 
 
+  var recoveryChapter: Int = 0
 
 
   /** Rolls a dice and returns a random number between 1 to 6.
@@ -276,7 +281,7 @@ class PlayerCharacter(val name: String,
    *
    * @param u The player defeated by the winner of the battle.
    */
-  def victories_perBattle(u: PlayerCharacter): Unit = {
+  private def victories_perBattle(u: PlayerCharacter): Unit = {
     val a: Int = victories + 2
     victories_=(a)
   }
@@ -288,7 +293,7 @@ class PlayerCharacter(val name: String,
    *
    * @param u The opponent that defeated the player.
    */
-  def dropStars_battle(u: Units): Unit = {
+  private def dropStars_battle(u: Units): Unit = {
     val a: Int = stars - stars/2
     stars_=(a)
   }
@@ -312,7 +317,7 @@ class PlayerCharacter(val name: String,
    *
    * @param u The Chicken defeated.
    */
-  def winStars_battle(u: Chicken): Unit = {
+  private def winStars_battle(u: Chicken): Unit = {
     val a: Int = stars + u.stars + 3
     stars_=(a)
   }
@@ -324,7 +329,7 @@ class PlayerCharacter(val name: String,
    *
    * @param u The RoboBall defeated.
    */
-  def winStars_battle(u: RoboBall): Unit = {
+  private def winStars_battle(u: RoboBall): Unit = {
     val a: Int = stars + u.stars + 2
     stars_=(a)
   }
@@ -336,7 +341,7 @@ class PlayerCharacter(val name: String,
    *
    * @param u The Seagull defeated.
    */
-  def winStars_battle(u: Seagull): Unit = {
+  private def winStars_battle(u: Seagull): Unit = {
     val a: Int = stars + u.stars + 2
     stars_=(a)
   }
@@ -477,6 +482,15 @@ class PlayerCharacter(val name: String,
 
   }
 
+  private def impossibleToFight(u: Units): Unit = {
+    if (u.dead()) {
+      throw new CannotAttack("Current player can't attack")
+    }
+    else if (!Can_play){
+      throw new CannotAttack("Rival is in Recovery phase")
+    }
+  }
+
 
   /** Starts the defense of the player.
    *
@@ -490,12 +504,17 @@ class PlayerCharacter(val name: String,
       defending(atk)
     }
     else {
-      if (!u.Can_play) {
-        throw new CannotAttack("Current player can't attack")
-      }
-      else {
-        throw new CannotAttack("Rival is in Recovery phase")
-      }
+      impossibleToFight(u)
+    }
+  }
+
+  private def defending_to(u: Units): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      defending(atk)
+    }
+    else {
+      impossibleToFight(u)
     }
   }
 
@@ -506,18 +525,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking Chicken.
    */
   def defending_to_Chicken(u: Chicken): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      defending(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    defending_to(u)
   }
 
   /** Starts the defense of the player.
@@ -527,18 +535,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking RoboBall.
    */
   def defending_to_RoboBall(u: RoboBall): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      defending(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    defending_to(u)
   }
 
   /** Starts the defense of the player.
@@ -548,18 +545,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking Seagull.
    */
   def defending_to_Seagull(u: Seagull): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      defending(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    defending_to(u)
   }
 
   /** Starts the evasion of the player.
@@ -574,12 +560,17 @@ class PlayerCharacter(val name: String,
       evading(atk)
     }
     else {
-      if (!u.Can_play) {
-        throw new CannotAttack("Current player can't attack")
-      }
-      else {
-        throw new CannotAttack("Rival is in Recovery phase")
-      }
+      impossibleToFight(u)
+    }
+  }
+
+  private def evading_to(u: Units): Unit = {
+    if (Can_play && !u.dead()) {
+      val atk: Int = u.attacking()
+      evading(atk)
+    }
+    else {
+      impossibleToFight(u)
     }
   }
 
@@ -590,18 +581,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking Chicken.
    */
   def evading_to_Chicken(u: Chicken): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      evading(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    evading_to(u)
   }
 
   /** Starts the evasion of the player.
@@ -611,18 +591,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking RoboBall.
    */
   def evading_to_RoboBall(u: RoboBall): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      evading(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    evading_to(u)
   }
 
   /** Starts the evasion of the player.
@@ -632,18 +601,7 @@ class PlayerCharacter(val name: String,
    * @param u The attacking Seagull.
    */
   def evading_to_Seagull(u: Seagull): Unit = {
-    if (Can_play && !u.dead()) {
-      val atk: Int = u.attacking()
-      evading(atk)
-    }
-    else {
-      if (!Can_play) {
-        throw new CannotAttack("Current player is in Recovery phase")
-      }
-      else {
-        throw new CannotAttack("The wild unit is dead")
-      }
-    }
+    evading_to(u)
   }
 
 

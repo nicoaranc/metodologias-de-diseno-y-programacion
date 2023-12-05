@@ -94,7 +94,12 @@ class Chicken extends WildUnit{
   }
 
 
-  /** method that stars an attack from the Chicken to a PlayerCharacter */
+  /** delegates the defense/evasion from the playerCharacter to the chicken's attack.
+   *
+   * This function might be invoked during a fight.
+   *
+   * @param u The player to attack.
+   * */
   def attacking_to_PlayChar(u: PlayerCharacter): Unit = {
     val roll: Int = new Random().nextInt(2) + 1
     if (roll == 1) {

@@ -3,7 +3,7 @@ package model.abstractclasses
 
 import model.wild.{RoboBall,Chicken,Seagull}
 import model.player.PlayerCharacter
-import model.panels.home
+import model.panels.Home
 import scala.util.Random
 
 class WildUnitTest extends munit.FunSuite {
@@ -46,7 +46,7 @@ class WildUnitTest extends munit.FunSuite {
     val npc1: WildUnit = new RoboBall()
     val a: Int = npc1.Hp
 
-    val panel1: home = new home()
+    val panel1: Home = new Home()
     val player1 = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
 
     npc1.defending_to_PlayChar(player1)
@@ -58,10 +58,10 @@ class WildUnitTest extends munit.FunSuite {
     val npc1: WildUnit = new RoboBall()
 
 
-    val panel: home = new home()
+    val panel: Home = new Home()
     val player = new PlayerCharacter("Pedro", 5, 10000, 1, -1, new Random(11), panel)
 
-    val panel2: home = new home()
+    val panel2: Home = new Home()
     val player2 = new PlayerCharacter("Pedro2", 5, -10000, 1, -1, new Random(11), panel2)
 
     val a: Int = npc1.Hp

@@ -12,7 +12,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
-class drop extends AbsPanel{
+class Drop extends AbsPanel{
 
 
   /** Drops the stars from the player.

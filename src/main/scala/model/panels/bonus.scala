@@ -13,7 +13,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
-class bonus extends AbsPanel{
+class Bonus extends AbsPanel{
 
 
   /** Gives stars to the player.

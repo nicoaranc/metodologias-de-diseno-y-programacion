@@ -4,18 +4,18 @@ package model.states
 import model.traits.{GameState, Panel}
 
 import cl.uchile.dcc.citric.model.controller.GameController
-import cl.uchile.dcc.citric.model.panels.{home, neutral}
+import cl.uchile.dcc.citric.model.panels.{Home, Neutral}
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.util.Random
 
 class DecisionToFightTest extends munit.FunSuite {
 
-  val panel: Panel = new neutral()
+  val panel: Panel = new Neutral()
   val state: GameState = new DecisionToFight(new GameController())
   val controller: GameController = state.context
-  val player: PlayerCharacter = new PlayerCharacter("Juan", 3, 1, 1, 1, new Random(), new home())
-  val player2: PlayerCharacter = new PlayerCharacter("José", 3, 1, 1, 1, new Random(), new home())
+  val player: PlayerCharacter = new PlayerCharacter("Juan", 3, 1, 1, 1, new Random(), new Home())
+  val player2: PlayerCharacter = new PlayerCharacter("José", 3, 1, 1, 1, new Random(), new Home())
   panel.addCharacter(player)
   panel.addCharacter(player2)
 

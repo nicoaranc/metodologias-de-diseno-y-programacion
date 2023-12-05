@@ -15,7 +15,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-class home  extends AbsPanel {
+class Home  extends AbsPanel {
 
   /** Makes the Norma Check, and if it's possible the Norma Clear.
    *

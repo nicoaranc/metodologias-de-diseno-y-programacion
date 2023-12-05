@@ -2,12 +2,12 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
-import model.panels.{bonus,home}
+import model.panels.{Bonus,Home}
 import scala.util.Random
 
 class BonusPanelTest extends munit.FunSuite {
-  val panel_a: home = new home()
-  val panel_b: home = new home()
+  val panel_a: Home = new Home()
+  val panel_b: Home = new Home()
 
   val player1: PlayerCharacter = new PlayerCharacter("Juan",6,7,
     4,6, new Random(11),panel_a)
@@ -16,7 +16,7 @@ class BonusPanelTest extends munit.FunSuite {
 
   player2.stars = 7
 
-  val panel1: bonus = new bonus()
+  val panel1: Bonus = new Bonus()
 
 
   /** tests of "give_stars" method */

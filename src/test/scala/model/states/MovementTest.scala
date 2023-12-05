@@ -4,7 +4,7 @@ package model.states
 import model.traits.{GameState, Panel}
 
 import cl.uchile.dcc.citric.model.controller.GameController
-import cl.uchile.dcc.citric.model.panels.{home, neutral}
+import cl.uchile.dcc.citric.model.panels.{Home, Neutral}
 import cl.uchile.dcc.citric.model.player.PlayerCharacter
 
 import scala.util.Random
@@ -14,15 +14,15 @@ class MovementTest extends munit.FunSuite {
   val state: GameState = new Movement(new GameController())
   val controller: GameController = state.context
   val player: PlayerCharacter = new PlayerCharacter("Gero", 3, 2, 3, 1,
-    new Random(), new home())
+    new Random(), new Home())
 
-  val panel1: Panel = new neutral()
-  val panel2: Panel = new neutral()
-  val panel3: Panel = new neutral()
-  val panel4: Panel = new neutral()
-  val panel5: Panel = new neutral()
-  val panel6: Panel = new neutral()
-  val panel7: Panel = new neutral()
+  val panel1: Panel = new Neutral()
+  val panel2: Panel = new Neutral()
+  val panel3: Panel = new Neutral()
+  val panel4: Panel = new Neutral()
+  val panel5: Panel = new Neutral()
+  val panel6: Panel = new Neutral()
+  val panel7: Panel = new Neutral()
 
 
   /** This construction of the board of the game

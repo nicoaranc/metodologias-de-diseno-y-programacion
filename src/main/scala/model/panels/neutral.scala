@@ -13,7 +13,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-class neutral extends AbsPanel {
+class Neutral extends AbsPanel {
 
 
   /** this method doesn't make any kind of effect */

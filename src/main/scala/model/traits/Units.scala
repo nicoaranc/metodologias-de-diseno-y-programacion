@@ -32,6 +32,7 @@ trait Units {
   /** current stars of the Unit */
   var stars: Int
 
+  def dead(): Boolean
   /** give stars to the Unit.
    *
    * This function might be invoked when the Unit wins

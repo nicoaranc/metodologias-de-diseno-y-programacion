@@ -1,6 +1,6 @@
 package cl.uchile.dcc.citric
 package exceptions
-import model.panels.home
+import model.panels.Home
 import model.player.PlayerCharacter
 import model.abstractclasses.WildUnit
 import model.wild.{Chicken,RoboBall,Seagull}
@@ -8,10 +8,10 @@ import scala.util.Random
 
 class CannotAttackTest extends munit.FunSuite {
   test("Attack isn't possible in many ways") {
-    val panel: home = new home()
+    val panel: Home = new Home()
     val player = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel)
 
-    val panel2: home = new home()
+    val panel2: Home = new Home()
     val player2 = new PlayerCharacter("Diego", 5, 1, 1, -1, new Random(11), panel2)
 
     val npc: Chicken = new Chicken()

@@ -6,7 +6,7 @@ import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 
 import scala.util.Random
 
-import cl.uchile.dcc.citric.model.panels.home
+import cl.uchile.dcc.citric.model.panels.Home
 
 class RoboBallTest extends munit.FunSuite {
   val npc: RoboBall = new RoboBall()

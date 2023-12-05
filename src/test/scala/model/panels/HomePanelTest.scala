@@ -8,7 +8,7 @@ import scala.util.Random
 
 class HomePanelTest extends munit.FunSuite {
 
-  val panel_a: home = new home()
+  val panel_a: Home = new Home()
   val player1: PlayerCharacter = new PlayerCharacter("pedro", 7, 4, 5,
     3, new Random(11),panel_a)
 

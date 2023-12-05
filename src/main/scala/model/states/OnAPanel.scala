@@ -9,8 +9,24 @@ import cl.uchile.dcc.citric.model.traits.{GameState, Panel}
 
 import scala.collection.mutable.ArrayBuffer
 
+
+/** Represents the OnAPanel GameState.
+ *
+ * The OnAPanel GameState is the state where the current
+ * player lands on a panel
+ *
+ * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
+ */
+
+
 class OnAPanel (context: GameController) extends AbstractState (context){
 
+  /** checks if the current Panel is empty, and then make the transition
+   *
+   * This function might be invoked when the GameController
+   * wants to make a transition from the OnAPanel State
+   *
+   * */
   override def checkPanel(): Unit = {
     val panel: Panel = context.currentPanel.get
     val list: ArrayBuffer[PlayerCharacter] = panel.characters

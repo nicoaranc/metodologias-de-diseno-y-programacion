@@ -6,8 +6,8 @@ import scala.util.Random
 
 class DropPanelTest extends munit.FunSuite {
 
-  val panel_a: home = new home()
-  val panel_b: home = new home()
+  val panel_a: Home = new Home()
+  val panel_b: Home = new Home()
   val player1: PlayerCharacter = new PlayerCharacter("Juan", 6, 7,
     4, 6, new Random(11),panel_a)
   val player2: PlayerCharacter = new PlayerCharacter("Pedro", 6, 7,
@@ -17,7 +17,7 @@ class DropPanelTest extends munit.FunSuite {
   player2.stars = 34
 
 
-  val panel1: drop = new drop()
+  val panel1: Drop = new Drop()
 
 
 

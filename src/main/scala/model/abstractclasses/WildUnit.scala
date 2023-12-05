@@ -126,9 +126,6 @@ abstract class WildUnit extends Units{
     }
   }
 
-  /** method that stars an attack from a Wild Unit to a PlayerCharacter */
-
-  def attacking_to_PlayChar(u: PlayerCharacter): Unit
 
 
   /** Starts the defense of the wild unit.

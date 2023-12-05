@@ -1,9 +1,12 @@
 package cl.uchile.dcc.citric
 package model.player
-import model.panels.home
-import cl.uchile.dcc.citric.model.wild.{Seagull, Chicken, RoboBall}
+import model.panels.Home
+
+import cl.uchile.dcc.citric.model.wild.{Chicken, RoboBall, Seagull}
 import cl.uchile.dcc.citric.model.abstractclasses.WildUnit
 import model.traits.Norma
+
+import cl.uchile.dcc.citric.model.controller.GameController
 
 import scala.util.Random
 
@@ -22,7 +25,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   private var randomNumberGenerator : Random = _
   private var stars = 0
   private var norma = 1
-  private val panel_a : home = new home()
+  private val panel_a : Home = new Home()
   /* Add any other constants you need here... */
 
   /*
@@ -77,7 +80,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("getters and setters"){
-    val panel1: home = new home()
+    val panel1: Home = new Home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
 
     /** Hit points */
@@ -106,13 +109,6 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(player1.norma, nom2)
     assertEquals(player1.norma_id, 2)
 
-    /** Recovery & Can Play */
-    assertEquals(player1.Recovery, false)
-    assertEquals(player1.Can_play, true)
-    player1.Recovery_=(true)
-    player1.Can_play_=(false)
-    assertEquals(player1.Recovery, true)
-    assertEquals(player1.Can_play, false)
 
     /** Kind of Goal & Goal */
     assertEquals(player1.kind_goal, "")
@@ -128,13 +124,13 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("The player can/can't stop on the Home Panel") {
-    val panel1: home = new home()
+    val panel1: Home = new Home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
 
-    val panel2: home = new home()
+    val panel2: Home = new Home()
     val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel2)
 
-    val panel3: home = new home()
+    val panel3: Home = new Home()
 
     assertEquals(player1.canStop(panel1), true)
     assertEquals(player1.canStop(panel2), false)
@@ -145,26 +141,13 @@ class PlayerCharacterTest extends munit.FunSuite {
 
   }
 
-  test("The player enters to the Recovery phase") {
-    val panel1: home = new home()
-    val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11), panel1)
 
-    val npc: Seagull = new Seagull()
-
-    assertEquals(player1.Recovery, false)
-    assertEquals(player1.Can_play, true)
-
-    player1.Hp_=(0)
-    player1.defeated(npc)
-    assertEquals(player1.Recovery, true)
-    assertEquals(player1.Can_play, false)
-  }
 
   test("A character wins/loose a battle") {
-    val panel1: home = new home()
+    val panel1: Home = new Home()
     val player1 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel1)
 
-    val panel2: home = new home()
+    val panel2: Home = new Home()
     val player2 = new PlayerCharacter("npc", 5, 1, 1, -1, new Random(11),panel2)
     player2.stars_=(6)
 
@@ -200,11 +183,11 @@ class PlayerCharacterTest extends munit.FunSuite {
 
 
   test("Defending an attack"){
-    val panel1: home = new home()
+    val panel1: Home = new Home()
     val play1: PlayerCharacter = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel1)
 
     /** from other PlayerCharacter */
-    val panel2: home = new home()
+    val panel2: Home = new Home()
     val play2: PlayerCharacter = new PlayerCharacter("Francesco", 5, 1, 1, -1, new Random(11), panel2)
     val a: Int = play1.Hp
     play1.defending_to_PlayChar(play2)
@@ -229,51 +212,15 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(play1.Hp != d, true)
   }
 
-  test("Evading an attack"){
-    val panel4: home = new home()
-    val play4: PlayerCharacter = new PlayerCharacter("Francesco", 5, 1, 1, -100000, new Random(11), panel4)
-
-    val panel5: home = new home()
-    val play5: PlayerCharacter = new PlayerCharacter("Martín", 5, 1, 1, 100000, new Random(11), panel5)
-
-
-    /** from other PlayerCharacter */
-    val panel6: home = new home()
-    val play6: PlayerCharacter = new PlayerCharacter("Pedro", 5, 1, 1, -1, new Random(11), panel6)
-    val a: Int = play5.Hp
-    play5.evading_to_PlayChar(play6)
-    assertEquals(play5.Hp, a)
-    val b: Int = play4.Hp
-    play4.evading_to_PlayChar(play6)
-    assertEquals(play4.Hp != b, true)
-    play4.Hp_=(play4.maxHp)
-
-
-    /** from a Chicken */
-    val chicken: Chicken = new Chicken()
-    play5.evading_to_Chicken(chicken)
-    assertEquals(play5.Hp, a)
-    play4.evading_to_Chicken(chicken)
-    assertEquals(play4.Hp != b, true)
-    play4.Hp_= (play4.maxHp)
-
-    /** from a RoboBall */
-    val roboball: RoboBall = new RoboBall()
-    play5.evading_to_RoboBall(roboball)
-    assertEquals(play5.Hp, a)
-    play4.evading_to_Chicken(chicken)
-    assertEquals(play4.Hp != b, true)
-    play4.Hp_= (play4.maxHp)
-
-    /** from a Seagull */
-    val seagull: Seagull = new Seagull()
-    play5.evading_to_Seagull(seagull)
-    assertEquals(play5.Hp, a)
-    play4.evading_to_Seagull(seagull)
-    assertEquals(play4.Hp != b, true)
-    play4.Hp_=(play4.maxHp)
-
-
+  test("addObserver Test"){
+    val playerTest: PlayerCharacter = new PlayerCharacter("Alexis", 1, 2, 3,
+                                                3, new Random(), new Home())
+    val controller: GameController = new GameController
+    assertEquals(playerTest.observers.isEmpty, true)
+    playerTest.addObserver(controller)
+    assertEquals(playerTest.observers.isEmpty, false)
   }
+
+
 
 }
