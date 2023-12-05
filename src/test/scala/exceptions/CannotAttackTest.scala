@@ -67,8 +67,11 @@ class CannotAttackTest extends munit.FunSuite {
 
     /** the player character can't attack to a dead wild unit */
     npc.Hp_=(0)
+    println(npc.Hp)
     npc2.Hp_= (0)
+    println(npc2.Hp)
     npc3.Hp_=(0)
+    println(npc3.Hp)
     intercept[CannotAttack] {
       npc.defending_to_PlayChar(player)
     }

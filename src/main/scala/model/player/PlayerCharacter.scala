@@ -6,7 +6,7 @@ import model.traits.{GameState, Norma, Observer, Panel, Subject, Units}
 import model.panels.Home
 import exceptions.CannotAttack
 
-import cl.uchile.dcc.citric.model.abstractclasses.AbstractFighter
+import cl.uchile.dcc.citric.model.abstractclasses.AbstractSubject
 import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.events.NormaSixEvent
 import cl.uchile.dcc.citric.model.states.PlayerTurn
@@ -55,32 +55,8 @@ class PlayerCharacter(val name: String,
               val defense: Int,
               val evasion: Int,
               val randomNumberGenerator: Random = new Random(),
-              val panelOwned: Home) extends AbstractFighter with Subject[NormaSixEvent]{
+              val panelOwned: Home) extends AbstractSubject[NormaSixEvent] with Units {
 
-  /** the List where observers observes the Subject */
-  var observers: List[Observer[NormaSixEvent]] = List.empty
-
-  /** adds an observer to the Subject's observers List.
-   *
-   * This function might be invoked when the game starts.
-   *
-   * @param observer The observer to add.
-   * */
-  def addObserver(observer: Observer[NormaSixEvent]): Unit = {
-    observers = observer :: observers
-  }
-
-  /** notifies every observer in the Subject's observers List.
-   *
-   * This function might be invoked when a player reach the 6th Norma.
-   *
-   * @param value The event to notify.
-   * */
-  def notifyObservers(value: NormaSixEvent): Unit = {
-    for (observer <- observers) {
-      observer.update(this, value)
-    }
-  }
 
   /** instances of each Norma,
    * specifies each possible Norma to reach

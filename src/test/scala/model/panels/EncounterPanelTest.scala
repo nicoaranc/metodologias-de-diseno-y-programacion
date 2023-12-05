@@ -69,7 +69,7 @@ class EncounterPanelTest extends munit.FunSuite {
     testPanel.roboBall = Some(new RoboBall())
     testPanel.apply(testPlayer3)
     assertEquals(testPanel.roboBall, None)
-    val testPlayer4: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -100000,
+    val testPlayer4: PlayerCharacter = new PlayerCharacter("Juan", 1, -400000, -1000000,
       -10000000, new Random(), new Home())
     testPanel.roboBall = Some(new RoboBall())
     testPanel.apply(testPlayer4)

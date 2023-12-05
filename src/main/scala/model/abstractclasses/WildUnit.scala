@@ -15,7 +15,7 @@ import scala.util.Random
  * @author [[https://github.com/nicoaranc Nicolás Arancibia A.]]
  */
 
-abstract class WildUnit extends AbstractFighter {
+abstract class WildUnit extends Units {
 
 
   /** to give random numbers, mainly for the battle */
