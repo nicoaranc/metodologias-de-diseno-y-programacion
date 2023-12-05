@@ -47,6 +47,11 @@ Board of the game, the objects to create are the different panels, and then each
 a different Factory, and the game's Board have instances of each Factory and if the constructor
 of the board wants to add one Panel to the Board, just call to the Board's specific Factory.
 
+#### Inputs
+There is no input implementation in the game, instead of that, the model works the methods that
+require inputs with random numbers that simulates different decisions in the game, for example, like 
+choose the panel to move, choose between fight against another player, or in a fight decides between
+defend or evade an attack.
 
 ## States diagram
 

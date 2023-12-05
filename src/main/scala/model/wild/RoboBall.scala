@@ -31,7 +31,9 @@ class RoboBall extends WildUnit {
    * @param NewHp The new Hit Points of the RoboBall.
    */
   def Hp_=(NewHp: Int): Unit = {
-    _Hp = NewHp
+    if (NewHp <= maxHp && NewHp >= 0) {
+      _Hp = NewHp
+    }
   }
 
   /** RoboBall's attack stat */
@@ -56,7 +58,9 @@ class RoboBall extends WildUnit {
    * @param NewStars The new stars of the RoboBall.
    */
   def stars_=(NewStars: Int): Unit = {
-    _stars = NewStars
+    if (NewStars >= 0) {
+      _stars = NewStars
+    }
   }
 
   /** give stars to the RoboBall.

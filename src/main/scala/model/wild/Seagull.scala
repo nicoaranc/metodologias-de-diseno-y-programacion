@@ -31,7 +31,9 @@ class Seagull extends WildUnit {
    * @param NewHp The new Hit Points of the seagull.
    */
   def Hp_=(NewHp: Int): Unit = {
-    _Hp = NewHp
+    if (NewHp <= maxHp && NewHp >= 0) {
+      _Hp = NewHp
+    }
   }
 
   /** Seagull's attack stat */
@@ -56,7 +58,9 @@ class Seagull extends WildUnit {
    * @param NewStars The new stars of the seagull.
    */
   def stars_=(NewStars: Int): Unit = {
-    _stars = NewStars
+    if (NewStars >= 0) {
+      _stars = NewStars
+    }
   }
 
   /** give stars to the seagull.
