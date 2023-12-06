@@ -3,6 +3,7 @@ package model.states
 
 import model.controller.GameController
 
+import cl.uchile.dcc.citric.model.panels.{Bonus, Drop}
 import cl.uchile.dcc.citric.model.traits.GameState
 
 class PreGameTest extends munit.FunSuite {
@@ -15,5 +16,9 @@ class PreGameTest extends munit.FunSuite {
     controller.startGame()
     val state2: GameState = controller.state
     assertEquals(state2.isInstanceOf[Chapter], true)
+    assertEquals(controller.board.isDefined, true)
+    for (player <- controller.players){
+      assertEquals(player.panel.get,controller.board.get.PanelsArray(5))
+    }
   }
 }

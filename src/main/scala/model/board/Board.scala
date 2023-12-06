@@ -37,52 +37,98 @@ class Board {
 
   /** add a neutral panel to the board
    *
-   * This function might be invoked at the creating of the board
+   * This function might be invoked at the creation of the board
    *
    * */
-  def addNeutral(): Unit = {
+  def addNeutral(): Neutral = {
     val neutral: Neutral = neutralFactory.createPanel()
     PanelsArray.addOne(neutral)
+    neutral
   }
 
   /** add a bonus panel to the board
    *
-   * This function might be invoked at the creating of the board
+   * This function might be invoked at the creation of the board
    *
    * */
-  def addBonus(): Unit = {
+  def addBonus(): Bonus = {
     val bonus: Bonus = bonusFactory.createPanel()
     PanelsArray.addOne(bonus)
+    bonus
   }
 
   /** add a home panel to the board
    *
-   * This function might be invoked at the creating of the board
+   * This function might be invoked at the creation of the board
    *
    * */
-  def addHome(): Unit = {
+  def addHome(): Home = {
     val home: Home = homeFactory.createPanel()
     PanelsArray.addOne(home)
+    home
   }
 
   /** add a encounter panel to the board
    *
-   * This function might be invoked at the creating of the board
+   * This function might be invoked at the creation of the board
    *
    * */
-  def addEncounter(): Unit = {
+  def addEncounter(): Encounter = {
     val encounter: Encounter = encounterFactory.createPanel()
     PanelsArray.addOne(encounter)
+    encounter
   }
 
   /** add a drop panel to the board
    *
-   * This function might be invoked at the creating of the board
+   * This function might be invoked at the creation of the board
    *
    * */
-  def addDrop(): Unit = {
+  def addDrop(): Drop = {
     val drop: Drop = dropFactory.createPanel()
     PanelsArray.addOne(drop)
+    drop
+  }
+
+  /** creates a the base of a 3x3 "Square" Board
+   *
+   * This function might be invoked at the creation of the board
+   *
+   * */
+  def construction(): Unit = {
+    val panel1: Home = addHome()
+    val panel2: Home = addHome()
+    val panel3: Home = addHome()
+    val panel4: Home = addHome()
+    val panel5: Drop = addDrop()
+    val panel6: Bonus = addBonus()
+    val panel7: Encounter = addEncounter()
+    val panel8: Neutral = addNeutral()
+    val panel9: Neutral = addNeutral()
+    panel1.addPanel(panel5)
+    panel1.addPanel(panel9)
+    panel2.addPanel(panel9)
+    panel2.addPanel(panel8)
+    panel9.addPanel(panel1)
+    panel9.addPanel(panel2)
+    panel9.addPanel(panel7)
+    panel5.addPanel(panel1)
+    panel5.addPanel(panel3)
+    panel5.addPanel(panel7)
+    panel3.addPanel(panel5)
+    panel3.addPanel(panel6)
+    panel6.addPanel(panel3)
+    panel6.addPanel(panel4)
+    panel6.addPanel(panel7)
+    panel4.addPanel(panel6)
+    panel4.addPanel(panel8)
+    panel8.addPanel(panel2)
+    panel8.addPanel(panel4)
+    panel8.addPanel(panel7)
+    panel7.addPanel(panel5)
+    panel7.addPanel(panel6)
+    panel7.addPanel(panel8)
+    panel7.addPanel(panel9)
   }
 
 }

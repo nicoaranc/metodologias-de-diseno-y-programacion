@@ -68,6 +68,9 @@ class PlayerCharacter(val name: String,
   private val n5: Norma = new Norma5()
   private val n6: Norma = new Norma6()
 
+  /** current Panel of the player */
+  var panel: Option[Panel] = None
+
   /** current Hp of the player, at the beginning of the game is the maxHp */
   private var _Hp: Int = maxHp
 

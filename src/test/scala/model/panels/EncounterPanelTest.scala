@@ -49,8 +49,8 @@ class EncounterPanelTest extends munit.FunSuite {
   }
 
   test("Fight against a Chicken in encounter panel"){
-    val testPlayer: PlayerCharacter = new PlayerCharacter("Jose", 2, 400000, 5,
-      3, new Random(), new Home())
+    val testPlayer: PlayerCharacter = new PlayerCharacter("Jose", 2, 400000, 50000,
+      30000, new Random(), new Home())
     val testPanel: Encounter = new Encounter()
     testPanel.chicken = Some(new Chicken())
     testPanel.apply(testPlayer)

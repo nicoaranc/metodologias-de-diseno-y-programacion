@@ -17,7 +17,7 @@ import scala.util.Random
 class GameController extends Observer[NormaSixEvent]{
 
   /** the board of the game */
-  private var board: Board = new Board()
+  var board: Option[Board] = None
 
   /** the finish state of the game */
   private var _finishedGame: Boolean = false
@@ -35,7 +35,7 @@ class GameController extends Observer[NormaSixEvent]{
   var state: GameState = new PreGame(this)
 
   /** the array of the players of the game with the respective turn's order*/
-  private var players: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
+  val players: ArrayBuffer[PlayerCharacter] = new ArrayBuffer[PlayerCharacter]()
 
 
   /** the current Player of the game */
@@ -145,6 +145,7 @@ class GameController extends Observer[NormaSixEvent]{
     val roll: Int = rand.nextInt(number_path)
     currentPanel = Some(panel.nextPanels(roll))
     currentPanel.get.addCharacter(player)
+    player.panel = currentPanel
   }
 
   /** sets the new values to the currentPanel when leaves the RecoveryPhase
@@ -286,6 +287,7 @@ class GameController extends Observer[NormaSixEvent]{
     players.remove(0)
     players.addOne(player)
     currentPlayer = Some(players(0))
+    currentPanel = currentPlayer.get.panel
   }
 
 
